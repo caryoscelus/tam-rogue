@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod type="attrib">
+    <map source="class" target="char">
+        <value in="human" out="@"/>
+        <value in="wall" out="-"/>
+        <value in="floor" out="."/>
+    </map>
+</mod>
