@@ -1,3 +1,5 @@
+import logging
+
 import server
 
 # NOTE: should be used multi-pointer friendly
@@ -20,7 +22,7 @@ class Entity:
             try:
                 self.handler.live(self)
             except TypeError:
-                pass
+                logging.warning('could not call handler live function')
     
     def destroy(self):
         # object cannot be destroyed twice?..
