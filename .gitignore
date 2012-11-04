@@ -1,3 +1,11 @@
+# logs
+*.log
+
+# temp files
+*~
+
+# compiled
+__pycache__
 *.py[co]
 
 # Packages
