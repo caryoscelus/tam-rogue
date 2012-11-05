@@ -63,6 +63,19 @@ class Tile:
             except EntityDeadError:                     # raised on destroyed
                 self.content[position] = entity
     
+    # TODO: position optional
+    def remove(self, entity, position):
+        content = self.get(position)
+        try:
+            content.remove(entity)
+        except ValueError:                              # not in list
+            raise TileEntityError(position, entity)
+        except AttributeError:                          # entity or empty
+            if content != entity:
+                raise TileEntityError(position, entity)
+            else:
+                self.content[position] = None
+    
     # is it useful?..
     def isValid(self, position):
         try:
@@ -71,7 +84,7 @@ class Tile:
         except TilePositionError:
             return False
 
-class TileTakenError(Exception):
+class TileTakenError(RuntimeError):
     def __init__(self, key):
         self.key = key
     
@@ -79,6 +92,11 @@ class TileTakenError(Exception):
         # TODO: fancy output
         return repr(self.key)
 
-class TilePositionError(Exception):
+class TilePositionError(RuntimeError):
     def __init__(self, key):
         self.key = key
+
+class TileEntityError(RuntimeError):
+    def __init__(self, position, entity):
+        self.position = position
+        self.entity = entity

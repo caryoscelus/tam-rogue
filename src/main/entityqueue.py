@@ -22,6 +22,9 @@ class EntityQueue:
         
         #return result
     
+    def remove(self, entity):
+        self.content.remove(entity)
+    
     def pop(self):
         result = None
         while not result:

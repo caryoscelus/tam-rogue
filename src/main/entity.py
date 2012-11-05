@@ -8,6 +8,8 @@ import server
 class Entity:
     def __init__(self, attrib = {}, alive = False, handler = None):
         self.attrib = attrib
+        self.children = {}
+        
         self.alive = alive
         self.handler = handler
         self.dead = False

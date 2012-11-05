@@ -28,6 +28,22 @@ class TiledMap:
     def getContent(self, x, y, position):
         return self.getTile(x, y).get(position)
     
+    def putOn(self, x, y, position, entity):
+        if entity.alive:
+            self.queue.push(entity)
+        
+        tile = self.getTile(x, y)
+        tile.put(position, entity)
+        entity.placeOn(self, x, y, position)
+    
+    def removeFromMap(self, entity):
+        if entity.alive:
+            self.queue.remove(entity)
+        
+        entity.removeFrom(self, x, y, position)
+        #tile = entity.refs.tile
+        #tile.remove(entity, entity.refs.position)
+    
     def step(self):
         if self.alive:
             return next(self.life)
