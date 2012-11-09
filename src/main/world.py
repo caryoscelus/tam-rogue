@@ -1,4 +1,5 @@
 import logging
+import time
 
 class World:
     def __init__(self):
@@ -25,8 +26,10 @@ class World:
             for tMap in self.maps:
                 # iterate over objects on map
                 while True:
+                    logging.debug('map step')
                     t = tMap.step()
                     if not t:
                         break
-                    logging.debug('step')
+                    logging.debug('step done')
                     yield t
+                time.sleep(0.1)

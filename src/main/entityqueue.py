@@ -1,3 +1,5 @@
+import logging
+
 from entity import EntityDeadError
 
 class EntityQueue:
@@ -26,6 +28,8 @@ class EntityQueue:
         self.content.remove(entity)
     
     def pop(self):
+        logging.debug('pop')
+        
         result = None
         while not result:
             try:

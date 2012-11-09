@@ -26,6 +26,8 @@ def generateWorld():
     human.alive = True
     
     map0 = TiledMap(20, 20, {'ground':None, 'objects':[]}, ['ground', 'objects'])
+    map0.alive = True
+    map0.queue.push(human)
     # floor
     for y in range(1, 10):
         for x in range(2, 18):

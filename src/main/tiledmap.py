@@ -13,6 +13,7 @@ class TiledMap:
         self.attrib = attrib
         self.alive = False
         self.queue = EntityQueue()
+        self.life = self.live()
     
     def clear(self):
         def t(x, y):
