@@ -25,6 +25,11 @@ class Entity:
                 self.handler.live(self)
             except TypeError:
                 logging.warning('could not call handler live function')
+            except AttributeError:
+                logging.warning('no handler')
+            return True
+        
+        return False
     
     def destroy(self):
         # object cannot be destroyed twice?..

@@ -26,10 +26,8 @@ class World:
             for tMap in self.maps:
                 # iterate over objects on map
                 while True:
-                    logging.debug('map step')
                     t = tMap.step()
                     if not t:
                         break
-                    logging.debug('step done')
                     yield t
                 time.sleep(0.1)

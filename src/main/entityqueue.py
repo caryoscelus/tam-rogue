@@ -28,19 +28,18 @@ class EntityQueue:
         self.content.remove(entity)
     
     def pop(self):
-        logging.debug('pop')
-        
-        result = None
-        while not result:
+        entity = None
+        while not entity:
             try:
                 entity = self.content[self.pos]
                 entity.check()
+                break
             except IndexError:
                 raise EmptyQueueError(self)
             except EntityDeadError:
                 del self.content[self.pos]
         self.pos += 1
-        return result
+        return entity
     
     def reset(self):
         self.pos = 0
