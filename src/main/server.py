@@ -3,6 +3,7 @@ import traceback
 import logging
 
 from mod import Mod
+from clientserver import ClientServer
 
 # TODO: try eliminating this
 globalServer = None
@@ -53,3 +54,12 @@ class Server:
     
     def disableMod(self, modId):
         raise NotImplementedError
+    
+    # called from client
+    def connect(self, client):
+        sc = ServerClient(client)
+        self.clients.append(sc)
+    
+    def disconnect(self, sc):
+        logging.info('client {0} disconnected'.format(sc))
+        self.clients.remove(sc)

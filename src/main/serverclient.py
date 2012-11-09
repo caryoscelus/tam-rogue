@@ -1,10 +1,10 @@
 from sleeping import Sleeping
 
 class ServerClient(Sleeping):
-    def __init__(self):
+    def __init__(self, client):
         self.entity = None
         self.actions = []
-        self.client = None
+        self.client = client
     
     def register(self):
         # set handler for entity
@@ -23,3 +23,6 @@ class ServerClient(Sleeping):
     # to be called on client side
     def request(self, action):
         self.actions.append(action)
+    
+    def __str__(self):
+        return ''
