@@ -3,7 +3,7 @@ import traceback
 import logging
 
 from mod import Mod
-from clientserver import ClientServer
+from serverclient import ServerClient
 
 # TODO: try eliminating this
 globalServer = None
