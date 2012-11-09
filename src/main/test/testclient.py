@@ -23,6 +23,7 @@ def generateWorld():
     floor = Entity({'class':'floor'})
     wall = Entity({'class':'wall'})
     human = Entity({'class':'human'})
+    human.alive = True
     
     map0 = TiledMap(20, 20, {'ground':None, 'objects':[]}, ['ground', 'objects'])
     # floor
@@ -46,6 +47,7 @@ def testClientServer(server, port):
     myServer = Server()
     myServer.world = generateWorld()
     myServer.loadMod('character-mod.xml')
+    myServer.start()
     myClient = Client()
     myClient.connectClient((server, port)) #'localhost', 6985))
     myClient.connectServer(myServer)

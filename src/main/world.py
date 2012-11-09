@@ -1,3 +1,5 @@
+import logging
+
 class World:
     def __init__(self):
         #self.entities = []
@@ -26,4 +28,5 @@ class World:
                     t = tMap.step()
                     if not t:
                         break
+                    logging.debug('step')
                     yield t

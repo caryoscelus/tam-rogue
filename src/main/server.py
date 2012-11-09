@@ -1,4 +1,5 @@
 import threading
+import traceback
 
 from mod import Mod
 
@@ -21,7 +22,12 @@ class Server:
     def main(self):
         self.life = self.world.live()
         while not self.quit:
-            next(life)
+            try:
+                next(self.life)
+            except Exception as err:
+                logging.error('unhandled exception in world server thread:')
+                logging.error(str(err))
+                logging.debug(traceback.format_exc())
     
     def start(self):
         self.thread = threading.Thread(None, self.main, 'world-server', (self,))
