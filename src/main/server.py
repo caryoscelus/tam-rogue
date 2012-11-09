@@ -1,5 +1,6 @@
 import threading
 import traceback
+import logging
 
 from mod import Mod
 
@@ -30,7 +31,7 @@ class Server:
                 logging.debug(traceback.format_exc())
     
     def start(self):
-        self.thread = threading.Thread(None, self.main, 'world-server', (self,))
+        self.thread = threading.Thread(None, self.main, 'world-server', ())
         self.thread.start()
     
     def stop(self):
