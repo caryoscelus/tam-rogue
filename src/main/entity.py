@@ -14,6 +14,15 @@ class Entity:
         self.handler = handler
         self.dead = False
     
+    # static
+    def fromXml(xmlEntity):
+        self = Entity()
+        self.loadXml(xmlEntity)
+        return self
+    
+    def loadXml(xmlEntity):
+        pass
+    
     def check(self):
         if self.dead:
             raise EntityDeadError(self)
