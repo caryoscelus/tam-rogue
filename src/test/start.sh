@@ -37,7 +37,7 @@ fi
 # store pid to kill later
 cd $DIR
 rm *.log
-eval "(python3 $PY >$BACK/test/client-err.log 2>&1) &"
+eval "python3 $PY &"
 TESTCLIENT=$!
 
 # start curses client
@@ -45,4 +45,6 @@ cd $BACK/gfxclient/curses
 rm *.log
 python3 ./main.py
 
-kill $TESTCLIENT
+# to be sure
+kill -KILL $TESTCLIENT
+
