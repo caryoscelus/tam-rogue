@@ -5,26 +5,23 @@ import traceback
 import xml.etree.ElementTree as ET
 
 from sleeping import Sleeping
+from displaying import Displaying
 from mapvisualizer import MapVisualizer
 
-class Client(Sleeping):
+class Client(Sleeping, Displaying):
     def __init__(self):
+        super().__init__()
+        
         self.myTurn = False
-        self.updateWorld = False or True
         self.quit = False
         self.server = None
         self.mapVisualizer = MapVisualizer()
-        self.gfxClient = None
         
         self.listenerThread = None
         self.updaterThread = None
     
     def connectServer(self, server):
         self.server = server
-    
-    def connectClient(self, gfxClient):
-        self.gfxClient = gfxClient
-        logging.info('gfx client is on '+str(self.gfxClient))
     
     # called from server
     def requestAction(self):
@@ -44,7 +41,7 @@ class Client(Sleeping):
     def clientUpdater(self):
         while not self.quit:
             try:
-                if self.updateWorld:
+                if self.updateDisplay:
                     self.redraw()
                 self.sleep()
             except Exception as err:
@@ -109,10 +106,12 @@ class Client(Sleeping):
         # - forbid direct access to world
         # - draw vision, not actual map
         # - draw current map
-        xml = self.mapVisualizer.toXml(self.server.world.maps[0])
+        self.displayData = self.mapVisualizer.toXml(self.server.world.maps[0])
         # TODO: optimize xml
-        if self.send(xml):
-            self.updateWorld = False
+        super().redraw()
+        
+        #if self.send(xml):
+            #self.updateWorld = False
     
     def send(self, data):
         try:
