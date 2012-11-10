@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import logging
+import traceback
 
 import sys
 sys.path.append(".")
@@ -57,11 +58,14 @@ def testClientServer(server, port):
     logging.info('client started')
 
 if __name__ == '__main__':
-    from sys import argv
-    if len(argv) < 3:
-        server = 'localhost'
-        port = 6985+2
-    else:
-        server = argv[1]
-        port = int(argv[2])
-    testClientServer(server, port)
+    try:
+        from sys import argv
+        if len(argv) < 3:
+            server = 'localhost'
+            port = 6985+2
+        else:
+            server = argv[1]
+            port = int(argv[2])
+        testClientServer(server, port)
+    except BaseException as err:
+        logging.error(traceback.format_exc())
