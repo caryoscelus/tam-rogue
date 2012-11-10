@@ -24,18 +24,18 @@ class TiledMap:
             raise XmlLoadError(xmlRoot)
         
         try:
-            self.width = xmlRoot.attrib['width']
-            self.height = xmlRoot.attrib['height']
-        except KeyError:
+            self.width = int(xmlRoot.get('width'))
+            self.height = int(xmlRoot.get('height'))
+        except TypeError:
             raise XmlLoadError(xmlRoot)
         
         self.clear()
         
         for xmlTile in xmlRoot:
             try:
-                x = xmlTile.attrib['x']
-                y = xmlTile.attrib['y']
-            except KeyError:
+                x = int(xmlTile.attrib('x'))
+                y = int(xmlTile.get('y'))
+            except TypeError:
                 raise XmlLoadError(xmlTile)
             
             self.getTile(x, y).loadXml(xmlTile)
