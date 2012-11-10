@@ -7,7 +7,7 @@ class Tile:
     # order - list: int -> string
     # content - dict: string -> Entity/list
     # if list, it's extandable position
-    def __init__(self, content, order):
+    def __init__(self, content = {}, order = []):
         self.order = order
         self.content = copy.deepcopy(content)
     

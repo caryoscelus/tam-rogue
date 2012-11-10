@@ -1,5 +1,6 @@
 from tile import Tile
 from entityqueue import EntityQueue, EmptyQueueError
+from miscerrors import XmlLoadError
 
 class TiledMap:
     def __init__(self, width, height, layers, layersOrder, attrib = {}):
@@ -15,12 +16,38 @@ class TiledMap:
         self.queue = EntityQueue()
         self.life = self.live()
     
+    def saveXml(self):
+        pass
+    
+    def loadXml(self, xmlRoot):
+        if xmlRoot.tag != 'tiledmap':
+            raise XmlLoadError(xmlRoot)
+        
+        try:
+            self.width = xmlRoot.attrib['width']
+            self.height = xmlRoot.attrib['height']
+        except KeyError:
+            raise XmlLoadError(xmlRoot)
+        
+        self.clear()
+        
+        for xmlTile in xmlRoot:
+            try:
+                x = xmlTile.attrib['x']
+                y = xmlTile.attrib['y']
+            except KeyError:
+                raise XmlLoadError(xmlTile)
+            
+            self.getTile(x, y).loadXml(xmlTile)
+    
     def clear(self):
         def t(x, y):
             return Tile(self.layers, self.layersOrder)
         self.content = self.genMap(t) #lambda x, y: Tile(self.layers))
     
     def genMap(self, func):
+        if self.width < 0 or self.height < 0:
+            raise TiledMapSizeError(self)
         return [[func(x, y) for x in range(self.width)] for y in range(self.height)]
     
     def getTile(self, x, y):
@@ -63,3 +90,8 @@ class TiledMap:
             # reload queue
             self.queue.reset()
             yield False
+
+
+class TiledMapSizeError(RuntimeError):
+    def __init__(self, tiledMap):
+        self.tiledMap = tiledMap
