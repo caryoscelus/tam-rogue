@@ -19,6 +19,7 @@ class TiledMap:
     def fromXml(xmlRoot):
         self = TiledMap()
         self.loadXml(xmlRoot)
+        return self
     
     def saveXml(self):
         pass
