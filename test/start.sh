@@ -4,12 +4,12 @@
 
 
 # TC == test client
-DIR_TC="../main/test"
+DIR_TC="../src/main/test"
 BACK_TC="../.."
 PY_TC="./testclient.py"
 
 # ME == map editor
-DIR_ME="../main"
+DIR_ME="../src/main"
 BACK_ME=".."
 PY_ME="./mapeditor.py"
 
