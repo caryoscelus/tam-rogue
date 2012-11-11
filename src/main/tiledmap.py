@@ -37,8 +37,8 @@ class TiledMap:
         
         for xmlTile in xmlRoot:
             try:
-                x = int(xmlTile.attrib('x'))
-                y = int(xmlTile.get('y'))
+                x = int(xmlTile.attrib['x'])
+                y = int(xmlTile.attrib['y'])
             except TypeError:
                 raise XmlLoadError(xmlTile)
             
