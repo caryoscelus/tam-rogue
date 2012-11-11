@@ -37,7 +37,7 @@ fi
 # store pid to kill later
 cd $DIR
 rm *.log
-eval "python3 $PY &"
+eval "python3 $PY $2 $3 $4 $5 &"
 TESTCLIENT=$!
 
 # start curses client
