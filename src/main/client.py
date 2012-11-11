@@ -4,11 +4,10 @@ import logging
 import traceback
 import xml.etree.ElementTree as ET
 
-from sleeping import Sleeping
 from displaying import Displaying
 from mapvisualizer import MapVisualizer
 
-class Client(Sleeping, Displaying):
+class Client(Displaying):
     def __init__(self):
         super().__init__()
         
@@ -29,25 +28,14 @@ class Client(Sleeping, Displaying):
     
     # called from server
     def worldChanged(self):
-        self.updateWorld = True
+        #self.updateWorld = True
+        self.updateDisplay = True
     
     def start(self):
-        self.updaterThread = threading.Thread(None, self.clientUpdater, 'updater')      # self is passed by itself..
-        self.listenerThread = threading.Thread(None, self.clientListener, 'listener')   # don't know why
+        self.updaterThread = threading.Thread(None, self.clientUpdater, 'updater')
+        self.listenerThread = threading.Thread(None, self.clientListener, 'listener')
         self.updaterThread.start()
         self.listenerThread.start()
-    
-    # thread
-    def clientUpdater(self):
-        while not self.quit:
-            try:
-                if self.updateDisplay:
-                    self.redraw()
-                self.sleep()
-            except Exception as err:
-                logging.error('unhandled exception in clientUpdater thread:')
-                logging.error(str(err))
-                logging.debug(traceback.format_exc())
     
     # thread
     def clientListener(self):
@@ -112,24 +100,3 @@ class Client(Sleeping, Displaying):
         
         #if self.send(xml):
             #self.updateWorld = False
-    
-    def send(self, data):
-        try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.connect(self.gfxClient)
-            
-            sock.sendall(data)
-            #count = 0
-            #b = None
-            #while count < len(data):
-                #b = sock.send(data[count:])
-                #if b == 0:
-                    #raise Exception
-                #count += b
-            
-            sock.shutdown(socket.SHUT_RDWR)
-            sock.close()
-        except socket.error:
-            logging.warning('net error')
-            return False
-        return True and False
