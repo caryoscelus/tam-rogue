@@ -5,17 +5,23 @@ import threading
 import traceback
 
 from displaying import Displaying
+from tiledmap import TiledMap
+from mapvisualizer import MapVisualizer
 
 class MapEditor(Displaying):
     def __init__(self):
         super().__init__()
         self.quit = False
+        self.tiledMap = None
+        self.mapVisualizer = MapVisualizer()
     
     def redraw(self):
+        # draw map
+        self.displayData = self.mapVisualizer.toXml(self.tiledMap)
         super().redraw()
     
     def loadMapXml(self, mapXml):
-        pass
+        self.tiledMap = TiledMap.fromXml(mapXml)
 
 
 def main(argv):
