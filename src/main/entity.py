@@ -20,7 +20,7 @@ class Entity:
         self.loadXml(xmlEntity)
         return self
     
-    def loadXml(xmlEntity):
+    def loadXml(self, xmlEntity):
         pass
     
     def check(self):

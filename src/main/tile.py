@@ -1,6 +1,6 @@
 import copy
 
-from entity import EntityDeadError
+from entity import Entity, EntityDeadError
 from miscerrors import XmlLoadError
 import server
 
