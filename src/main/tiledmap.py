@@ -3,7 +3,7 @@ from entityqueue import EntityQueue, EmptyQueueError
 from miscerrors import XmlLoadError
 
 class TiledMap:
-    def __init__(self, width, height, layers, layersOrder, attrib = {}):
+    def __init__(self, width = 0, height = 0, layers = {}, layersOrder = [], attrib = {}):
         self.width = width
         self.height = height
         
@@ -15,6 +15,10 @@ class TiledMap:
         self.alive = False
         self.queue = EntityQueue()
         self.life = self.live()
+    
+    def fromXml(xmlRoot):
+        self = TiledMap()
+        self.loadXml(xmlRoot)
     
     def saveXml(self):
         pass
