@@ -10,6 +10,8 @@ class Displaying(Sleeping):
     def __init__(self):
         super().__init__()
         
+        self.displayData = None
+        
         self.updateDisplay = False or True
         self.gfxClient = None
         self.updaterThread = threading.Thread(None, self.clientUpdater, 'updater')
@@ -50,6 +52,10 @@ class Displaying(Sleeping):
             sock.close()
         except socket.error as err:
             logging.warning('net error')
+            logging.debug(err)
+            return False
+        except Exception as err:
+            logging.warning('unknown error while connecting')
             logging.debug(err)
             return False
         return True and False
