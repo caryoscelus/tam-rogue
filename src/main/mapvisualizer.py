@@ -4,32 +4,19 @@ import math
 import logging
 import xml.etree.ElementTree as ET
 
+from entity import EntityAttributeError
+
 class MapVisualizer:
     # TODO: return full gfx, not only character
     def tileToGfx(self, tiledMap, x, y):
         upper = tiledMap.getTile(x, y).getUpper()
         if not upper:
             return ' '
-        return upper.attr('char')
-        #ground = tiledMap.getContent(x, y, 'ground')
-        #objects = tiledMap.getContent(x, y, 'objects')
-        #if objects:
-            #obj = objects[-1]
-            #entity = obj
-        #else:
-            #entity = ground
         
-        #if not entity:
-            #return ' '
-        #entityType = entity.attr('class')
-        #if entityType == 'floor':
-            #return '.'
-        #elif entityType == 'wall':
-            #return '-'
-        #elif entityType == 'human':
-            #return '@'
-        #else:
-            #return '?'
+        try:
+            return upper.attr('char')
+        except EntityAttributeError:
+            logging.warning('unvisualizable entity')
     
     def toGfx(self, tiledMap):
         # TODO: remove stupid screen format
@@ -46,7 +33,11 @@ class MapVisualizer:
         for y in range(screen[0]['height']):
             for x in range(screen[0]['width']):
                 ch = screen[1][y][x]
-                ET.SubElement(root, 'char', {'x':str(x), 'y':str(y), 'ch':ch})
+                # TODO: duck typing?..
+                if isinstance(ch, str):
+                    ET.SubElement(root, 'char', {'x':str(x), 'y':str(y), 'ch':ch})
+                else:
+                    logging.warning('unvisualizable display character')
         
         #f = 32
         #l = 128
