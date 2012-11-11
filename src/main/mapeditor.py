@@ -8,6 +8,7 @@ from displaying import Displaying
 
 class MapEditor(Displaying):
     def __init__(self):
+        super().__init__()
         self.quit = False
     
     def redraw(self):
