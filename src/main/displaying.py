@@ -45,18 +45,12 @@ class Displaying(Sleeping):
             sock.connect(self.gfxClient)
             
             sock.sendall(data)
-            #count = 0
-            #b = None
-            #while count < len(data):
-                #b = sock.send(data[count:])
-                #if b == 0:
-                    #raise Exception
-                #count += b
             
             sock.shutdown(socket.SHUT_RDWR)
             sock.close()
-        except socket.error:
+        except socket.error as err:
             logging.warning('net error')
+            logging.debug(err)
             return False
         return True and False
     
