@@ -13,13 +13,28 @@ class MapEditor(Displaying):
     
     def redraw(self):
         super().redraw()
+    
+    def loadMapXml(self, mapXml):
+        pass
 
 
 def main(argv):
+    import xml.etree.ElementTree as ET
+    
     if len(argv) < 2:
         raise RuntimeError('not enough command line arguments')
     
+    try:
+        fname = argv[1]
+        f = open(fname)
+        mapXml = ET.fromstring(f.read())
+        f.close()
+    except IOError:
+        logging.error(traceback.format_exc())
+        raise RuntimeError('error while reading file')
+    
     me = MapEditor()
+    me.loadMapXml(mapXml)
     me.start()
 
 if __name__ == '__main__':
