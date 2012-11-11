@@ -52,6 +52,8 @@ class Entity:
         except KeyError:
             try:
                 return server.globalServer.world.attrList[name](self)
+            except AttributeError:                      # no world?..
+                raise EntityAttributeError(self, name)
             except TypeError:
                 raise NotImplementedError('can\' handle non-function extended attributes')
             except KeyError:
