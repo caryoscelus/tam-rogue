@@ -2,37 +2,30 @@
 
 import logging
 import threading
+import traceback
 
-from sleeping import Sleeping
+from displaying import Displaying
 
-class MapEditor(Sleeping):
+class MapEditor(Displaying):
     def __init__(self):
         self.quit = False
     
-    def start(self):
-        self.updaterThread = threading.Thread(None, self.clientUpdater, 'updater')
-        self.updaterThread.start()
-    
-    # thread
-    def clientUpdater(self):
-        while not self.quit:
-            try:
-                if self.updateWorld:
-                    self.redraw()
-                self.sleep()
-            except Exception as err:
-                logging.error('unhandled exception in clientUpdater thread:')
-                logging.error(str(err))
-                logging.debug(traceback.format_exc())
+    def redraw(self):
+        super().redraw()
 
 
-if __name__ == '__main__':
-    from sys import argv
-    
+def main(argv):
     if len(argv) < 2:
         raise RuntimeError('not enough command line arguments')
     
-    logging.basicConfig(filename='mapeditor.log', level=logging.DEBUG)
-    
     me = MapEditor()
     me.start()
+
+if __name__ == '__main__':
+    logging.basicConfig(filename='mapeditor.log', level=logging.DEBUG)
+    
+    try:
+        from sys import argv
+        main(argv)
+    except BaseException as err:
+        logging.error(traceback.format_exc())
