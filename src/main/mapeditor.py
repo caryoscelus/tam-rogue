@@ -5,11 +5,12 @@ import threading
 import traceback
 
 from displaying import Displaying
+from inputting import Inputting
 from tiledmap import TiledMap
 from mapvisualizer import MapVisualizer
 from worldregistry import sysWorldRegistry
 
-class MapEditor(Displaying):
+class MapEditor(Displaying, Inputting):
     def __init__(self):
         super().__init__()
         self.quit = False
