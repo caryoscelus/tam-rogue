@@ -17,6 +17,7 @@ class MapVisualizer:
             return upper.attr('char')
         except EntityAttributeError:
             logging.warning('unvisualizable entity')
+            return None
     
     def toGfx(self, tiledMap):
         # TODO: remove stupid screen format
@@ -39,11 +40,4 @@ class MapVisualizer:
                 else:
                     logging.warning('unvisualizable display character')
         
-        #f = 32
-        #l = 128
-        #ch = chr(math.floor(random.random()*(l-f)+f))
-        
-        #ET.SubElement(root, 'char', {'ch':ch, 'x':'12', 'y':'1'})
-        
         return bytes(ET.tostring(root))
-        #return bytes('<scrup>\n<char ch="'+ch+'" x="12" y="1"/>\n</scrup>', 'ascii')

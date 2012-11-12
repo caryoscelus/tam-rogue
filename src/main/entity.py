@@ -14,6 +14,10 @@ class Entity:
         self.handler = handler
         self.dead = False
     
+    def __str__(self):
+        # TODO
+        return str(self.attrib)
+    
     # static
     def fromXml(xmlEntity):
         self = Entity()

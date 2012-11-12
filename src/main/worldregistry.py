@@ -17,6 +17,7 @@ class WorldRegistry:
         mod = Mod(modXml)
         self.lastMod += 1
         self.mods[self.lastMod] = mod
+        mod.applyMod(self.world)
         
         return self.lastMod
     
