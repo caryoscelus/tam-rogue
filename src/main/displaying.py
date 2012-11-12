@@ -6,8 +6,9 @@ import threading
 
 from sleeping import Sleeping
 from starting import Starting
+from receiver import Receiver
 
-class Displaying(Sleeping, Starting):
+class Displaying(Sleeping, Starting, Receiver):
     def __init__(self):
         super().__init__()
         
@@ -79,30 +80,30 @@ class Displaying(Sleeping, Starting):
         while not self.quit:
             try:
                 request = self.listen()
-                self.reply(request)
+                self.processRequest(request)
             except Exception as err:
                 logging.error('unhandled exception in clientListener thread:')
                 logging.error(str(err))
                 logging.debug(traceback.format_exc())
     
     # TODO: use receiver
-    def listen(self):
-        while True:
-            (clientsocket, address) = self.listenerSocket.accept()
+    #def listen(self):
+        #while True:
+            #(clientsocket, address) = self.listenerSocket.accept()
             
-            logging.info('client connected')
+            #logging.info('client connected')
             
-            # TODO: separate function?..
-            data = bytearray()
-            readall = False
-            while not readall:
-                chunk = clientsocket.recv(4096)
-                data += chunk
-                readall = (len(chunk) == 0)
+            ## TODO: separate function?..
+            #data = bytearray()
+            #readall = False
+            #while not readall:
+                #chunk = clientsocket.recv(4096)
+                #data += chunk
+                #readall = (len(chunk) == 0)
             
-            data = data.decode()
+            #data = data.decode()
             
-            self.processRequest(data)
+            #self.processRequest(data)
     
     def processRequest(self, xml):
         try:

@@ -5,15 +5,13 @@ import xml.etree.ElementTree as ET
 from receiver import Receiver
 from starting import Starting
 
-class Inputting(Starting):
+class Inputting(Starting, Receiver):
     def __init__(self):
-        self.receiver = Receiver()
+        super().__init__()
+        
         self.quit = False
         
         self.thread = threading.Thread(None, self.loop, 'inputting')
-    
-    def connect(self, cl):
-        self.receiver.connect(cl)
     
     def start(self):
         super().start()
@@ -31,7 +29,7 @@ class Inputting(Starting):
     def readKey(self):
         key = None
         while not key:
-            xml = self.receiver.listen()
+            xml = self.listen()
             root = ET.fromstring(xml)
             if root.tag == 'input':
                 try:
