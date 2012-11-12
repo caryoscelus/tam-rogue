@@ -44,7 +44,10 @@ class Entity:
     
     def destroy(self):
         # object cannot be destroyed twice?..
-        self.check()
+        try:
+            self.check()
+        except EntityDeadError:
+            logging.warning('destroying dead entity')
         
         self.dead = True
     
@@ -58,7 +61,8 @@ class Entity:
                 logging.warning('could not reach modding')
                 raise EntityAttributeError(self, name)
             except TypeError:
-                raise NotImplementedError('can\' handle non-function extended attributes')
+                logging.debug(sysWorldRegistry.world.attrList)
+                raise NotImplementedError('can\'t handle non-function extended attributes')
             except KeyError:
                 raise EntityAttributeError(self, name)
 
