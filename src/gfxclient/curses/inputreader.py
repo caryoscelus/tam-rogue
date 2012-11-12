@@ -1,3 +1,6 @@
+import logging
+import xml.etree.ElementTree as ET
+
 class InputReader:
     def __init__(self, disp):
         self.disp = disp
@@ -5,6 +8,11 @@ class InputReader:
     def loop(self):
         while not self.disp.quit:
             try:
-                pass
+                opcode = self.disp.cScr.getch()
+                self.processKey(opcode)
             except:
-                pass
+                logging.error('unhandled exception in input reader')
+    
+    def processKey(self, opcode):
+        root = ET.Element('input', {'opcode':opcode})
+        sendBack(root.toString())

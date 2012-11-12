@@ -24,10 +24,6 @@ class DisplayServer:
             try:
                 (clientsocket, address) = self.socket.accept()
                 
-                #logging.debug('accepted '+str(address))
-                #logging.debug(str(clientsocket))
-                #logging.debug('connect')
-                
                 # read data
                 data = bytearray()
                 readall = False
@@ -51,8 +47,6 @@ class DisplayServer:
                     self.display.update = True
                 except ET.ParseError:
                     logging.error('parse error')
-            #except KeyboardInterrupt:
-                #self.quit = True
             except Exception as err:
                 logging.error('unhandled exception in display server thread:')
                 logging.error(str(err))

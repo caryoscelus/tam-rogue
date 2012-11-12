@@ -40,11 +40,8 @@ def main(myAddr, clAddr):
             logging.error(str(err))
             logging.debug(traceback.format_exc())
 
-
-#def testMain(disp):
-    #disp.data[0][1] = Cell('H', 0)
-
 def tryConnect(myAddr, clAddr):
+    # TODO: replace with xml generating
     message = bytes('<connect address="'+myAddr[0]+'" port="'+str(myAddr[1])+'" />', 'ascii')
     
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
