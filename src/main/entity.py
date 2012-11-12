@@ -23,7 +23,7 @@ class Entity:
         return self
     
     def loadXml(self, xmlEntity):
-        pass
+        self.attrib = xmlEntity.attrib
     
     def check(self):
         if self.dead:

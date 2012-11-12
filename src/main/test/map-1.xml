@@ -2,7 +2,7 @@
 <tiledmap width="10" height="10">
     <tile x="1" y="1">
         <layer name="ground" type="object">
-            <entity type="floor"/>
+            <entity class="floor"/>
         </layer>
         <layer name="objects" type="list"/>
     </tile>

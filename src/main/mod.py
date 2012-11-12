@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
-
-from entity import EntityAttributeError
+import logging
+import traceback
 
 class Mod:
     def __init__(self, xml):
@@ -12,7 +12,9 @@ class Mod:
     def attrFunc(self, entity, target, source, values):
         try:
             return values[entity.attr(source)]
-        except:
+        except Exception as err:
+            logging.debug('while handling attribute mod:')
+            logging.debug(err)
             raise EntityAttributeError(entity, source)
     
     def applyMod(self, world):
@@ -27,7 +29,8 @@ class Mod:
                     world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
                 else:
                     raise NotImplementedError('only mapping supported')
-        #raise NotImplementedError('not implemented')
     
     def undoMod(self, world):
         raise NotImplementedError('undo is not supported now')
+
+from entity import EntityAttributeError
