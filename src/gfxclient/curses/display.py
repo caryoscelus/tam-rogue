@@ -6,24 +6,22 @@ import traceback
 from cell import Cell
 
 class Display:
-    ready = False
-    
-    # common flags
-    quit = False
-    update = False
-    
-    alwaysUpdate = False
-    wait = 1.0/32
-    
-    data = []
-    width = 0
-    height = 0
-    
-    cScr = None
-    cPad = None
-    
     def __init__(self):
-        pass
+        self.ready = False
+        
+        # common flags
+        self.quit = False
+        self.update = False
+        
+        self.alwaysUpdate = False
+        self.wait = 1.0/32
+        
+        self.data = []
+        self.width = 0
+        self.height = 0
+        
+        self.cScr = None
+        self.cPad = None
     
     def filldata(self):
         self.data = [[Cell('a') for x in range(self.width)] for y in range(self.height)]

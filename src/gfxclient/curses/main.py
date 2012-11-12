@@ -8,10 +8,9 @@ import socket
 from displayserver import DisplayServer
 from display import Display
 from cell import Cell
+from inputreader import InputReader
 
 def main(myAddr, clAddr):
-    logging.basicConfig(filename='ascii-curses.log', level=logging.DEBUG)
-    
     myDisplay = Display()
     myDisplay.init()
     
@@ -19,14 +18,14 @@ def main(myAddr, clAddr):
     displayThread = threading.Thread(None, displayMain, 'display', (myDisplay, ))
     displayThread.start()
     
-    #tempThread = threading.Thread(None, testMain, 'test', (myDisplay, ))
-    #tempThread.start()
-    
     serverThread = threading.Thread(None, displayServerMain, 'displayserver', (myDisplay, myAddr))
     serverThread.start()
     
     connectTread = threading.Thread(None, connectMain, 'connection', (myAddr, clAddr))
     connectTread.start()
+    
+    inputThread = threading.Thread(None, inputMain, 'input', (myDisplay, ))
+    inputThread.start()
     
     # wait till threads end
     while displayThread.is_alive() and serverThread.is_alive():
@@ -82,7 +81,13 @@ def displayMain(disp):
     disp.loop()
     disp.clean()
 
+def inputMain(disp):
+    inputReader = InputReader(disp)
+    inputReader.loop()
+
 if __name__ == '__main__':
+    logging.basicConfig(filename='ascii-curses.log', level=logging.DEBUG)
+    
     myServer = 'localhost'
     myPort = 6985
     
