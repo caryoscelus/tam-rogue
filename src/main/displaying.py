@@ -85,6 +85,7 @@ class Displaying(Sleeping, Starting):
                 logging.error(str(err))
                 logging.debug(traceback.format_exc())
     
+    # TODO: use receiver
     def listen(self):
         while True:
             (clientsocket, address) = self.listenerSocket.accept()

@@ -47,6 +47,9 @@ def main(argv):
         raise RuntimeError('error while reading file')
     
     me = MapEditor()
+    # TODO: remove constants
+    addr = ('localhost', 6991)
+    me.connect(addr)
     me.loadMapXml(mapXml)
     me.start()
 
