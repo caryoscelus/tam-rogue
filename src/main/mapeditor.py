@@ -7,6 +7,7 @@ import traceback
 from displaying import Displaying
 from tiledmap import TiledMap
 from mapvisualizer import MapVisualizer
+from worldregistry import sysWorldRegistry
 
 class MapEditor(Displaying):
     def __init__(self):
@@ -29,6 +30,8 @@ def main(argv):
     
     if len(argv) < 2:
         raise RuntimeError('not enough command line arguments')
+    
+    sysWorldRegistry.loadMod('test/character-mod.xml')
     
     try:
         fname = argv[1]

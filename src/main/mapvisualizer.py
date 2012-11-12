@@ -4,8 +4,6 @@ import math
 import logging
 import xml.etree.ElementTree as ET
 
-from entity import EntityAttributeError
-
 class MapVisualizer:
     # TODO: return full gfx, not only character
     def tileToGfx(self, tiledMap, x, y):
@@ -41,3 +39,5 @@ class MapVisualizer:
                     logging.warning('unvisualizable display character')
         
         return bytes(ET.tostring(root))
+
+from entity import EntityAttributeError

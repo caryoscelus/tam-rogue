@@ -1,4 +1,4 @@
-from mod import Mod
+import mod
 from world import World
 
 class WorldRegistry:
@@ -14,10 +14,10 @@ class WorldRegistry:
         modXml = f.read()
         f.close()
         
-        mod = Mod(modXml)
+        newMod = mod.Mod(modXml)
         self.lastMod += 1
-        self.mods[self.lastMod] = mod
-        mod.applyMod(self.world)
+        self.mods[self.lastMod] = newMod
+        newMod.applyMod(self.world)
         
         return self.lastMod
     

@@ -1,10 +1,6 @@
 import xml.etree.ElementTree as ET
 
-# TODO: eliminate this hack (should be gone after killing globalServer)
-try:
-    from entity import EntityAttributeError
-except ImportError:
-    pass
+from entity import EntityAttributeError
 
 class Mod:
     def __init__(self, xml):

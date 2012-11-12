@@ -1,7 +1,5 @@
 import logging
 
-from worldregistry import sysWorldRegistry
-
 # NOTE: should be used multi-pointer friendly
 # DO NOT use it in immutable manner
 # NOTE: catch EntityDeadError and remove dead links
@@ -75,3 +73,5 @@ class EntityAttributeError(RuntimeError):
     def __init__(self, entity, name):
         self.entity = entity
         self.name = name
+
+from worldregistry import sysWorldRegistry
