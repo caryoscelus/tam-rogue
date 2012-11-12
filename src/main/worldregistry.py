@@ -1,6 +1,6 @@
 from mod import Mod
 
-class ModRegistry:
+class WorldRegistry:
     def __init__(self):
         self.mods = {}
         self.lastMod = 0
@@ -24,4 +24,4 @@ class ModRegistry:
     def disableMod(self, modId):
         raise NotImplementedError
 
-sysModRegistry = ModRegistry()
+sysWorldRegistry = WorldRegistry()
