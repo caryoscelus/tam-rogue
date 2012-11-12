@@ -1,9 +1,11 @@
 from mod import Mod
+from world import World
 
 class WorldRegistry:
     def __init__(self):
         self.mods = {}
         self.lastMod = 0
+        self.world = World()
     
     def loadMod(self, modFile):
         # TODO: implement

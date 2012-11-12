@@ -1,6 +1,6 @@
 import logging
 
-import server
+from worldregistry import sysWorldRegistry
 
 # NOTE: should be used multi-pointer friendly
 # DO NOT use it in immutable manner
@@ -51,7 +51,7 @@ class Entity:
             return self.attrib[name]
         except KeyError:
             try:
-                return server.globalServer.world.attrList[name](self)
+                return sysWorldRegistry.world.attrList[name](self)
             except AttributeError:                      # no world?..
                 logging.warning('could not reach modding')
                 raise EntityAttributeError(self, name)

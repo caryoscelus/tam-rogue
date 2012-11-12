@@ -3,17 +3,18 @@ import traceback
 import logging
 
 from serverclient import ServerClient
+from worldregistry import sysWorldRegistry
 
 class Server:
     def __init__(self):
         self.clients = []
         self.thread = None
-        self.world = None
         self.quit = False
         self.life = None
     
     def main(self):
-        self.life = self.world.live()
+        # NOTE: this makes impossible to switch worlds
+        self.life = sysWorldRegistry.world.live()
         while not self.quit:
             try:
                 next(self.life)

@@ -42,16 +42,15 @@ def generateWorld():
     # human
     map0.getTile(12, 4).put('objects', human)
     
-    world = World()
-    world.maps.append(map0)
-    return world
+    sysWorldRegistry.world.maps.append(map0)
 
 def testClientServer(server, port):
     logging.basicConfig(filename='testclient.log', level=logging.DEBUG)
     myServer = Server()
-    myServer.world = generateWorld()
-    #myServer.loadMod('character-mod.xml')
+    
     sysWorldRegistry.loadMod('character-mod.xml')
+    generateWorld()
+    
     myServer.start()
     myClient = Client()
     myClient.connectClient((server, port)) #'localhost', 6985))

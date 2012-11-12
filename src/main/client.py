@@ -2,6 +2,7 @@ import logging
 
 from displaying import Displaying
 from mapvisualizer import MapVisualizer
+from worldregistry import sysWorldRegistry
 
 class Client(Displaying):
     def __init__(self):
@@ -30,6 +31,6 @@ class Client(Displaying):
         # - forbid direct access to world
         # - draw vision, not actual map
         # - draw current map
-        self.displayData = self.mapVisualizer.toXml(self.server.world.maps[0])
+        self.displayData = self.mapVisualizer.toXml(sysWorldRegistry.world.maps[0])
         # TODO: optimize xml
         super().redraw()
