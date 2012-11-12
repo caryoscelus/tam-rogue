@@ -13,7 +13,7 @@ class Mod:
         try:
             return values[entity.attr(source)]
         except:
-            raise EntityAttributeError
+            raise EntityAttributeError(entity, source)
     
     def applyMod(self, world):
         if self.modType == 'attrib':

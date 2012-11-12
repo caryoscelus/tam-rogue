@@ -66,14 +66,14 @@ class Entity:
                 raise EntityAttributeError(self, name)
 
 class EntityDeadError(RuntimeError):
-    def __init__(self, entity):
+    def __init__(self, entity = None):
         self.entity = entity
     
     #def __str__(self):
         #pass
 
 class EntityAttributeError(RuntimeError):
-    def __init__(self, entity, name):
+    def __init__(self, entity = None, name = ''):
         self.entity = entity
         self.name = name
 
