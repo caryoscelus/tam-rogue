@@ -1,7 +1,10 @@
 import socket
 
 class BackSender:
-    def __init__(self, addr):
+    def __init__(self, addr = None):
+        self.connect(addr)
+    
+    def connect(self, addr):
         self.addr = addr
     
     def send(self, message):

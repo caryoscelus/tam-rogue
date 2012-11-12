@@ -60,7 +60,7 @@ def connectMain(myAddr, backSender):
         try:
             connected = tryConnect(myAddr, backSender)
         except socket.error:
-            logging.error('error connecting to '+str(clAddr))
+            logging.error('error connecting to ??? <fixme>')
         pause *= 2
     
     logging.info('connection thread exit')
