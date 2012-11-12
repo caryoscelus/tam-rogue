@@ -13,6 +13,7 @@ from world import *
 from tiledmap import *
 from tile import *
 from entity import *
+from modregistry import *
 
 def testClient():
     logging.basicConfig(filename='testclient.log', level=logging.DEBUG)
@@ -49,7 +50,8 @@ def testClientServer(server, port):
     logging.basicConfig(filename='testclient.log', level=logging.DEBUG)
     myServer = Server()
     myServer.world = generateWorld()
-    myServer.loadMod('character-mod.xml')
+    #myServer.loadMod('character-mod.xml')
+    sysModRegistry.loadMod('character-mod.xml')
     myServer.start()
     myClient = Client()
     myClient.connectClient((server, port)) #'localhost', 6985))

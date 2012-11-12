@@ -53,6 +53,7 @@ class Entity:
             try:
                 return server.globalServer.world.attrList[name](self)
             except AttributeError:                      # no world?..
+                logging.warning('could not reach modding')
                 raise EntityAttributeError(self, name)
             except TypeError:
                 raise NotImplementedError('can\' handle non-function extended attributes')
