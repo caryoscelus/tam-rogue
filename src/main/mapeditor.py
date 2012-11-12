@@ -17,6 +17,9 @@ class MapEditor(Displaying, Inputting):
         self.tiledMap = None
         self.mapVisualizer = MapVisualizer()
     
+    def start(self):
+        super().start()
+    
     def redraw(self):
         # draw map
         self.displayData = self.mapVisualizer.toXml(self.tiledMap)

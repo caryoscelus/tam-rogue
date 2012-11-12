@@ -1,15 +1,23 @@
 import logging
+import threading
 import xml.etree.ElementTree as ET
 
 from receiver import Receiver
+from starting import Starting
 
-class Inputting:
+class Inputting(Starting):
     def __init__(self):
         self.receiver = Receiver()
         self.quit = False
+        
+        self.thread = threading.Thread(None, self.loop, 'inputting')
     
     def connect(self, cl):
         self.receiver.connect(cl)
+    
+    def start(self):
+        super().start()
+        self.thread.start()
     
     def loop(self):
         while not self.quit:

@@ -5,8 +5,9 @@ import xml.etree.ElementTree as ET
 import threading
 
 from sleeping import Sleeping
+from starting import Starting
 
-class Displaying(Sleeping):
+class Displaying(Sleeping, Starting):
     def __init__(self):
         super().__init__()
         
@@ -18,6 +19,7 @@ class Displaying(Sleeping):
         self.listenerThread = threading.Thread(None, self.clientListener, 'listener')
     
     def start(self):
+        super().start()
         self.updaterThread.start()
         self.listenerThread.start()
     
