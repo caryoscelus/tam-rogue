@@ -2,7 +2,7 @@ import logging
 import xml.etree.ElementTree as ET
 
 class InputReader:
-    def __init__(self, disp):
+    def __init__(self, disp, backSender):
         self.disp = disp
     
     def loop(self):
@@ -15,4 +15,4 @@ class InputReader:
     
     def processKey(self, opcode):
         root = ET.Element('input', {'opcode':opcode})
-        sendBack(root.toString())
+        self.backSender.send(root.toString())

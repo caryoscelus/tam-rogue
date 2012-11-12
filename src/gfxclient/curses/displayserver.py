@@ -7,12 +7,9 @@ from display import Display
 from cell import Cell
 
 class DisplayServer:
-    display = None
-    
-    quit = False
-    
     def __init__(self, disp = None):
         self.display = disp
+        self.quit = False
     
     def init(self, myAddr):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

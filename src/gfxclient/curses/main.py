@@ -9,10 +9,13 @@ from displayserver import DisplayServer
 from display import Display
 from cell import Cell
 from inputreader import InputReader
+from backsender import BackSender
 
 def main(myAddr, clAddr):
     myDisplay = Display()
     myDisplay.init()
+    
+    backSender = BackSender(clAddr)
     
     # start threads
     displayThread = threading.Thread(None, displayMain, 'display', (myDisplay, ))
@@ -21,10 +24,10 @@ def main(myAddr, clAddr):
     serverThread = threading.Thread(None, displayServerMain, 'displayserver', (myDisplay, myAddr))
     serverThread.start()
     
-    connectTread = threading.Thread(None, connectMain, 'connection', (myAddr, clAddr))
+    connectTread = threading.Thread(None, connectMain, 'connection', (myAddr, backSender))
     connectTread.start()
     
-    inputThread = threading.Thread(None, inputMain, 'input', (myDisplay, ))
+    inputThread = threading.Thread(None, inputMain, 'input', (myDisplay, backSender))
     inputThread.start()
     
     # wait till threads end
@@ -40,28 +43,22 @@ def main(myAddr, clAddr):
             logging.error(str(err))
             logging.debug(traceback.format_exc())
 
-def tryConnect(myAddr, clAddr):
+def tryConnect(myAddr, backSender):
     # TODO: replace with xml generating
     message = bytes('<connect address="'+myAddr[0]+'" port="'+str(myAddr[1])+'" />', 'ascii')
     
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(clAddr)
-    
-    sock.sendall(message)
-    
-    sock.close()
+    backSender.send(message)
     
     return True
 
-def connectMain(myAddr, clAddr):
-    if not clAddr:
-        return
+def connectMain(myAddr, backSender):
+    # TODO: move to BackSender
     pause = 1
     connected = False
     while not connected:
         time.sleep(pause)
         try:
-            connected = tryConnect(myAddr, clAddr)
+            connected = tryConnect(myAddr, backSender)
         except socket.error:
             logging.error('error connecting to '+str(clAddr))
         pause *= 2
@@ -78,8 +75,8 @@ def displayMain(disp):
     disp.loop()
     disp.clean()
 
-def inputMain(disp):
-    inputReader = InputReader(disp)
+def inputMain(disp, backSender):
+    inputReader = InputReader(disp, backSender)
     inputReader.loop()
 
 if __name__ == '__main__':
