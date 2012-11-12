@@ -23,7 +23,7 @@ class Inputting(Starting):
         while not self.quit:
             try:
                 key = self.readKey()
-                processKey(key)
+                self.processKey(key)
             except Exception as err:
                 logging.error('error while waiting key')
                 logging.debug(err)
