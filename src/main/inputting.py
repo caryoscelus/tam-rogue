@@ -31,7 +31,7 @@ class Inputting(Starting):
     def readKey(self):
         key = None
         while not key:
-            xml = self.listen()
+            xml = self.receiver.listen()
             root = ET.fromstring(xml)
             if root.tag == 'input':
                 try:

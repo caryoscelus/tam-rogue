@@ -8,6 +8,6 @@ class Receiver:
     def connect(self, addr):
         self.addr = addr
     
-    def listen():
+    def listen(self):
         logging.debug('listening..')
         return None
