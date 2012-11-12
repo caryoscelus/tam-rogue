@@ -5,6 +5,7 @@ class Receiver:
     def __init__(self, addr = None):
         self.listenerSocket = None
         self.connect(addr)
+        self.canListen = False
     
     def connect(self, addr):
         if addr:
@@ -14,7 +15,13 @@ class Receiver:
             self.listenerSocket.bind(addr)
             self.listenerSocket.listen(5)
     
+    def allowListening(self, can = True):
+        self.canListen = can
+    
     def listen(self):
+        if not self.canListen:
+            raise ReceiverListeningForbidden(self)
+        
         (clientsocket, address) = self.listenerSocket.accept()
         
         logging.info('somebody connected to Receiver')
@@ -29,3 +36,7 @@ class Receiver:
         
         data = data.decode()
         return data
+
+class ReceiverListeningForbidden(RuntimeError):
+    def __init__(self, receiver):
+        pass

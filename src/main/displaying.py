@@ -65,17 +65,18 @@ class Displaying(Sleeping, Starting, Receiver):
     
     # thread
     def clientListener(self):
-        try:
-            self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #try:
+            #self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             
-            addr = ('localhost', 6990)
-            self.listenerSocket.bind(addr)
-            self.listenerSocket.listen(5)
-            logging.info('bound to '+str(addr))
-        except Exception as err:
-            logging.error('unhandled exception while setuping clientListener:')
-            logging.error(str(err))
-            logging.debug(traceback.format_exc())
+            #addr = self.addr
+            #self.listenerSocket.bind(addr)
+            #self.listenerSocket.listen(5)
+            #logging.info('bound to '+str(addr))
+        #except Exception as err:
+            #logging.error('unhandled exception while setuping clientListener:')
+            #logging.error(str(err))
+            #logging.debug(traceback.format_exc())
+        self.allowListening()
         
         while not self.quit:
             try:

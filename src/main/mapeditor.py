@@ -48,7 +48,7 @@ def main(argv):
     
     me = MapEditor()
     # TODO: remove constants
-    addr = ('localhost', 6991)
+    addr = ('localhost', 6990)
     me.connect(addr)
     me.loadMapXml(mapXml)
     me.start()
