@@ -10,4 +10,4 @@ class Receiver:
     
     def listen(self):
         logging.debug('listening..')
-        return None
+        return '<input opcode="33"/>'

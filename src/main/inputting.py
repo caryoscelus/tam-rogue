@@ -35,7 +35,7 @@ class Inputting(Starting):
             root = ET.fromstring(xml)
             if root.tag == 'input':
                 try:
-                    key = root.attrib['opcode']
+                    key = int(root.attrib['opcode'])
                 except Exception as err:
                     logging.warning('bad xml')
             else:
@@ -45,5 +45,5 @@ class Inputting(Starting):
     def processKey(self, opcode):
         try:
             logging.debug('key pressed: {0}'.format(chr(opcode)))
-        except:
-            pass
+        except Exception as err:
+            logging.error(err)
