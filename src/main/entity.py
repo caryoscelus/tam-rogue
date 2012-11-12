@@ -61,7 +61,6 @@ class Entity:
                 logging.warning('could not reach modding')
                 raise EntityAttributeError(self, name)
             except TypeError:
-                logging.debug(sysWorldRegistry.world.attrList)
                 raise NotImplementedError('can\'t handle non-function extended attributes')
             except KeyError:
                 raise EntityAttributeError(self, name)
