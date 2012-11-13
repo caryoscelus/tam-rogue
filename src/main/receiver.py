@@ -25,8 +25,6 @@ class Receiver:
         
         (clientsocket, address) = self.listenerSocket.accept()
         
-        logging.info('somebody connected to Receiver')
-        
         # TODO: separate function?..
         data = bytearray()
         readall = False

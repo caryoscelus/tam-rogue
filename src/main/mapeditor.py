@@ -9,13 +9,17 @@ from inputting import Inputting
 from tiledmap import TiledMap
 from mapvisualizer import MapVisualizer
 from worldregistry import sysWorldRegistry
+from entity import Entity
 
 class MapEditor(Displaying, Inputting):
     def __init__(self):
         super().__init__()
         self.quit = False
-        self.tiledMap = None
         self.mapVisualizer = MapVisualizer()
+        
+        self.tiledMap = None
+        
+        self.cursor = [0, 0]
     
     def start(self):
         super().start()
@@ -27,6 +31,27 @@ class MapEditor(Displaying, Inputting):
     
     def loadMapXml(self, mapXml):
         self.tiledMap = TiledMap.fromXml(mapXml)
+    
+    def processKey(self, opcode):
+        logging.debug('key pressed: {0}'.format(chr(opcode)))
+        
+        try:
+            ch = chr(opcode)
+            if ch == 'h':
+                self.cursor[0] -= 1
+            elif ch == 'j':
+                self.cursor[1] += 1
+            elif ch == 'k':
+                self.cursor[1] -= 1
+            elif ch == 'l':
+                self.cursor[0] += 1
+            elif ch == '.':
+                self.tiledMap.putOn(self.cursor[0], self.cursor[1],
+                                    'ground', Entity({'class':'floor'}))
+        except Exception as err:
+            logging.error('unhandled exception while processing key')
+            logging.error(err)
+            logging.debug(traceback.format_exc())
 
 
 def main(argv):
