@@ -21,6 +21,7 @@ class Tile:
         
         order = []
         content = {}
+        emptyContent = {}
         
         for layer in xmlTile:
             if layer.tag == 'layer':
@@ -31,19 +32,24 @@ class Tile:
                             layerContent = Entity.fromXml(layer[0])
                         except IndexError:
                             layerContent = None
+                        emptyLayer = None
                     elif layer.attrib['type'] == 'list':
                         layerContent = [Entity.fromXml(e) for e in layer]
+                        emptyLayer = []
                     else:
                         logging.warning('unknown xml tile layer type')
                 except KeyError:
                     raise XmlLoadError(layer)
                 order.append(name)
                 content[name] = layerContent
+                emptyContent[name] = emptyLayer
             else:
                 logging.warning('unknown xml node type')
         
         self.order = order
         self.content = content
+        
+        sysWorldRegistry.world.addTileLayers(emptyContent, order)
     
     def get(self, position):
         try:

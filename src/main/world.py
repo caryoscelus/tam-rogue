@@ -12,6 +12,14 @@ class World:
         self.layers = {}
         self.layerOrder = []
     
+    def addTileLayers(self, layers, layerOrder):
+        # TODO: calculate proper order
+        # TODO: check for conflicts
+        missing = set(layers.keys()).difference(self.layers.keys())
+        for l in missing:
+            self.layers[l] = layers[l]
+            self.layerOrder.append(l)
+    
     def createMap(self, width, height, attrib = {}):
         newMap = Map(width, height, self.layers, self.layerOrder, attrib)
         self.maps.append(newMap)
