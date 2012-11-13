@@ -45,7 +45,6 @@ def generateWorld():
     sysWorldRegistry.world.maps.append(map0)
 
 def testClientServer(server, port):
-    logging.basicConfig(filename='testclient.log', level=logging.DEBUG)
     myServer = Server()
     
     sysWorldRegistry.loadMod('character-mod.xml')
@@ -55,10 +54,13 @@ def testClientServer(server, port):
     myClient = Client()
     myClient.connectClient((server, port)) #'localhost', 6985))
     myClient.connectServer(myServer)
+    addr = ('localhost', 6990)
+    myClient.connect(addr)
     myClient.start()
     logging.info('client started')
 
 if __name__ == '__main__':
+    logging.basicConfig(filename='testclient.log', level=logging.DEBUG)
     try:
         from sys import argv
         if len(argv) < 3:
