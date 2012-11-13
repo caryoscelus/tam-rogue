@@ -64,6 +64,10 @@ class Entity:
                 raise NotImplementedError('can\'t handle non-function extended attributes')
             except KeyError:
                 raise EntityAttributeError(self, name)
+    
+    def placeOn(self, tMap, x, y, position):
+        pass
+
 
 class EntityDeadError(RuntimeError):
     def __init__(self, entity = None):
