@@ -4,6 +4,7 @@ from displaying import Displaying
 from inputting import Inputting
 from mapvisualizer import MapVisualizer
 from worldregistry import sysWorldRegistry
+from action import Action
 
 class Client(Displaying, Inputting):
     def __init__(self):
@@ -13,6 +14,9 @@ class Client(Displaying, Inputting):
         self.quit = False
         self.server = None
         self.mapVisualizer = MapVisualizer()
+        
+        # TODO: port to some entity controler
+        self.entity = None
     
     def connectServer(self, server):
         self.server = server
@@ -35,3 +39,12 @@ class Client(Displaying, Inputting):
         self.displayData = self.mapVisualizer.toXml(sysWorldRegistry.world.maps[0])
         # TODO: optimize xml
         super().redraw()
+    
+    def processKey(self, opcode):
+        if chr(opcode) == 'F':
+            logging.info('trying to apply hit action')
+            action = Action()
+            entity = self.entity
+            action.applyAction({'actor':entity, 'tool':entity, 'target':entity})
+        else:
+            logging.warning('unhandled key: {0}'.format(chr(opcode)))

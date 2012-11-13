@@ -1,3 +1,5 @@
+import logging
+
 # action types:
 #   * move
 #   * remove

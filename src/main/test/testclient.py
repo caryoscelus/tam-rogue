@@ -24,7 +24,7 @@ def testClient():
 def generateWorld():
     floor = Entity({'class':'floor'})
     wall = Entity({'class':'wall'})
-    human = Entity({'class':'human'})
+    human = Entity({'class':'human', 'hp':20})
     human.alive = True
     
     map0 = TiledMap(20, 20, {'ground':None, 'objects':[]}, ['ground', 'objects'])
@@ -43,15 +43,18 @@ def generateWorld():
     map0.getTile(12, 4).put('objects', human)
     
     sysWorldRegistry.world.maps.append(map0)
+    
+    return human
 
 def testClientServer(server, port):
     myServer = Server()
     
     sysWorldRegistry.loadMod('character-mod.xml')
-    generateWorld()
+    human = generateWorld()
     
     myServer.start()
     myClient = Client()
+    myClient.entity = human
     myClient.connectClient((server, port)) #'localhost', 6985))
     myClient.connectServer(myServer)
     addr = ('localhost', 6990)
