@@ -1,6 +1,6 @@
 class Starting:
     def __init__(self):
-        pass
+        super().__init__()
     
     def start(self):
         pass
