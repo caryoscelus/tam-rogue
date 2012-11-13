@@ -2,7 +2,7 @@ import copy
 
 from entity import Entity, EntityDeadError
 from miscerrors import XmlLoadError
-import server
+from worldregistry import sysWorldRegistry
 
 class Tile:
     # order - list: int -> string
@@ -55,7 +55,7 @@ class Tile:
             self.content[position] = None
             return None
         except KeyError:                                # raised on no position
-            extPositions = server.globalServer.world.tileLayers
+            extPositions = sysWorldRegistry.world.layers
             try:
                 t = copy.deepcopy(extPositions[position])
                 self.content[position] = t
