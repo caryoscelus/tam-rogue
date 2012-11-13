@@ -64,24 +64,16 @@ class Displaying(Sleeping, Starting, Receiver):
         return True and False
     
     # thread
+    # TODO: one listener per app
     def clientListener(self):
-        #try:
-            #self.listenerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            
-            #addr = self.addr
-            #self.listenerSocket.bind(addr)
-            #self.listenerSocket.listen(5)
-            #logging.info('bound to '+str(addr))
-        #except Exception as err:
-            #logging.error('unhandled exception while setuping clientListener:')
-            #logging.error(str(err))
-            #logging.debug(traceback.format_exc())
         self.allowListening()
         
         while not self.quit:
             try:
                 request = self.listen()
-                self.processRequest(request)
+                # if connected: one connection per server is ok by now
+                if self.processRequest(request):
+                    break
             except Exception as err:
                 logging.error('unhandled exception in clientListener thread:')
                 logging.error(str(err))
@@ -113,5 +105,6 @@ class Displaying(Sleeping, Starting, Receiver):
                 server = str(root.attrib['address'])
                 port = int(root.attrib['port'])
                 self.connectClient((server, port))
+                return True
         except ET.ParseError:
             logging.error('parse error')

@@ -3,6 +3,7 @@ import socket
 
 class Receiver:
     def __init__(self, addr = None):
+        super().__init__()
         self.listenerSocket = None
         self.connect(addr)
         self.canListen = False
