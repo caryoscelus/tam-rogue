@@ -1,4 +1,5 @@
 import copy
+import logging
 
 from entity import Entity, EntityDeadError
 from miscerrors import XmlLoadError
@@ -89,7 +90,7 @@ class Tile:
         # check if position is ok
         self.get(position)
         
-        try:
+        try:                                            # try list
             self.content[position].append(entity)
         except KeyError:
             logging.error('this could not happen!')
@@ -102,6 +103,9 @@ class Tile:
                 self.content[position] = entity
             except EntityDeadError:                     # raised on destroyed
                 self.content[position] = entity
+        
+        # TODO: proper order
+        self.order.append(position)
     
     # TODO: position optional
     def remove(self, entity, position):

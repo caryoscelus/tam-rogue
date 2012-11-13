@@ -46,8 +46,8 @@ class MapEditor(Displaying, Inputting):
             elif ch == 'l':
                 self.cursor[0] += 1
             elif ch == '.':
-                self.tiledMap.putOn(self.cursor[0], self.cursor[1],
-                                    'ground', Entity({'class':'floor'}))
+                floor = Entity({'class':'floor'})
+                self.tiledMap.putOn(self.cursor[0], self.cursor[1], 'ground', floor)
         except Exception as err:
             logging.error('unhandled exception while processing key')
             logging.error(err)
