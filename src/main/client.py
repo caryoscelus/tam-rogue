@@ -1,10 +1,11 @@
 import logging
 
 from displaying import Displaying
+from inputting import Inputting
 from mapvisualizer import MapVisualizer
 from worldregistry import sysWorldRegistry
 
-class Client(Displaying):
+class Client(Displaying, Inputting):
     def __init__(self):
         super().__init__()
         
