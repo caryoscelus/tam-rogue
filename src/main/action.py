@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 # action types:
 #   * move
@@ -19,9 +20,11 @@ class Action:
         def hitFunc(args):
             actor, tool, target = args['actor'], args['tool'], args['target']
             try:
-                target.changeNumericAttr(target, 'hp', -1)
+                target.changeNumericAttr('hp', -1)
             except:
                 logging.warning('something went wrong in hitFunc')
+                logging.debug(traceback.format_exc())
+            logging.info('hp: {0}'.format(target.attr('hp')))
         self.func = hitFunc
     
     def applyAction(self, args):

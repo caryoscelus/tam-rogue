@@ -52,6 +52,8 @@ class Entity:
         self.dead = True
     
     def attr(self, name):
+        self.check()
+        
         try:
             return self.attrib[name]
         except KeyError:
@@ -64,6 +66,14 @@ class Entity:
                 raise NotImplementedError('can\'t handle non-function extended attributes')
             except KeyError:
                 raise EntityAttributeError(self, name)
+    
+    def changeNumericAttr(self, name, delta):
+        self.check()
+        
+        value = int(self.attr(name))
+        value += delta
+        
+        self.attrib[name] = value
     
     def placeOn(self, tMap, x, y, position):
         pass
