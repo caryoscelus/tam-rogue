@@ -43,7 +43,7 @@ class Client(Displaying, Inputting):
     def processKey(self, opcode):
         if chr(opcode) == 'F':
             logging.info('trying to apply hit action')
-            action = Action()
+            action = sysWorldRegistry.world.actions['hit']
             entity = self.entity
             action.applyAction({'actor':entity, 'tool':entity, 'target':entity})
         else:

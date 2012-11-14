@@ -2,6 +2,7 @@ import logging
 import traceback
 
 from miscerrors import XmlLoadError
+from entitywrapper import EntityWrapper
 
 # action types:
 #   * move
@@ -12,22 +13,9 @@ from miscerrors import XmlLoadError
 #   * entity handler asks to 
 class Action:
     def __init__(self):
-        # values put here for test
-        self.name = 'hit'
-        self.arguments = {
-            'actor' : True,
-            'tool' : True,
-            'target' : True,
-        }
-        def hitFunc(args):
-            actor, tool, target = args['actor'], args['tool'], args['target']
-            try:
-                target.changeNumericAttr('hp', -1)
-            except:
-                logging.warning('something went wrong in hitFunc')
-                logging.debug(traceback.format_exc())
-            logging.info('hp: {0}'.format(target.attr('hp')))
-        self.func = hitFunc
+        self.name = None
+        self.arguments = {}
+        self.func = None
     
     def fromXml(xml):
         self = Action()
