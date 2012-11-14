@@ -79,25 +79,6 @@ class Displaying(Sleeping, Starting, Receiver):
                 logging.error(str(err))
                 logging.debug(traceback.format_exc())
     
-    # TODO: use receiver
-    #def listen(self):
-        #while True:
-            #(clientsocket, address) = self.listenerSocket.accept()
-            
-            #logging.info('client connected')
-            
-            ## TODO: separate function?..
-            #data = bytearray()
-            #readall = False
-            #while not readall:
-                #chunk = clientsocket.recv(4096)
-                #data += chunk
-                #readall = (len(chunk) == 0)
-            
-            #data = data.decode()
-            
-            #self.processRequest(data)
-    
     def processRequest(self, xml):
         try:
             root = ET.fromstring(xml)

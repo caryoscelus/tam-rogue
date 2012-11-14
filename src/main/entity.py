@@ -19,8 +19,7 @@ class Entity:
         self.position = None
     
     def __str__(self):
-        # TODO
-        return str(self.attrib)
+        return '<Entity: {0} >'.format(self.attrib)
     
     def setHandler(self, handler):
         self.handler = handler

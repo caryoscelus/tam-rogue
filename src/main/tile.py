@@ -107,11 +107,22 @@ class Tile:
         # TODO: proper order
         self.order.append(position)
     
-    # TODO: position optional
-    def remove(self, entity, position):
-        logging.debug('remove')
+    def remove(self, entity, position = None):
+        if not position:
+            for pos in self.content:
+                try:                                    # list
+                    self.content[pos].remove(entity)
+                    return
+                except ValueError:                      # not in list
+                    pass
+                except TypeError:                       # entity or empty
+                    if self.content[pos] == entity:
+                        self.content[pos] = None
+                        return
+            raise TileEntityError(position, entity)
+        
         content = self.get(position)
-        try:
+        try:                                            # list
             content.remove(entity)
         except ValueError:                              # not in list
             raise TileEntityError(position, entity)
