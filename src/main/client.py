@@ -42,9 +42,13 @@ class Client(Displaying, Inputting):
     
     def processKey(self, opcode):
         if chr(opcode) == 'F':
-            logging.info('trying to apply hit action')
             action = sysWorldRegistry.world.actions['hit']
             entity = self.entity
             action.applyAction({'actor':entity, 'tool':entity, 'target':entity})
+        elif chr(opcode) == 'h':
+            logging.debug('left move action')
+            action = sysWorldRegistry.world.actions['move']
+            entity = self.entity
+            action.applyAction({'subject':entity, 'dx':-1, 'dy':0})
         else:
             logging.warning('unhandled key: {0}'.format(chr(opcode)))

@@ -1,7 +1,7 @@
 import logging
 
 class EntityWrapper:
-    entityApi = ['changeNumericAttr', 'attr']
+    entityApi = ['changeNumericAttr', 'attr', 'move']
     
     def __init__(self, entity):
         def closure(attrib):
