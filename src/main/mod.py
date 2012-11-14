@@ -2,6 +2,8 @@ import xml.etree.ElementTree as ET
 import logging
 import traceback
 
+from action import Action
+
 class Mod:
     def __init__(self, xml):
         self.src = ET.fromstring(xml)
@@ -30,7 +32,8 @@ class Mod:
                 else:
                     raise NotImplementedError('only mapping supported')
         elif self.modType == 'action':
-            logging.info('new action')
+            action = Action.fromXml(src)
+            world.actions[action.name] = action
         else:
             logging.warning('unknown mod type')
     

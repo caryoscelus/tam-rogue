@@ -32,10 +32,13 @@ class Action:
     def fromXml(xml):
         self = Action()
         self.loadXml(xml)
+        return self
     
     def loadXml(self, xmlRoot):
-        if xmlRoot.tag != 'mod' or xmlRoot.attr('name') != 'action':
+        if xmlRoot.tag != 'mod' or xmlRoot.attr('type') != 'action':
             raise XmlLoadError(xmlRoot)
+        
+        self.name = xmlRoot.attr('name')
         
         args = []
         
