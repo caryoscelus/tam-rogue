@@ -16,8 +16,8 @@ class Client(Displaying, Inputting, EntityController):
         self.server = None
         self.mapVisualizer = MapVisualizer()
     
-    def live(self):
-        super().live()
+    def live(self, entity):
+        super().live(entity)
     
     def connectServer(self, server):
         self.server = server

@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 # NOTE: should be used multi-pointer friendly
 # DO NOT use it in immutable manner
@@ -44,6 +45,7 @@ class Entity:
                 self.handler.live(self)
             except TypeError:
                 logging.warning('could not call handler live function')
+                logging.debug(traceback.format_exc())
             except AttributeError:
                 logging.warning('no handler')
             return True

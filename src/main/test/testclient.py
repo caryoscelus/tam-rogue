@@ -57,6 +57,8 @@ def testClientServer(server, port):
     myServer.start()
     myClient = Client()
     myClient.entity = human
+    # TODO: move to server
+    human.setHandler(myClient)
     myClient.connectClient((server, port)) #'localhost', 6985))
     myClient.connectServer(myServer)
     addr = ('localhost', 6990)
