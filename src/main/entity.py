@@ -11,6 +11,11 @@ class Entity:
         self.alive = alive
         self.handler = handler
         self.dead = False
+        
+        self.onMap = None
+        self.x = None
+        self.y = None
+        self.position = None
     
     def __str__(self):
         # TODO
@@ -75,9 +80,24 @@ class Entity:
         
         self.attrib[name] = value
     
-    def placeOn(self, tMap, x, y, position):
-        pass
+    def placeOn(self, onMap, x, y, position):
+        self.onMap = onMap
+        self.x = x
+        self.y = y
+        self.position = position
+    
+    def removeFrom(self, onMap, x, y, position):
+        if self.onMap != onMap:
+            raise EntityPositionError(self, onMap)
+        if self.x != x or self.y != y:
+            raise EntityPositionError(self, (x, y))
+        if self.position != position:
+            raise EntityPositionError(self, position)
 
+
+class EntityPositionError(RuntimeError):
+    def __init__(self, problem):
+        self.problem = problem
 
 class EntityDeadError(RuntimeError):
     def __init__(self, entity = None):
