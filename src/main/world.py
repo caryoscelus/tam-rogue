@@ -11,6 +11,7 @@ class World:
         self.attrList = {}
         self.layers = {}
         self.layerOrder = []
+        self.actions = {}
     
     def addTileLayers(self, layers, layerOrder):
         # TODO: calculate proper order

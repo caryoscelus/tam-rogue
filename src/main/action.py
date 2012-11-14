@@ -1,6 +1,8 @@
 import logging
 import traceback
 
+from miscerrors import XmlLoadError
+
 # action types:
 #   * move
 #   * remove
@@ -26,6 +28,23 @@ class Action:
                 logging.debug(traceback.format_exc())
             logging.info('hp: {0}'.format(target.attr('hp')))
         self.func = hitFunc
+    
+    def loadXml(self, xmlRoot):
+        if xmlRoot.tag != 'action':
+            raise XmlLoadError(xmlRoot)
+        
+        args = []
+        
+        for node in xmlRoot:
+            if node.tag == 'object':
+                # TODO: use filters?..
+                args.append(node.attrib('name'))
+            elif node.tag == 'code':
+                code = node.text
+            else:
+                logging.warning('unknown xml node while parsing action: {0}'.format(node))
+        
+        self.func = self.compileCode(code, args)
     
     def applyAction(self, args):
         self.func(args)
