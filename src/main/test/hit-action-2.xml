@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<action name="hit">
+    <!-- list of used objects -->
+    <object name="actor"><attrs class="monster" /></object>
+    <object name="tool"/>
+    <object name="target"/>
+    
+    <code>
+        # python code here
+        try:
+            target.changeNumericAttr('hp', -1)
+        except:
+            pass
+            #logging.warning('something went wrong in hitFunc')
+            #logging.debug(traceback.format_exc())
+        #logging.info('hp: {0}'.format(target.attr('hp')))
+    </code>
+</action>

@@ -46,5 +46,13 @@ class Action:
         
         self.func = self.compileCode(code, args)
     
+    def compileCode(self, code, args):
+        wrappers = dict((key, EntityWrapper(args[key]) for key in args.keys())
+        # TODO: add generic function/objects
+        ns = {'__builtins__':None}
+        compiled = compile(code)
+        func = lambda args: return exec(compiled, ns, wrappers)
+        return func
+    
     def applyAction(self, args):
         self.func(args)
