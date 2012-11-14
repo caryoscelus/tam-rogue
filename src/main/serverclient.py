@@ -12,6 +12,7 @@ class ServerClient(Sleeping):
     def register(self):
         # set handler for entity
         self.entity.handler = self.client
+        self.client.entity = self.entity
     
     def assignTo(self, entity):
         self.entity = entity
@@ -24,8 +25,8 @@ class ServerClient(Sleeping):
         action = self.actions.pop(0)
     
     # to be called on client side
-    def request(self, action):
-        self.actions.append(action)
+    def request(self, action, args):
+        self.actions.append((action, args))
     
     # to be called on client side
     def requestEntity(self, entity = None):

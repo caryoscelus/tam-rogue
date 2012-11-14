@@ -15,15 +15,30 @@ class Client(Displaying, Inputting, EntityController):
         self.quit = False
         self.serverClient = None
         self.mapVisualizer = MapVisualizer()
+        self.entity = None
     
     def live(self, entity):
+        if self.entity != entity:
+            raise RuntimeError('entity mismatch')
         super().live(entity)
     
     def connectServer(self, server):
         self.serverClient = server.connect(self)
     
     def askForEntity(self, entity = None):
-        self.serverClient.requestEntity(entity)
+        try:
+            self.serverClient.requestEntity(entity)
+        except AttributeError:
+            logging.warning('not connected')
+    
+    def doAction(self, action, args):
+        action.applyAction(args)
+        
+        # TODO: make this work or trash it
+        try:
+            self.serverClient.request(action, args)
+        except AttributeError:
+            logging.warning('not connected')
     
     # called from server
     def requestAction(self):
@@ -47,18 +62,18 @@ class Client(Displaying, Inputting, EntityController):
     def processKey(self, opcode):
         if chr(opcode) == 'F':
             action = sysWorldRegistry.world.actions['hit']
-            action.applyAction({'actor':self.entity, 'tool':self.entity, 'target':self.entity})
+            self.doAction(action, {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
         elif chr(opcode) == 'h':
             action = sysWorldRegistry.world.actions['move']
-            action.applyAction({'subject':self.entity, 'dx':-1, 'dy':0})
+            self.doAction(action, {'subject':self.entity, 'dx':-1, 'dy':0})
         elif chr(opcode) == 'j':
             action = sysWorldRegistry.world.actions['move']
-            action.applyAction({'subject':self.entity, 'dx':0, 'dy':1})
+            self.doAction(action, {'subject':self.entity, 'dx':0, 'dy':1})
         elif chr(opcode) == 'k':
             action = sysWorldRegistry.world.actions['move']
-            action.applyAction({'subject':self.entity, 'dx':0, 'dy':-1})
+            self.doAction(action, {'subject':self.entity, 'dx':0, 'dy':-1})
         elif chr(opcode) == 'l':
             action = sysWorldRegistry.world.actions['move']
-            action.applyAction({'subject':self.entity, 'dx':1, 'dy':0})
+            self.doAction(action, {'subject':self.entity, 'dx':1, 'dy':0})
         else:
             logging.warning('unhandled key: {0}'.format(chr(opcode)))
