@@ -21,6 +21,7 @@ class Client(Displaying, Inputting, EntityController):
         if self.entity != entity:
             raise RuntimeError('entity mismatch')
         super().live(entity)
+        # TODO: make something working here
     
     def connectServer(self, server):
         self.serverClient = server.connect(self)

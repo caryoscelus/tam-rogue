@@ -5,4 +5,4 @@ class EntityController:
         super().__init__()
     
     def live(self, entity):
-        logging.info('entity is alive!')
+        logging.debug('entity is alive!')
