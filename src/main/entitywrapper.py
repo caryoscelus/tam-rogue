@@ -12,5 +12,4 @@ class EntityWrapper:
         self.closure = closure
     
     def __getattr__(self, attrib):
-        logging.debug('entityWrapper: trying to access {0}'.format(attrib))
         return self.closure(attrib)

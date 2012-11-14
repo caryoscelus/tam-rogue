@@ -22,6 +22,9 @@ class Client(Displaying, Inputting, EntityController):
     def connectServer(self, server):
         self.serverClient = server.connect(self)
     
+    def askForEntity(self, entity = None):
+        self.serverClient.requestEntity(entity)
+    
     # called from server
     def requestAction(self):
         self.myTurn = True

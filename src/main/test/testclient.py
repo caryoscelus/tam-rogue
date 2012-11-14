@@ -56,11 +56,12 @@ def testClientServer(server, port):
     
     myServer.start()
     myClient = Client()
-    myClient.entity = human
-    # TODO: move to server
-    human.setHandler(myClient)
     myClient.connectClient((server, port)) #'localhost', 6985))
     myClient.connectServer(myServer)
+    
+    # TODO: move to server
+    myClient.askForEntity(human)
+    
     addr = ('localhost', 6990)
     myClient.connect(addr)
     myClient.start()

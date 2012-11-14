@@ -1,10 +1,13 @@
 from sleeping import Sleeping
 
 class ServerClient(Sleeping):
-    def __init__(self, client):
+    def __init__(self, server, client):
         self.entity = None
         self.actions = []
         self.client = client
+        
+        # TODO: make it safe
+        self.server = server
     
     def register(self):
         # set handler for entity
@@ -23,6 +26,15 @@ class ServerClient(Sleeping):
     # to be called on client side
     def request(self, action):
         self.actions.append(action)
+    
+    # to be called on client side
+    def requestEntity(self, entity = None):
+        if entity:
+            # TODO: checking
+            self.entity = entity
+            self.register()
+        else:
+            raise NotImplementedError('requesting entity to be choosed from server is not supported yet')
     
     def __str__(self):
         return ''
