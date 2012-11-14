@@ -77,6 +77,13 @@ class TiledMap:
         #tile = entity.refs.tile
         #tile.remove(entity, entity.refs.position)
     
+    def moveTo(self, entity, x, y, position):
+        # TODO: use more generic code
+        entity.removeFrom(self, x, y, position)
+        tile = self.getTile(x, y)
+        tile.put(position, entity)
+        entity.placeOn(self, x, y, position)
+    
     def step(self):
         if self.alive:
             return next(self.life)

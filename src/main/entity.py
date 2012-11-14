@@ -93,6 +93,13 @@ class Entity:
             raise EntityPositionError(self, (x, y))
         if self.position != position:
             raise EntityPositionError(self, position)
+    
+    def move(self, xdiff, ydiff):
+        # TODO: check movement
+        x = self.x+xdfiff
+        y = self.y+ydiff
+        
+        self.onMap
 
 
 class EntityPositionError(RuntimeError):
