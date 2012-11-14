@@ -79,7 +79,7 @@ class TiledMap:
     
     def moveTo(self, entity, x, y, position):
         # TODO: use more generic code
-        entity.removeFrom(self, x, y, position)
+        entity.removeFrom(self, entity.x, entity.y, position)
         tile = self.getTile(x, y)
         tile.put(position, entity)
         entity.placeOn(self, x, y, position)
