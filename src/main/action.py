@@ -34,7 +34,7 @@ class Action:
         self.loadXml(xml)
     
     def loadXml(self, xmlRoot):
-        if xmlRoot.tag != 'action':
+        if xmlRoot.tag != 'mod' or xmlRoot.attr('name') != 'action':
             raise XmlLoadError(xmlRoot)
         
         args = []

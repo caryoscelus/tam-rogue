@@ -29,6 +29,10 @@ class Mod:
                     world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
                 else:
                     raise NotImplementedError('only mapping supported')
+        elif self.modType == 'action':
+            logging.info('new action')
+        else:
+            logging.warning('unknown mod type')
     
     def undoMod(self, world):
         raise NotImplementedError('undo is not supported now')
