@@ -103,7 +103,8 @@ class Entity:
 
 
 class EntityPositionError(RuntimeError):
-    def __init__(self, problem):
+    def __init__(self, entity, problem):
+        self.entity = entity
         self.problem = problem
 
 class EntityDeadError(RuntimeError):
