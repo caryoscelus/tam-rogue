@@ -1,5 +1,7 @@
+import logging
+
 class EntityWrapper:
-    entityApi = []
+    entityApi = ['changeNumericAttr', 'attr']
     
     def __init__(self, entity):
         def closure(attrib):
@@ -9,5 +11,6 @@ class EntityWrapper:
                 raise AttributeError(attrib)
         self.closure = closure
     
-    def __getattribute__(self, attrib):
+    def __getattr__(self, attrib):
+        logging.debug('entityWrapper: trying to access {0}'.format(attrib))
         return self.closure(attrib)

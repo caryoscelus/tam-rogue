@@ -42,8 +42,9 @@ class Action:
         self.func = self.compileCode(code, args)
     
     def compileCode(self, code, formalArgs):
-        # TODO: add generic function/objects
-        ns = {'__builtins__':None}
+        # TODO: add safe builtins; check loggin for safety
+        safeBuiltins = None #__builtins__
+        ns = {'__builtins__':safeBuiltins, 'logging':logging}
         compiled = compile(code, '<action mod>', 'exec')
         
         def launchCode(args):
