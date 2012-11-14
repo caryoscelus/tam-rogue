@@ -40,7 +40,7 @@ def generateWorld():
         map0.getTile(x, 10).put('ground', wall)
     
     # human
-    map0.getTile(12, 4).put('objects', human)
+    map0.putOn(12, 4, 'objects', human)
     
     sysWorldRegistry.world.maps.append(map0)
     
