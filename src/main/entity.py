@@ -93,6 +93,9 @@ class Entity:
             raise EntityPositionError(self, (x, y))
         if self.position != position:
             raise EntityPositionError(self, position)
+        self.x = None
+        self.y = None
+        self.position = None
     
     def move(self, dx, dy):
         # TODO: check movement

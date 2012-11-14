@@ -109,6 +109,7 @@ class Tile:
     
     # TODO: position optional
     def remove(self, entity, position):
+        logging.debug('remove')
         content = self.get(position)
         try:
             content.remove(entity)
