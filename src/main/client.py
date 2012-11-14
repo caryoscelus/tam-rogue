@@ -13,14 +13,14 @@ class Client(Displaying, Inputting, EntityController):
         
         self.myTurn = False
         self.quit = False
-        self.server = None
+        self.serverClient = None
         self.mapVisualizer = MapVisualizer()
     
     def live(self, entity):
         super().live(entity)
     
     def connectServer(self, server):
-        self.server = server
+        self.serverClient = server.connect(self)
     
     # called from server
     def requestAction(self):

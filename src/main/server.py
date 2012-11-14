@@ -34,6 +34,14 @@ class Server:
     def connect(self, client):
         sc = ServerClient(client)
         self.clients.append(sc)
+        
+        try:
+            sc.register()
+        except Exception as err:
+            logging.warning('error while registering client')
+            logging.debug(traceback.format_exc())
+        
+        return sc
     
     def disconnect(self, sc):
         logging.info('client {0} disconnected'.format(sc))
