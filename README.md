@@ -5,10 +5,11 @@ rogue-like engine and game development
 
 LAUNCHING
 ---------
-Simply change directory to test and launch ./start.sh; this will start both
-"graphical" client and client/server (which is combined now)
+Simply change directory to test/ and launch ./start.sh; this will start both
+"graphical" client and client/server (which is combined now).
 Alternativly, you could launch them by yourself: src/main/test/testclient.py
-and src/gfxclient/curses/main.py
+and src/gfxclient/curses/main.py; they could not work if not launched from
+thier directory.
 
 LICENSE
 -------
