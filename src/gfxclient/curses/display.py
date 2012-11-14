@@ -14,7 +14,7 @@ class Display:
         self.update = False
         
         self.alwaysUpdate = False
-        self.wait = 1.0/32
+        self.wait = 1.0/64
         
         self.data = []
         self.width = 0
@@ -36,7 +36,7 @@ class Display:
         curses.cbreak()
         self.cScr.keypad(1)
         
-        #self.height, self.width = self.cScr.getmaxyx()
+        # TODO: remove constants
         self.height, self.width = 25, 80
         
         self.filldata()
@@ -57,16 +57,13 @@ class Display:
                     for y in range(self.height):
                         line = self.data[y]
                         for x in range(self.width):
-                            self.cPad.addstr(y, x, line[x].c) #, line[x].a)
-                            #self.cPad.addch(4, 18, ord('c'))
+                            self.cPad.addstr(y, x, line[x].c)
                     self.cPad.refresh(0, 0, 0, 0, 12, 80)
                     self.cScr.refresh()
                     
                     self.update = False
                 if self.wait > 0:
                     time.sleep(self.wait)
-            #except KeyboardInterrupt:
-                #self.quit = True
             except Exception as err:
                 logging.error('unhandled exception in display server:')
                 logging.error(str(err))

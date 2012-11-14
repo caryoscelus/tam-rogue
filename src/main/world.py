@@ -1,9 +1,9 @@
 import logging
-import time
 
-class World:
+from sleeping import Sleeping
+
+class World(Sleeping):
     def __init__(self):
-        #self.entities = []
         self.maps = []
         self.life = self.live()
         
@@ -21,6 +21,7 @@ class World:
             self.layers[l] = layers[l]
             self.layerOrder.append(l)
     
+    # TODO: use
     def createMap(self, width, height, attrib = {}):
         newMap = Map(width, height, self.layers, self.layerOrder, attrib)
         self.maps.append(newMap)
@@ -39,4 +40,4 @@ class World:
                     if not t:
                         break
                     yield t
-                time.sleep(0.1)
+                self.sleep()
