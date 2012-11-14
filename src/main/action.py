@@ -63,7 +63,7 @@ class Action:
                 logging.debug(args)
                 logging.debug(formalArgs)
                 raise ActionError('undefined args passed')
-            wrappers = dict((key, wrapper(args[key])) for key in args.keys())
+            wrappers = dict((key, wrapper(args[key], key)) for key in args.keys())
             exec(compiled, ns, wrappers)
         
         return launchCode

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mod type="action" name="hit">
+<mod type="action" name="move">
     <!-- list of used objects -->
     <object name="subject"/>
     <integer name="dx"/>
