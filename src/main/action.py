@@ -28,12 +28,14 @@ class Action:
         
         self.name = xmlRoot.attrib['name']
         
-        args = []
+        args = {}
         
         for node in xmlRoot:
             if node.tag == 'object':
                 # TODO: use filters?..
-                args.append(node.attrib['name'])
+                args[node.attrib['name']] = 'object'
+            elif node.tag == 'integer':
+                args[node.attrib['name']] = 'integer'
             elif node.tag == 'code':
                 code = node.text
             else:
@@ -42,16 +44,26 @@ class Action:
         self.func = self.compileCode(code, args)
     
     def compileCode(self, code, formalArgs):
-        # TODO: add safe builtins; check loggin for safety
+        # TODO: add safe builtins; check logging for safety
         safeBuiltins = None #__builtins__
         ns = {'__builtins__':safeBuiltins, 'logging':logging}
         compiled = compile(code, '<action mod>', 'exec')
         
         def launchCode(args):
+            def wrapper(obj, key):
+                if formalArgs[key] == 'object':
+                    return EntityWrapper(obj)
+                elif formalArgs[key] == 'integer' and type(obj) == int:
+                    return obj
+                else:
+                    raise TypeError('type mismatch')
+            
             # args that are not present in formalArgs passed
-            if set(args.keys()).difference(set(formalArgs)):
+            if set(args.keys()).difference(set(formalArgs.keys())):
+                logging.debug(args)
+                logging.debug(formalArgs)
                 raise ActionError('undefined args passed')
-            wrappers = dict((key, EntityWrapper(args[key])) for key in args.keys())
+            wrappers = dict((key, wrapper(args[key])) for key in args.keys())
             exec(compiled, ns, wrappers)
         
         return launchCode
