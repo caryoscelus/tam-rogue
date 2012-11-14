@@ -9,7 +9,7 @@ class Entity:
         self.children = {}
         
         self.alive = alive
-        self.handler = handler
+        self.setHandler(handler)
         self.dead = False
         
         self.onMap = None
@@ -20,6 +20,9 @@ class Entity:
     def __str__(self):
         # TODO
         return str(self.attrib)
+    
+    def setHandler(self, handler):
+        self.handler = handler
     
     # static
     def fromXml(xmlEntity):

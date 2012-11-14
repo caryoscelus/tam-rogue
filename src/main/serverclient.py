@@ -8,7 +8,7 @@ class ServerClient(Sleeping):
     
     def register(self):
         # set handler for entity
-        self.entity.handler
+        self.entity.handler = self.client
     
     def assignTo(self, entity):
         self.entity = entity
