@@ -53,13 +53,23 @@ class Action:
         
         self.func = self.compileCode(code, args)
     
-    def compileCode(self, code, args):
-        wrappers = dict((key, EntityWrapper(args[key])) for key in args.keys())
+    def compileCode(self, code, formalArgs):
         # TODO: add generic function/objects
         ns = {'__builtins__':None}
-        compiled = compile(code)
-        func = lambda args: exec(compiled, ns, wrappers)
-        return func
+        compiled = compile(code, '<action mod>', 'exec')
+        
+        def launchCode(args):
+            # args that are not present in formalArgs passed
+            if set(args.keys()).difference(set(formalArgs)):
+                raise ActionError('undefined args passed')
+            wrappers = dict((key, EntityWrapper(args[key])) for key in args.keys())
+            exec(compiled, ns, wrappers)
+        
+        return launchCode
     
     def applyAction(self, args):
         self.func(args)
+
+
+class ActionError(RuntimeError):
+    pass

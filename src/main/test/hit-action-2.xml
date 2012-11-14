@@ -6,13 +6,13 @@
     <object name="target"/>
     
     <code>
-        # python code here
-        try:
-            target.changeNumericAttr('hp', -1)
-        except:
-            pass
-            #logging.warning('something went wrong in hitFunc')
-            #logging.debug(traceback.format_exc())
-        #logging.info('hp: {0}'.format(target.attr('hp')))
+# python code here
+try:
+    target.changeNumericAttr('hp', -1)
+except:
+    pass
+    #logging.warning('something went wrong in hitFunc')
+    #logging.debug(traceback.format_exc())
+#logging.info('hp: {0}'.format(target.attr('hp')))
     </code>
 </mod>
