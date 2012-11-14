@@ -60,20 +60,25 @@ class Client(Displaying, Inputting, EntityController):
         super().redraw()
     
     def processKey(self, opcode):
-        if chr(opcode) == 'F':
+        # TODO: make customizable bindings
+        movement = {
+            'h' : (-1, 0),
+            'j' : (0, 1),
+            'k' : (0, -1),
+            'l' : (1, 0),
+            'y' : (-1, -1),
+            'u' : (1, -1),
+            'b' : (-1, 1),
+            'n' : (1, 1),
+        }
+        
+        ch = chr(opcode)
+        
+        if ch == 'F':
             action = sysWorldRegistry.world.actions['hit']
             self.doAction(action, {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
-        elif chr(opcode) == 'h':
+        elif ch in movement.keys():
             action = sysWorldRegistry.world.actions['move']
-            self.doAction(action, {'subject':self.entity, 'dx':-1, 'dy':0})
-        elif chr(opcode) == 'j':
-            action = sysWorldRegistry.world.actions['move']
-            self.doAction(action, {'subject':self.entity, 'dx':0, 'dy':1})
-        elif chr(opcode) == 'k':
-            action = sysWorldRegistry.world.actions['move']
-            self.doAction(action, {'subject':self.entity, 'dx':0, 'dy':-1})
-        elif chr(opcode) == 'l':
-            action = sysWorldRegistry.world.actions['move']
-            self.doAction(action, {'subject':self.entity, 'dx':1, 'dy':0})
+            self.doAction(action, {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
         else:
             logging.warning('unhandled key: {0}'.format(chr(opcode)))
