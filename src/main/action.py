@@ -35,17 +35,17 @@ class Action:
         return self
     
     def loadXml(self, xmlRoot):
-        if xmlRoot.tag != 'mod' or xmlRoot.attr('type') != 'action':
+        if xmlRoot.tag != 'mod' or xmlRoot.get('type') != 'action':
             raise XmlLoadError(xmlRoot)
         
-        self.name = xmlRoot.attr('name')
+        self.name = xmlRoot.attrib['name']
         
         args = []
         
         for node in xmlRoot:
             if node.tag == 'object':
                 # TODO: use filters?..
-                args.append(node.attrib('name'))
+                args.append(node.attrib['name'])
             elif node.tag == 'code':
                 code = node.text
             else:

@@ -32,7 +32,7 @@ class Mod:
                 else:
                     raise NotImplementedError('only mapping supported')
         elif self.modType == 'action':
-            action = Action.fromXml(src)
+            action = Action.fromXml(self.src)
             world.actions[action.name] = action
         else:
             logging.warning('unknown mod type')
