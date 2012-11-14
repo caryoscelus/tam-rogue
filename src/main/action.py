@@ -64,7 +64,11 @@ class Action:
                 logging.debug(formalArgs)
                 raise ActionError('undefined args passed')
             wrappers = dict((key, wrapper(args[key], key)) for key in args.keys())
-            exec(compiled, ns, wrappers)
+            try:
+                exec(compiled, ns, wrappers)
+            except:
+                logging.error('action launching failed')
+                logging.debug(traceback.format_exc())
         
         return launchCode
     
