@@ -50,7 +50,8 @@ def testClientServer(server, port):
     myServer = Server()
     
     sysWorldRegistry.loadMod('character-mod.xml')
-    sysWorldRegistry.loadMod('hit-action-2.xml')
+    sysWorldRegistry.loadMod('hit-action.xml')
+    sysWorldRegistry.loadMod('move-action.xml')
     human = generateWorld()
     
     myServer.start()

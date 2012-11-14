@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod type="action" name="hit">
+    <!-- list of used objects -->
+    <object name="subject"/>
+    <integer name="dx"/>
+    <integer name="dy"/>
+    
+    <code>
+subject.move(dx, dy)
+    </code>
+</mod>
