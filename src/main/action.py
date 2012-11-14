@@ -29,6 +29,10 @@ class Action:
             logging.info('hp: {0}'.format(target.attr('hp')))
         self.func = hitFunc
     
+    def fromXml(xml):
+        self = Action()
+        self.loadXml(xml)
+    
     def loadXml(self, xmlRoot):
         if xmlRoot.tag != 'action':
             raise XmlLoadError(xmlRoot)
