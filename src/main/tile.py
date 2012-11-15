@@ -144,7 +144,13 @@ class Tile:
             return False
     
     def notifyRemoval(self, position, entity):
-        logging.debug('notifyRemoval({0}, {1}'.format(position, entity))
+        for watcher in self.watchers or sysWorldRegistry.world.tileWatchers:
+            try:
+                watchList = self.watchers[watcher]
+            except KeyError:
+                watchList = sysWorldRegistry.world.tileWatchers[watcher]
+            if position in watchList:
+                watcher.notify(self, position, 'remove', entity)
     
     def watchPosition(self, target, name):
         if target in self.watchers:
