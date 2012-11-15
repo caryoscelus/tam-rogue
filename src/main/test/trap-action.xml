@@ -6,9 +6,9 @@
     <bindTile tile="tile" tileEntity="subject" notify="notifyType" position="objects"/>
     
     <code>
-if notifyType == 'remove':
-    debug('tile entity remove notification')
-elif notifyType == 'add':
+if notifyType == 'add':
+    # TODO: direct notification to trap entity?
+    # this should make it faster..
     trap = tile.get('trap')
     if trap:
         try:
@@ -19,7 +19,5 @@ elif notifyType == 'add':
             warning('this trap doesn\'t hurt or subject isn\'t hurtable!')
     else:
         debug('looks like there is no trap')
-else:
-    warning('unknown tile notification')
     </code>
 </mod>
