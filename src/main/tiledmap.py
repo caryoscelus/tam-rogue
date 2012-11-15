@@ -1,5 +1,6 @@
 from tile import Tile
 from entityqueue import EntityQueue, EmptyQueueError
+from entity import EntityDeadError
 from miscerrors import XmlLoadError
 
 class TiledMap:
@@ -100,9 +101,13 @@ class TiledMap:
             while True:
                 try:
                     entity = self.queue.pop()
+                    entity.check()
                 except EmptyQueueError:
                     break
-                yield entity.live()
+                except EntityDeadError:
+                    self.removeFromMap(entity)
+                else:
+                    yield entity.live()
             # reload queue
             self.queue.reset()
             yield False
