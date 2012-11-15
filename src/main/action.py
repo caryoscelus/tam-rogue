@@ -61,10 +61,7 @@ class Action:
         self.func = self.compileCode(code, args)
     
     def compileCode(self, code, formalArgs):
-        # TODO: add safe builtins
-        # TODO: replace logging with proper API
-        safeBuiltins = None #__builtins__
-        ns = {'__builtins__':actionapi, 'logging':logging}
+        ns = {'__builtins__':actionapi}
         compiled = compile(code, '<action mod>', 'exec')
         
         def launchCode(args):

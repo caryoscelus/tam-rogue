@@ -7,7 +7,7 @@
     
     <code>
 if notifyType == 'remove':
-    logging.debug('tile entity remove notification')
+    debug('tile entity remove notification')
 elif notifyType == 'add':
     trap = tile.get('trap')
     if trap:
@@ -16,10 +16,10 @@ elif notifyType == 'add':
             # TODO: replace with proper action
             subject.changeNumericAttr('hp', -hurt)
         except EntityAttributeError:
-            logging.warning('this trap doesn\'t hurt or subject isn\'t hurtable!')
+            warning('this trap doesn\'t hurt or subject isn\'t hurtable!')
     else:
-        logging.debug('looks like there is no trap')
+        debug('looks like there is no trap')
 else:
-    logging.warning('unknown tile notification')
+    warning('unknown tile notification')
     </code>
 </mod>

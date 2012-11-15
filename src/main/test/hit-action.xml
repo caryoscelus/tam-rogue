@@ -7,6 +7,6 @@
     
     <code>
 target.changeNumericAttr('hp', -1)
-logging.info('hp: {0}'.format(target.attr('hp')))
+info('hp: {0}'.format(target.attr('hp')))
     </code>
 </mod>

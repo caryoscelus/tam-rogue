@@ -7,7 +7,7 @@
     <code>
 if not reason:
     reason = 'unknown reason'
-logging.info('{0} died because: {1}'.format(subject.attr('class'), reason))
+info('{0} died because: {1}'.format(subject.attr('class'), reason))
 subject.die()
     </code>
 </mod>
