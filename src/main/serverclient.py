@@ -41,8 +41,13 @@ class ServerClient(Sleeping, EntityController):
     def live(self, entity):
         if self.entity != entity:
             raise RuntimeError('entity mismatch')
-        super().live(entity)
-        # TODO: make something working here
+        
+        while not self.actions:
+            self.sleep()
+        
+        if self.actions:
+            action, args = self.actions.pop(0)
+            action.applyAction(args)
     
     def __str__(self):
         return ''
