@@ -88,6 +88,10 @@ class Entity:
         
         self.notifyAttr(name)
     
+    # NOTE: different from destroy -> available in action api
+    def die(self):
+        self.destroy()
+    
     def watchAttr(self, target, name):
         if target in self.watchers:
             self.watchers[target].update({name})
