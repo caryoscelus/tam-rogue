@@ -99,8 +99,12 @@ class Entity:
             self.watchers[target] = {name}
     
     def notifyAttr(self, name):
-        for watcher in self.watchers:
-            if name in self.watchers[watcher]:
+        for watcher in self.watchers or sysWorldRegistry.world.watchers:
+            try:
+                watchList = self.watchers[watcher]
+            except AttributeError:
+                watchList = sysWorldRegistry.world.watchers
+            if name in watchList:
                 watcher.notify(self, name)
     
     def placeOn(self, onMap, x, y, position):

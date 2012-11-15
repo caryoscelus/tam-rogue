@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-import mod
+from mod import Mod
 from world import World
 
 class WorldRegistry:
@@ -14,7 +14,7 @@ class WorldRegistry:
         modXml = f.read()
         f.close()
         
-        newMod = mod.Mod(ET.fromstring(modXml))
+        newMod = Mod(ET.fromstring(modXml))
         self.lastMod += 1
         self.mods[self.lastMod] = newMod
         newMod.applyMod(self.world)
