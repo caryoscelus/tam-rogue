@@ -103,7 +103,7 @@ class Entity:
             try:
                 watchList = self.watchers[watcher]
             except KeyError:
-                watchList = sysWorldRegistry.world.watchers
+                watchList = sysWorldRegistry.world.watchers[watcher]
             if name in watchList:
                 watcher.notify(self, name)
     
