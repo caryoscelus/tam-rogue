@@ -15,7 +15,7 @@ elif notifyType == 'add':
             hurt = trap.attr('hurt')
             # TODO: replace with proper action
             subject.changeNumericAttr('hp', -hurt)
-        except:
+        except EntityAttributeError:
             logging.warning('this trap doesn\'t hurt or subject isn\'t hurtable!')
     else:
         logging.debug('looks like there is no trap')
