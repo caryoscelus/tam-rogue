@@ -12,6 +12,8 @@ from entitywrapper import EntityWrapper
 # action system:
 #   * entity handler asks to 
 class Action:
+    TYPES = {'object', 'integer', 'string'}
+    
     def __init__(self):
         self.name = None
         self.arguments = {}
@@ -31,11 +33,8 @@ class Action:
         args = {}
         
         for node in xmlRoot:
-            if node.tag == 'object':
-                # TODO: use filters?..
-                args[node.attrib['name']] = 'object'
-            elif node.tag == 'integer':
-                args[node.attrib['name']] = 'integer'
+            if node.tag in self.TYPES:
+                args[node.attrib['name']] = node.tag
             elif node.tag == 'code':
                 code = node.text
             else:
@@ -51,20 +50,33 @@ class Action:
         compiled = compile(code, '<action mod>', 'exec')
         
         def launchCode(args):
+            # TODO: make integer->int, string->str conversion more proper
             def wrapper(obj, key):
                 if formalArgs[key] == 'object':
                     return EntityWrapper(obj)
                 elif formalArgs[key] == 'integer' and type(obj) == int:
                     return obj
+                elif formalArgs[key] == 'string' and type(obj) == str:
+                    return obj
                 else:
                     raise TypeError('type mismatch')
+            
+            def defaultValue(argType):
+                if argType == 'integer':
+                    return 0
+                elif argType == 'string':
+                    return ''
+                elif argType == 'object':
+                    return None
             
             # args that are not present in formalArgs passed
             if set(args.keys()).difference(set(formalArgs.keys())):
                 logging.debug(args)
                 logging.debug(formalArgs)
                 raise ActionError('undefined args passed')
-            wrappers = dict((key, wrapper(args[key], key)) for key in args.keys())
+            wrappers = {}
+            wrappers.update(dict((key, defaultValue(formalArgs[key])) for key in formalArgs))
+            wrappers.update(dict((key, wrapper(args[key], key)) for key in args))
             try:
                 exec(compiled, ns, wrappers)
             except:
