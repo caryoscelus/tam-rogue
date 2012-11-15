@@ -107,6 +107,8 @@ class Tile:
         
         # TODO: proper order
         self.order.append(position)
+        
+        self.notify(position, entity, 'add')
     
     def remove(self, entity, position = None):
         if not position:
@@ -133,7 +135,7 @@ class Tile:
             else:
                 self.content[position] = None
         
-        self.notifyRemoval(position, entity)
+        self.notify(position, entity, 'remove')
     
     # is it useful?..
     def isValid(self, position):
@@ -143,14 +145,14 @@ class Tile:
         except TilePositionError:
             return False
     
-    def notifyRemoval(self, position, entity):
+    def notify(self, position, entity, notification):
         for watcher in self.watchers or sysWorldRegistry.world.tileWatchers:
             try:
                 watchList = self.watchers[watcher]
             except KeyError:
                 watchList = sysWorldRegistry.world.tileWatchers[watcher]
             if position in watchList:
-                watcher.notify(self, position, 'remove', entity)
+                watcher.notify(self, position, notification, entity)
     
     def watchPosition(self, target, name):
         if target in self.watchers:
