@@ -74,7 +74,7 @@ class Client(Displaying, Inputting):
             action = sysWorldRegistry.world.actions['hit']
             self.doAction(action, {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
         elif ch == 'X':
-            action = sysWorldRegistry.world.actions['death']
+            action = sysWorldRegistry.world.actions['die']
             self.doAction(action, {'subject':self.entity, 'reason':'user decided to die'})
         elif ch in movement.keys():
             action = sysWorldRegistry.world.actions['move']
