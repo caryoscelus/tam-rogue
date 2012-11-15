@@ -2,12 +2,11 @@ import logging
 
 from displaying import Displaying
 from inputting import Inputting
-from entitycontroller import EntityController
 from mapvisualizer import MapVisualizer
 from worldregistry import sysWorldRegistry
 from action import Action
 
-class Client(Displaying, Inputting, EntityController):
+class Client(Displaying, Inputting):
     def __init__(self):
         super().__init__()
         
@@ -16,12 +15,6 @@ class Client(Displaying, Inputting, EntityController):
         self.serverClient = None
         self.mapVisualizer = MapVisualizer()
         self.entity = None
-    
-    def live(self, entity):
-        if self.entity != entity:
-            raise RuntimeError('entity mismatch')
-        super().live(entity)
-        # TODO: make something working here
     
     def connectServer(self, server):
         self.serverClient = server.connect(self)
@@ -33,7 +26,7 @@ class Client(Displaying, Inputting, EntityController):
             logging.warning('not connected')
     
     def doAction(self, action, args):
-        action.applyAction(args)
+        #action.applyAction(args)
         
         # TODO: make this work or trash it
         try:
@@ -43,10 +36,12 @@ class Client(Displaying, Inputting, EntityController):
     
     # called from server
     def requestAction(self):
+        logging.debug('server requested action')
         self.myTurn = True
     
     # called from server
     def worldChanged(self):
+        logging.debug('world changed')
         #self.updateWorld = True
         self.updateDisplay = True
     

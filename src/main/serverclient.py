@@ -1,6 +1,7 @@
 from sleeping import Sleeping
+from entitycontroller import EntityController
 
-class ServerClient(Sleeping):
+class ServerClient(Sleeping, EntityController):
     def __init__(self, server, client):
         self.entity = None
         self.actions = []
@@ -11,7 +12,7 @@ class ServerClient(Sleeping):
     
     def register(self):
         # set handler for entity
-        self.entity.handler = self.client
+        self.entity.handler = self
         self.client.entity = self.entity
     
     def assignTo(self, entity):
@@ -36,6 +37,12 @@ class ServerClient(Sleeping):
             self.register()
         else:
             raise NotImplementedError('requesting entity to be choosed from server is not supported yet')
+    
+    def live(self, entity):
+        if self.entity != entity:
+            raise RuntimeError('entity mismatch')
+        super().live(entity)
+        # TODO: make something working here
     
     def __str__(self):
         return ''
