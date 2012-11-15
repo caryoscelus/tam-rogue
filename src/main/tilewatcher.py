@@ -7,6 +7,6 @@ class TileWatcher:
         self.binding = binding
     
     def notify(self, tile, position, notifyType, entity):
-        t = {'tile':tile, 'tileEntity':entity, 'notifyType':notifyType}
-        args = dict((self.binding[name], t[name]) for name in self.binding)
+        t = {'tile':tile, 'tileEntity':entity, 'notify':notifyType}
+        args = {self.binding[name] : t[name] for name in self.binding}
         self.action.applyAction(args)
