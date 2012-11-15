@@ -2,7 +2,8 @@ import logging
 import xml.etree.ElementTree as ET
 
 from worldregistry import sysWorldRegistry
-    
+
+# TODO: raise errors instead of logging?..
 def loadPack(xmlFile):
     try:
         f = open(xmlFile)

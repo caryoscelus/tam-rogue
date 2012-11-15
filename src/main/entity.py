@@ -17,6 +17,8 @@ class Entity:
         self.x = None
         self.y = None
         self.position = None
+        
+        self.watchers = {}
     
     def __str__(self):
         return '<Entity: {0} >'.format(self.attrib)
@@ -83,6 +85,19 @@ class Entity:
         value += delta
         
         self.attrib[name] = value
+        
+        self.notifyAttr(name)
+    
+    def watchAttr(self, target, name):
+        if target in self.watchers:
+            self.watchers[target].update({name})
+        else:
+            self.watchers[target] = {name}
+    
+    def notifyAttr(self, name):
+        for watcher in self.watchers:
+            if name in self.watchers[watcher]:
+                watcher.notify(self, name)
     
     def placeOn(self, onMap, x, y, position):
         self.onMap = onMap
