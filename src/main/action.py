@@ -38,9 +38,10 @@ class Action:
             if node.tag in self.TYPES:
                 args[node.attrib['name']] = node.tag
             elif node.tag == 'bind':
-                logging.debug('binding..')
                 attrib = node.attrib['attrib']
-                worldregistry.sysWorldRegistry.world.watchAttr(EntityWatcher(), attrib)
+                binding = node.attrib['target']
+                watcher = EntityWatcher(self, binding)
+                worldregistry.sysWorldRegistry.world.watchAttr(watcher, attrib)
             elif node.tag == 'code':
                 code = node.text
             else:

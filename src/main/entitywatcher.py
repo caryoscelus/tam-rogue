@@ -1,8 +1,9 @@
 import logging
 
 class EntityWatcher:
-    def __init__(self):
-        pass
+    def __init__(self, action, binding):
+        self.action = action
+        self.binding = binding
     
     def notify(self, entity, name):
-        logging.info('entityWatcher was notified about {0} / {1}'.format(entity, name))
+        self.action.applyAction({self.binding:entity})
