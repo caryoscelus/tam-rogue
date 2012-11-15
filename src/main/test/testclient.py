@@ -26,7 +26,7 @@ def generateWorld():
     floor = Entity({'class':'floor'})
     wall = Entity({'class':'wall'})
     human = Entity({'class':'human', 'hp':2})
-    trap = Entity({'class':'trap'})
+    trap = Entity({'class':'trap', 'hurt':1})
     human.alive = True
     
     map0 = TiledMap(20, 20, {'ground':None, 'trap':None, 'objects':[]}, ['ground', 'objects'])
