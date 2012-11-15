@@ -11,6 +11,15 @@ Alternativly, you could launch them by yourself: src/main/test/testclient.py
 and src/gfxclient/curses/main.py; they could not work if not launched from
 thier directory.
 
+PLAYING
+-------
+Currenly supported actions:
+
+KEY             ACTION
+hjklyubn        moving
+F               "fight" (actually just decrease hp for now)
+X               commit suicide
+
 LICENSE
 -------
 (see full text in file GPL3)
