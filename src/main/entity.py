@@ -92,6 +92,7 @@ class Entity:
     def die(self):
         self.destroy()
     
+    # TODO: separate to Watchable
     def watchAttr(self, target, name):
         if target in self.watchers:
             self.watchers[target].update({name})
@@ -99,11 +100,11 @@ class Entity:
             self.watchers[target] = {name}
     
     def notifyAttr(self, name):
-        for watcher in self.watchers or sysWorldRegistry.world.watchers:
+        for watcher in self.watchers or sysWorldRegistry.world.entityWatchers:
             try:
                 watchList = self.watchers[watcher]
             except KeyError:
-                watchList = sysWorldRegistry.world.watchers[watcher]
+                watchList = sysWorldRegistry.world.entityWatchers[watcher]
             if name in watchList:
                 watcher.notify(self, name)
     

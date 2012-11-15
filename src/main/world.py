@@ -12,7 +12,8 @@ class World(Sleeping):
         self.layers = {}
         self.layerOrder = []
         self.actions = {}
-        self.watchers = {}
+        self.entityWatchers = {}
+        self.tileWatchers = {}
     
     def addTileLayers(self, layers, layerOrder):
         # TODO: calculate proper order
@@ -43,8 +44,14 @@ class World(Sleeping):
                     yield t
                 self.sleep()
     
-    def watchAttr(self, target, name):
-        if target in self.watchers:
-            self.watchers[target].update({name})
+    def watch(self, what, watcher, name):
+        if watcher in what:
+            what[watcher].update({name})
         else:
-            self.watchers[target] = {name}
+            what[watcher] = {name}
+    
+    def watchAttr(self, target, name):
+        self.watch(self.entityWatchers, target, name)
+    
+    def watchPosition(self, target, name):
+        self.watch(self.tileWatchers, target, name)

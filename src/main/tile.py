@@ -12,6 +12,7 @@ class Tile:
     def __init__(self, content = {}, order = []):
         self.order = order
         self.content = copy.deepcopy(content)
+        self.watchers = {}
     
     def saveXml(self):
         pass
@@ -131,6 +132,8 @@ class Tile:
                 raise TileEntityError(position, entity)
             else:
                 self.content[position] = None
+        
+        self.notifyRemoval(position, entity)
     
     # is it useful?..
     def isValid(self, position):
@@ -139,6 +142,15 @@ class Tile:
             return True
         except TilePositionError:
             return False
+    
+    def notifyRemoval(self, position, entity):
+        logging.debug('notifyRemoval({0}, {1}'.format(position, entity))
+    
+    def watchPosition(self, target, name):
+        if target in self.watchers:
+            self.watchers[target].update({name})
+        else:
+            self.watchers[target] = {name}
 
 class TileTakenError(RuntimeError):
     def __init__(self, key):
