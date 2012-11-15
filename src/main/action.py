@@ -93,8 +93,8 @@ class Action:
                 logging.debug(formalArgs)
                 raise ActionError('undefined args passed')
             wrappers = {}
-            wrappers.update(dict((key, defaultValue(formalArgs[key])) for key in formalArgs))
-            wrappers.update(dict((key, wrapper(args[key], key)) for key in args))
+            wrappers.update({key : defaultValue(formalArgs[key]) for key in formalArgs})
+            wrappers.update({key : wrapper(args[key], key) for key in args})
             try:
                 exec(compiled, ns, wrappers)
             except:
