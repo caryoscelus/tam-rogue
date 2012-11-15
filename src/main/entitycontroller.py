@@ -6,3 +6,7 @@ class EntityController:
     
     def live(self, entity):
         logging.debug('entity is alive!')
+
+
+class EntityControllerMismatchError(RuntimeError):
+    pass

@@ -1,5 +1,5 @@
 from sleeping import Sleeping
-from entitycontroller import EntityController
+from entitycontroller import EntityController, EntityControllerMismatchError
 
 class ServerClient(Sleeping, EntityController):
     def __init__(self, server, client):
@@ -40,7 +40,7 @@ class ServerClient(Sleeping, EntityController):
     
     def live(self, entity):
         if self.entity != entity:
-            raise RuntimeError('entity mismatch')
+            raise EntityControllerMismatchError(self.entity, entity)
         
         while not self.actions:
             self.sleep()
