@@ -26,9 +26,10 @@ def generateWorld():
     floor = Entity({'class':'floor'})
     wall = Entity({'class':'wall'})
     human = Entity({'class':'human', 'hp':2})
+    trap = Entity({'class':'trap'})
     human.alive = True
     
-    map0 = TiledMap(20, 20, {'ground':None, 'objects':[]}, ['ground', 'objects'])
+    map0 = TiledMap(20, 20, {'ground':None, 'trap':None, 'objects':[]}, ['ground', 'objects'])
     map0.alive = True
     map0.queue.push(human)
     # floor
@@ -42,6 +43,7 @@ def generateWorld():
     
     # human
     map0.putOn(12, 4, 'objects', human)
+    map0.putOn(15, 4, 'trap', trap)
     
     sysWorldRegistry.world.maps.append(map0)
     
