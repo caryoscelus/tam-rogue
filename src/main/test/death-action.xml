@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod type="action" name="death">
+    <!-- list of used objects -->
+    <object name="subject"/>
+    <string name="reason"/>
+    
+    <code>
+if not reason:
+    reason = 'unknown reason'
+logging.info('{0} died because: {1}'.format(subject.attr('class'), reason))
+#subject.die()
+    </code>
+</mod>

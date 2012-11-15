@@ -3,4 +3,5 @@
     <load file="character-mod.xml"/>
     <load file="hit-action.xml"/>
     <load file="move-action.xml"/>
+    <load file="death-action.xml"/>
 </modpack>
