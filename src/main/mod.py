@@ -1,4 +1,3 @@
-import xml.etree.ElementTree as ET
 import logging
 import traceback
 
@@ -6,7 +5,7 @@ from action import Action
 
 class Mod:
     def __init__(self, xml):
-        self.src = ET.fromstring(xml)
+        self.src = xml
         if not self.src.tag == 'mod':
             raise RuntimeError('wrong mod xml')
         self.modType = self.src.attrib['type']

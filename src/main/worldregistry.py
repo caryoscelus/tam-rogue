@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+
 import mod
 from world import World
 
@@ -8,13 +10,11 @@ class WorldRegistry:
         self.world = World()
     
     def loadMod(self, modFile):
-        # TODO: implement
-        # should return internal mod id
         f = open(modFile)
         modXml = f.read()
         f.close()
         
-        newMod = mod.Mod(modXml)
+        newMod = mod.Mod(ET.fromstring(modXml))
         self.lastMod += 1
         self.mods[self.lastMod] = newMod
         newMod.applyMod(self.world)
