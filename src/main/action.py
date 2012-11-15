@@ -5,6 +5,7 @@ from miscerrors import XmlLoadError
 from entitywrapper import EntityWrapper
 from entitywatcher import EntityWatcher
 import worldregistry
+import actionapi
 
 # action types:
 #   * move
@@ -53,7 +54,7 @@ class Action:
         # TODO: add safe builtins
         # TODO: replace logging with proper API
         safeBuiltins = None #__builtins__
-        ns = {'__builtins__':safeBuiltins, 'logging':logging}
+        ns = {'__builtins__':actionapi, 'logging':logging}
         compiled = compile(code, '<action mod>', 'exec')
         
         def launchCode(args):

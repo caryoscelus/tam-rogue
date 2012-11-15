@@ -25,7 +25,7 @@ def testClient():
 def generateWorld():
     floor = Entity({'class':'floor'})
     wall = Entity({'class':'wall'})
-    human = Entity({'class':'human', 'hp':20})
+    human = Entity({'class':'human', 'hp':2})
     human.alive = True
     
     map0 = TiledMap(20, 20, {'ground':None, 'objects':[]}, ['ground', 'objects'])
