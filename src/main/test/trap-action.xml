@@ -7,10 +7,10 @@
     
     <code>
 if notifyType == 'remove':
-    debug('tile entity remove notification')
+    logging.debug('tile entity remove notification')
 elif notifyType == 'add':
-    debug('tile entity add notification')
+    logging.debug('tile entity add notification')
 else:
-    warning('unknown tile notification')
+    logging.warning('unknown tile notification')
     </code>
 </mod>
