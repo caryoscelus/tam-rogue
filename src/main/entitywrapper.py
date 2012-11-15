@@ -1,7 +1,7 @@
 import logging
 
 class EntityWrapper:
-    entityApi = ['changeNumericAttr', 'attr', 'move', 'die']
+    entityApi = ['changeNumericAttr', 'attr', 'move', 'die', 'get']
     
     def __init__(self, entity):
         # TODO: eliminate type comparison?..
