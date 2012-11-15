@@ -1,5 +1,6 @@
 import logging
 
+# TODO: merge with TileWatcher
 class EntityWatcher:
     def __init__(self, action, binding):
         self.action = action
