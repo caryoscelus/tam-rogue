@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modpack>
+    <load file="character-mod.xml"/>
+    <load file="hit-action.xml"/>
+    <load file="move-action.xml"/>
+</modpack>

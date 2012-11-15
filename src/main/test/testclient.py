@@ -14,6 +14,7 @@ from tiledmap import *
 from tile import *
 from entity import *
 from worldregistry import *
+import modpack
 
 def testClient():
     logging.basicConfig(filename='testclient.log', level=logging.DEBUG)
@@ -49,9 +50,7 @@ def generateWorld():
 def testClientServer(server, port):
     myServer = Server()
     
-    sysWorldRegistry.loadMod('character-mod.xml')
-    sysWorldRegistry.loadMod('hit-action.xml')
-    sysWorldRegistry.loadMod('move-action.xml')
+    modpack.loadPack('basic-modpack.xml')
     human = generateWorld()
     
     myServer.start()
