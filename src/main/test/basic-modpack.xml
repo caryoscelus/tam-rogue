@@ -5,4 +5,5 @@
     <load file="move-action.xml"/>
     <load file="die-action.xml"/>
     <load file="hp-check-action.xml"/>
+    <load file="trap-action.xml"/>
 </modpack>

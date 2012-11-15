@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod type="action" name="trap">
+    <object name="subject"/>
+    <string name="notifyType"/>
+    <object name="tile"/>
+    <bindTile tile="tile" tileEntity="subject" notify="notifyType" position="objects"/>
+    
+    <code>
+if notifyType == 'remove':
+    debug('tile entity remove notification')
+elif notifyType == 'add':
+    debug('tile entity add notification')
+else:
+    warning('unknown tile notification')
+    </code>
+</mod>
