@@ -19,6 +19,7 @@ class Client(Displaying, Inputting):
         
         # UI
         self.showingLogs = False
+        self.showingInv = False
     
     def connectServer(self, server):
         self.serverClient = server.connect(self)
@@ -60,10 +61,19 @@ class Client(Displaying, Inputting):
         if self.showingLogs:
             self.showLogs()
         
+        if self.showingInv:
+            self.showInv()
+        
         super().redraw()
     
     def showLogs(self):
         self.putString(0, 0, eventlogger.textLog[-1])
+    
+    def showInv(self):
+        inv = self.entity.children
+        if not inv:
+            # TODO: no constants!
+            self.putString(40, 2, 'inventory is empty')
     
     def processKey(self, opcode):
         # TODO: make customizable bindings
@@ -88,6 +98,8 @@ class Client(Displaying, Inputting):
             self.doAction(action, {'subject':self.entity, 'reason':'user decided to die'})
         elif ch == '!':
             self.showingLogs = not self.showingLogs
+        elif ch == 'i':
+            self.showingInv = not self.showingInv
         elif ch in movement.keys():
             action = sysWorldRegistry.world.actions['move']
             self.doAction(action, {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
