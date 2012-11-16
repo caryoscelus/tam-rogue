@@ -131,6 +131,28 @@ class Entity:
         y = self.y+dy
         
         self.onMap.moveTo(self, x, y, self.position)
+    
+    # TODO: merge with tile?
+    def putChild(self, position, child):
+        try:
+            self.children[position]
+        except KeyError:
+            self.children[position] = child
+        else:
+            try:
+                self.children[position].append(child)
+            except AttributeError:
+                if self.children[position] == None:
+                    self.children[position] = child
+                else:
+                    raise EntityChildPositionError(self, position)
+    
+    # NOTE: could return list actually
+    def getChild(self, position):
+        return self.children[position]
+    
+    def removeChild(self, child):
+        pass
 
 
 class EntityPositionError(RuntimeError):
@@ -149,5 +171,8 @@ class EntityAttributeError(RuntimeError):
     def __init__(self, entity = None, name = ''):
         self.entity = entity
         self.name = name
+
+class EntityChildPositionError(RuntimeError):
+    pass
 
 from worldregistry import sysWorldRegistry
