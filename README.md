@@ -20,6 +20,7 @@ hjklyubn        moving
 F               "fight" (actually just decrease hp for now)
 X               commit suicide
 
+i               show inventory (doesn't work much currently)
 !               show game log
 
 LICENSE
