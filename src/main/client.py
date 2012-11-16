@@ -5,6 +5,7 @@ from inputting import Inputting
 from mapvisualizer import MapVisualizer
 from worldregistry import sysWorldRegistry
 from action import Action
+import eventlogger
 
 class Client(Displaying, Inputting):
     def __init__(self):
@@ -62,7 +63,7 @@ class Client(Displaying, Inputting):
         super().redraw()
     
     def showLogs(self):
-        self.putString(0, 0, 'hello, world')
+        self.putString(0, 0, eventlogger.textLog[-1])
     
     def processKey(self, opcode):
         # TODO: make customizable bindings
