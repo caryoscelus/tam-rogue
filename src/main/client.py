@@ -15,6 +15,9 @@ class Client(Displaying, Inputting):
         self.serverClient = None
         self.mapVisualizer = MapVisualizer()
         self.entity = None
+        
+        # UI
+        self.showingLogs = False
     
     def connectServer(self, server):
         self.serverClient = server.connect(self)
@@ -52,8 +55,14 @@ class Client(Displaying, Inputting):
         # - draw vision, not actual map
         # - draw current map
         self.displayData = self.mapVisualizer.toXml(sysWorldRegistry.world.maps[0])
-        # TODO: optimize xml
+        
+        if self.showingLogs:
+            self.showLogs()
+        
         super().redraw()
+    
+    def showLogs(self):
+        self.putString(0, 0, 'hello, world')
     
     def processKey(self, opcode):
         # TODO: make customizable bindings
@@ -76,6 +85,8 @@ class Client(Displaying, Inputting):
         elif ch == 'X':
             action = sysWorldRegistry.world.actions['die']
             self.doAction(action, {'subject':self.entity, 'reason':'user decided to die'})
+        elif ch == '!':
+            self.showingLogs = not self.showingLogs
         elif ch in movement.keys():
             action = sysWorldRegistry.world.actions['move']
             self.doAction(action, {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})

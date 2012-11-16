@@ -38,6 +38,6 @@ class MapVisualizer:
                 else:
                     logging.warning('unvisualizable display character')
         
-        return bytes(ET.tostring(root))
+        return root
 
 from entity import EntityAttributeError

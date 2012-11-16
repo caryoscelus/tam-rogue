@@ -12,7 +12,7 @@ class Displaying(Sleeping, Starting, Receiver):
     def __init__(self):
         super().__init__()
         
-        self.displayData = None
+        self.displayData = ET.Element('scrup')
         
         self.updateDisplay = False or True
         self.gfxClient = None
@@ -40,8 +40,21 @@ class Displaying(Sleeping, Starting, Receiver):
         self.gfxClient = gfxClient
         logging.info('gfx client is on '+str(self.gfxClient))
     
+    # TODO: support styles/effects
+    def putChar(self, x, y, ch):
+        # TODO: override instead of appending!
+        ET.SubElement(self.displayData, 'char', {'x':str(x), 'y':str(y), 'ch':ch})
+    
+    def putString(self, x, y, s):
+        # TODO: length control
+        for ch in s:
+            self.putChar(x, y, ch)
+            x += 1
+    
     def redraw(self):
-        if self.send(self.displayData):
+        # TODO: optimize xml
+        msg = bytes(ET.tostring(self.displayData))
+        if self.send(msg):
             self.updateDisplay = False
     
     def send(self, data):

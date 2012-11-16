@@ -20,6 +20,8 @@ hjklyubn        moving
 F               "fight" (actually just decrease hp for now)
 X               commit suicide
 
+!               show game log
+
 LICENSE
 -------
 (see full text in file GPL3)
