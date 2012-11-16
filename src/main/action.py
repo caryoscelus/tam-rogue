@@ -6,6 +6,7 @@ from entitywrapper import EntityWrapper
 from entitywatcher import EntityWatcher
 from tilewatcher import TileWatcher
 import worldregistry
+import eventlogger
 import actionapi
 
 # action types:
@@ -101,6 +102,7 @@ class Action:
         return launchCode
     
     def applyAction(self, args):
+        eventlogger.processAction(self, args)
         self.func(args)
 
 
