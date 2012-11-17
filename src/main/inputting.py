@@ -1,8 +1,9 @@
 import logging
+import traceback
 import threading
 import xml.etree.ElementTree as ET
 
-from receiver import Receiver
+from receiver import Receiver, ReceiverListeningForbidden
 from starting import Starting
 
 class Inputting(Starting, Receiver):
@@ -27,18 +28,28 @@ class Inputting(Starting, Receiver):
                 logging.debug(err)
     
     def readKey(self):
-        key = None
-        while not key:
-            xml = self.listen()
-            root = ET.fromstring(xml)
-            if root.tag == 'input':
-                try:
-                    key = int(root.attrib['opcode'])
-                except Exception as err:
-                    logging.warning('bad xml')
-            else:
-                logging.warning('unknown xml node type')
-        return key
+        while True:
+            try:
+                xml = self.listen()
+                root = ET.fromstring(xml)
+                if root.tag == 'input':
+                    try:
+                        key = int(root.attrib['opcode'])
+                    except AttributeError:
+                        logging.warning('bad xml')
+                    else:
+                        return key
+                else:
+                    logging.warning('unknown xml node type')
+            except ReceiverListeningForbidden:
+                logging.debug('readKey: listening is forbidden')
+            except ET.ParseError:
+                logging.warning('readKey: received message is unparsable')
+                logging.debug(traceback.format_exc())
+            except Exception as err:
+                logging.error('readKey: unknown exception')
+            
+            self.sleep()
     
     def processKey(self, opcode):
         try:
