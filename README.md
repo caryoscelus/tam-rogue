@@ -3,6 +3,24 @@ tam-rogue
 
 rogue-like engine and game development
 
+INTRO
+-----
+If you came here because you thought that you could play game, you are here
+by mistake. This project is started quite recently and it is not playable.
+And i think that when real game would appear, it will be in separate
+repository, current will contain only engine.
+
+So, if you're not interested in development , you can just add this repo to
+bookmarks and return to see what happend to it later.
+
+GOALS
+-----
+* general-purpose engine with modpacks for actual game experience
+* server-client architecture and thus theorethical support of multiplayer
+* also, previous point makes it possible to easily replace rendering engine
+from ncurses one to opengl
+* just create certain game(s) which i have in mind
+
 LAUNCHING
 ---------
 Simply change directory to test/ and launch ./start.sh; this will start both
@@ -27,8 +45,8 @@ LICENSE
 -------
 (see full text in file GPL3)
 
-    This program is free software: you can redistribute it and/or modify                                                                                     
-    it under the terms of the GNU General Public License as published by                                                                                     
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
