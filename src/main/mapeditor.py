@@ -30,6 +30,19 @@ class MapEditor(Displaying, Inputting):
         self.displayData = self.mapVisualizer.toXml(self.tiledMap)
         super().redraw()
     
+    def loadFile(self, fname):
+        try:
+            f = open(fname)
+            mapXml = ET.fromstring(f.read())
+            f.close()
+            self.loadMapXml(mapXml)
+        except IOError as err:
+            logging.error(traceback.format_exc())
+            raise err
+    
+    def saveFile(self, fname):
+        pass
+    
     def loadMapXml(self, mapXml):
         self.tiledMap = TiledMap.fromXml(mapXml)
     
@@ -66,21 +79,11 @@ def main(argv):
     
     sysWorldRegistry.loadMod('test/character-mod.xml')
     
-    # TODO: put reading file into MapEditor
-    try:
-        fname = argv[1]
-        f = open(fname)
-        mapXml = ET.fromstring(f.read())
-        f.close()
-    except IOError:
-        logging.error(traceback.format_exc())
-        raise RuntimeError('error while reading file')
-    
     me = MapEditor()
     # TODO: remove constants
     addr = ('localhost', 6990)
     me.connect(addr)
-    me.loadMapXml(mapXml)
+    me.loadFile(argv[1])
     me.start()
 
 if __name__ == '__main__':
