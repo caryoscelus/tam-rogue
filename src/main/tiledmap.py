@@ -4,6 +4,7 @@ from tile import Tile
 from entityqueue import EntityQueue, EmptyQueueError
 from entity import EntityDeadError
 from miscerrors import XmlLoadError
+from worldregistry import sysWorldRegistry
 
 class TiledMap:
     def __init__(self, width = 0, height = 0, layers = {}, layersOrder = [], attrib = {}):
@@ -15,6 +16,7 @@ class TiledMap:
         
         self.clear()
         self.attrib = attrib
+        self.exist = False
         self.alive = False
         self.queue = EntityQueue()
         self.life = self.live()
@@ -94,12 +96,14 @@ class TiledMap:
     def moveTo(self, entity, x, y, position):
         self.removeFromMap(entity, queueChange=False)
         self.putOn(x, y, position, entity, queueChange=False)
-        #entity.removeFrom(self, entity.x, entity.y, position)
-        #tile = self.getTile(x, y)
-        #tile.put(position, entity)
-        #entity.placeOn(self, x, y, position)
     
     def step(self):
+        if not self.exist:
+            # generate map
+            if not sysWorldRegistry.world.mapGenerators:
+                raise RuntimeError('no map generators')
+            else:
+                raise NotImplementedError('map generation is not implemented yet')
         if self.alive:
             return next(self.life)
         else:
