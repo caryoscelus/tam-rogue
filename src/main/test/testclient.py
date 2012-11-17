@@ -16,12 +16,7 @@ from entity import *
 from worldregistry import *
 import modpack
 
-def testClient():
-    logging.basicConfig(filename='testclient.log', level=logging.DEBUG)
-    myClient = Client()
-    myClient.connectClient(('localhost', 6985))
-    myClient.start()
-
+# TODO: remove from here; make proper loading/generation
 def generateWorld():
     floor = Entity({'class':'floor'})
     wall = Entity({'class':'wall'})
@@ -49,6 +44,7 @@ def generateWorld():
     
     return human
 
+# TODO: remove constants
 def testClientServer(server, port):
     myServer = Server()
     

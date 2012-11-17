@@ -12,6 +12,7 @@ from mapvisualizer import MapVisualizer
 from worldregistry import sysWorldRegistry
 from entity import Entity
 
+# TODO: port to actions
 class MapEditor(Displaying, Inputting):
     def __init__(self):
         super().__init__()
@@ -86,7 +87,6 @@ class MapEditor(Displaying, Inputting):
             elif ch == 'S':
                 logging.info('saving map to file {0}...'.format(self.fname))
                 self.saveFile()
-                
         except Exception as err:
             logging.error('unhandled exception while processing key')
             logging.error(err)

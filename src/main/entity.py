@@ -34,6 +34,7 @@ class Entity:
         return self
     
     def loadXml(self, xmlEntity):
+        # TODO: load children
         self.attrib = xmlEntity.attrib
     
     def saveXml(self):

@@ -8,6 +8,7 @@ from entity import EntityAttributeError
 
 def action(name, args):
     import worldregistry
+    # TODO: proper action launching..
     worldregistry.sysWorldRegistry.world.actions[name].applyAction(args)
 
 def traceback():

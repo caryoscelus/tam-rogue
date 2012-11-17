@@ -47,6 +47,7 @@ class Action:
                 worldregistry.sysWorldRegistry.world.watchAttr(watcher, attrib)
             elif node.tag == 'bindTile':
                 position = node.attrib['position']
+                # TODO: more proper checking?
                 binding = {
                     key : node.attrib[key] for key in node.attrib if not (key in (
                         'position',

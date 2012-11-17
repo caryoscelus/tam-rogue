@@ -31,9 +31,6 @@ class Client(Displaying, Inputting):
             logging.warning('not connected')
     
     def doAction(self, action, args):
-        #action.applyAction(args)
-        
-        # TODO: make this work or trash it
         try:
             self.serverClient.request(action, args)
         except AttributeError:
@@ -47,7 +44,6 @@ class Client(Displaying, Inputting):
     # called from server
     def worldChanged(self):
         logging.debug('world changed')
-        #self.updateWorld = True
         self.updateDisplay = True
     
     def redraw(self):
@@ -67,6 +63,8 @@ class Client(Displaying, Inputting):
         super().redraw()
     
     def showLogs(self):
+        # TODO: show full logs
+        # TODO: nice output
         self.putString(0, 0, eventlogger.textLog[-1])
     
     def showInv(self):
@@ -74,6 +72,10 @@ class Client(Displaying, Inputting):
         if not inv:
             # TODO: no constants!
             self.putString(40, 2, 'inventory is empty')
+        else:
+            # TODO: make this work
+            self.putString(40, 2, 'inventory is not empty')
+            logging.warning('displaying inventory is not supported yet')
     
     def processKey(self, opcode):
         # TODO: make customizable bindings

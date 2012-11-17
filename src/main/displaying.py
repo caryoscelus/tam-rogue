@@ -57,6 +57,7 @@ class Displaying(Sleeping, Starting, Receiver):
         if self.send(msg):
             self.updateDisplay = False
     
+    # TODO: separate?
     def send(self, data):
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

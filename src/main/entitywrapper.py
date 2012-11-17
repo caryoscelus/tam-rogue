@@ -1,6 +1,7 @@
 import logging
 
 class EntityWrapper:
+    # TODO: move api somewhere?..
     entityApi = ['changeNumericAttr', 'attr', 'move', 'die', 'get']
     
     def __init__(self, entity):

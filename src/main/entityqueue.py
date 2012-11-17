@@ -7,23 +7,6 @@ class EntityQueue:
         self.content = []
         self.pos = 0
     
-    #def pop(self):
-        #result = None
-        #while not result:
-            #try:
-                #entity = self.content.pop(0)
-                #entity.check()
-                #result = entity
-            #except IndexError:
-                #raise EmptyQueueError(self)
-            #except EntityDeadError:
-                #pass
-        
-        ## return to queue
-        #self.push(entity)
-        
-        #return result
-    
     def remove(self, entity):
         self.content.remove(entity)
     
@@ -52,5 +35,3 @@ class EntityQueue:
 class EmptyQueueError(Exception):
     def __init__(self, queue):
         self.queue = queue
-    
-    #
