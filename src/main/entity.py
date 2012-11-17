@@ -1,5 +1,6 @@
 import logging
 import traceback
+import xml.etree.ElementTree as ET
 
 # NOTE: should be used multi-pointer friendly
 # DO NOT use it in immutable manner
@@ -34,6 +35,10 @@ class Entity:
     
     def loadXml(self, xmlEntity):
         self.attrib = xmlEntity.attrib
+    
+    def saveXml(self):
+        # TODO: save children!!
+        return ET.Element('entity', self.attrib)
     
     def check(self):
         if self.dead:

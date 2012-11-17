@@ -18,6 +18,21 @@ class Tile:
     # TODO: store x/y at tile?..
     def saveXml(self, x, y):
         tileXml = ET.Element('tile', {'x':str(x), 'y':str(y)})
+        for name in self.content:
+            layer = self.content[name]
+            try:
+                contentXml = [layer.saveXml()]
+                contentType = 'object'
+            except AttributeError:
+                try:
+                    contentXml = [entity.saveXml() for entity in layer]
+                    contentType = 'list'
+                except TypeError:
+                    # just ignore empty layer for size optimization
+                    continue
+            # not empty here
+            layerXml = ET.SubElement(tileXml, 'layer', {'name':name, 'type':contentType})
+            layerXml.extend(contentXml)
         return tileXml
     
     def loadXml(self, xmlTile):

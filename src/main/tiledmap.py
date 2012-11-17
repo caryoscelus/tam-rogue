@@ -27,7 +27,7 @@ class TiledMap:
     # TODO: separate to loader/saver?..
     # TODO: other formats?
     def saveXml(self):
-        xmlRoot = ET.Element('tiledmap')
+        xmlRoot = ET.Element('tiledmap', {'width':str(self.width), 'height':str(self.height)})
         for y in range(self.height):
             for x in range(self.width):
                 tile = self.getTile(x, y)
