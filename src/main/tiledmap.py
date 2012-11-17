@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+
 from tile import Tile
 from entityqueue import EntityQueue, EmptyQueueError
 from entity import EntityDeadError
@@ -22,8 +24,16 @@ class TiledMap:
         self.loadXml(xmlRoot)
         return self
     
+    # TODO: separate to loader/saver?..
+    # TODO: other formats?
     def saveXml(self):
-        pass
+        xmlRoot = ET.Element('tiledmap')
+        for y in range(self.height):
+            for x in range(self.width):
+                tile = self.getTile(x, y)
+                if not tile.empty():
+                    xmlRoot.append(tile.saveXml(x, y))
+        return xmlRoot
     
     def loadXml(self, xmlRoot):
         if xmlRoot.tag != 'tiledmap':

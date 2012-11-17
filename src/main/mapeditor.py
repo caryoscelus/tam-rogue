@@ -3,6 +3,7 @@
 import logging
 import threading
 import traceback
+import xml.etree.ElementTree as ET
 
 from displaying import Displaying
 from inputting import Inputting
@@ -32,6 +33,9 @@ class MapEditor(Displaying, Inputting):
     def loadMapXml(self, mapXml):
         self.tiledMap = TiledMap.fromXml(mapXml)
     
+    def saveMapXml(self):
+        return self.tiledMap.saveXml()
+    
     def processKey(self, opcode):
         logging.debug('key pressed: {0}'.format(chr(opcode)))
         
@@ -48,6 +52,8 @@ class MapEditor(Displaying, Inputting):
             elif ch == '.':
                 floor = Entity({'class':'floor'})
                 self.tiledMap.putOn(self.cursor[0], self.cursor[1], 'ground', floor)
+            elif ch == 'D':
+                logging.debug(ET.tostring(self.saveMapXml()))
         except Exception as err:
             logging.error('unhandled exception while processing key')
             logging.error(err)
@@ -55,13 +61,12 @@ class MapEditor(Displaying, Inputting):
 
 
 def main(argv):
-    import xml.etree.ElementTree as ET
-    
     if len(argv) < 2:
         raise RuntimeError('not enough command line arguments')
     
     sysWorldRegistry.loadMod('test/character-mod.xml')
     
+    # TODO: put reading file into MapEditor
     try:
         fname = argv[1]
         f = open(fname)

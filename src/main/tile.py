@@ -1,5 +1,6 @@
 import copy
 import logging
+import xml.etree.ElementTree as ET
 
 from entity import Entity, EntityDeadError
 from miscerrors import XmlLoadError
@@ -14,8 +15,10 @@ class Tile:
         self.content = copy.deepcopy(content)
         self.watchers = {}
     
-    def saveXml(self):
-        pass
+    # TODO: store x/y at tile?..
+    def saveXml(self, x, y):
+        tileXml = ET.Element('tile', {'x':str(x), 'y':str(y)})
+        return tileXml
     
     def loadXml(self, xmlTile):
         if xmlTile.tag != 'tile':
@@ -52,6 +55,17 @@ class Tile:
         self.content = content
         
         sysWorldRegistry.world.addTileLayers(emptyContent, order)
+    
+    def empty(self):
+        if not self.content:
+            return True
+        
+        for name in self.content:
+            layer = self.content[name]
+            if layer:
+                return False
+        
+        return True
     
     def get(self, position):
         try:
