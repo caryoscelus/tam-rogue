@@ -21,6 +21,8 @@ class MapEditor(Displaying, Inputting):
         self.tiledMap = None
         
         self.cursor = [0, 0]
+        
+        self.fname = None
     
     def start(self):
         super().start()
@@ -37,11 +39,25 @@ class MapEditor(Displaying, Inputting):
             f.close()
             self.loadMapXml(mapXml)
         except IOError as err:
+            # TODO: should we even do this?
+            logging.warning('error while loading map file {0}'.format(fname))
+            raise err
+        else:
+            self.fname = fname
+    
+    def saveFile(self, fname = None):
+        if not fname:
+            fname = self.fname
+        try:
+            f = open(fname, 'w')
+            text = ET.tostring(self.saveMapXml())
+            f.write(text.decode())
+            f.close()
+        except IOError as err:
             logging.error(traceback.format_exc())
             raise err
-    
-    def saveFile(self, fname):
-        pass
+        else:
+            self.fname = fname
     
     def loadMapXml(self, mapXml):
         self.tiledMap = TiledMap.fromXml(mapXml)
@@ -67,6 +83,10 @@ class MapEditor(Displaying, Inputting):
                 self.tiledMap.putOn(self.cursor[0], self.cursor[1], 'ground', floor)
             elif ch == 'D':
                 logging.debug(ET.tostring(self.saveMapXml()))
+            elif ch == 'S':
+                logging.info('saving map to file {0}...'.format(self.fname))
+                self.saveFile()
+                
         except Exception as err:
             logging.error('unhandled exception while processing key')
             logging.error(err)
