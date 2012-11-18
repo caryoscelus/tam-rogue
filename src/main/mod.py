@@ -2,6 +2,7 @@ import logging
 import traceback
 
 from action import Action
+from mapgenerator import MapGenerator
 
 class Mod:
     def __init__(self, xml):
@@ -33,6 +34,9 @@ class Mod:
         elif self.modType == 'action':
             action = Action.fromXml(self.src)
             world.actions[action.name] = action
+        elif self.modType == 'mapGenerator':
+            generator = MapGenerator.fromXml(self.src)
+            world.mapGenerators[generator.name] = generator
         else:
             logging.warning('unknown mod type')
     

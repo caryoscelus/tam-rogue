@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modpack>
     <load file="character-mod.xml"/>
+    
     <load file="hit-action.xml"/>
     <load file="move-action.xml"/>
     <load file="die-action.xml"/>
     <load file="hp-check-action.xml"/>
     <load file="trap-action.xml"/>
+    
+    <load file="simple-generator.xml"/>
 </modpack>
