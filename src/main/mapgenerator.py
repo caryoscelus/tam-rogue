@@ -8,4 +8,9 @@ class MapGenerator:
         return self
     
     def loadXml(self, xml):
+        # TODO: load
         self.name = xml.attrib['name']
+    
+    def generate(self, tMap):
+        # TODO: work
+        tMap.getContent(2, 2, 'ground').attrib['char'] = '?'

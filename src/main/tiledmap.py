@@ -15,6 +15,7 @@ class TiledMap:
         self.layersOrder = layersOrder
         
         self.clear()
+        
         self.attrib = attrib
         self.exist = False
         self.alive = False
@@ -61,7 +62,7 @@ class TiledMap:
     def clear(self):
         def t(x, y):
             return Tile(self.layers, self.layersOrder)
-        self.content = self.genMap(t) #lambda x, y: Tile(self.layers))
+        self.content = self.genMap(t)
     
     def genMap(self, func):
         if self.width < 0 or self.height < 0:
@@ -103,7 +104,9 @@ class TiledMap:
             if not sysWorldRegistry.world.mapGenerators:
                 raise RuntimeError('no map generators')
             else:
-                raise NotImplementedError('map generation is not implemented yet')
+                # TODO: choose instead of getting first generator
+                generator = next(iter(sysWorldRegistry.world.mapGenerators.values()))
+                generator.generate(self)
         if self.alive:
             return next(self.life)
         else:
