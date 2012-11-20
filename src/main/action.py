@@ -30,7 +30,7 @@ class Action:
         return self
     
     def loadXml(self, xmlRoot):
-        if xmlRoot.tag != 'mod' or xmlRoot.get('type') != 'action':
+        if xmlRoot.tag != 'action':
             raise XmlLoadError(xmlRoot)
         
         self.name = xmlRoot.attrib['name']

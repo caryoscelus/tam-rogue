@@ -18,10 +18,7 @@ class Mod:
             raise EntityAttributeError(entity, source)
     
     def applyMod(self, world):
-        if self.modType == 'action':
-            action = Action.fromXml(self.src)
-            world.actions[action.name] = action
-        elif self.modType == 'mapGenerator':
+        if self.modType == 'mapGenerator':
             generator = MapGenerator.fromXml(self.src)
             world.mapGenerators[generator.name] = generator
         else:
@@ -37,6 +34,9 @@ class Mod:
                     for record in node:
                         values[record.get('in')] = record.get('out')
                     world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
+                elif node.tag == 'action':
+                    action = Action.fromXml(node)
+                    world.actions[action.name] = action
                 else:
                     logging.warning('unknown mod xml node tagged "{0}"'.format(node.tag))
     
