@@ -72,15 +72,17 @@ class Action:
                 try:
                     obj = args[key]
                 except KeyError:
-                    raise NotImplementedError('..')
-                if formalArgs[key] == 'object':
-                    return EntityWrapper(obj)
-                elif formalArgs[key] == 'integer' and type(obj) == int:
-                    return obj
-                elif formalArgs[key] == 'string' and type(obj) == str:
-                    return obj
+                    # put all arguments that are not found in formalArgs
+                    return {k:args[k] for k in args if not (k in formalArgs)}
                 else:
-                    raise TypeError('type mismatch')
+                    if formalArgs[key] == 'object':
+                        return EntityWrapper(obj)
+                    elif formalArgs[key] == 'integer' and type(obj) == int:
+                        return obj
+                    elif formalArgs[key] == 'string' and type(obj) == str:
+                        return obj
+                    else:
+                        raise TypeError('type mismatch')
             
             def defaultValue(argType):
                 if argType == 'integer':
