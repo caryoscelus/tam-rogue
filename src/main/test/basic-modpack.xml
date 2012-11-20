@@ -2,6 +2,8 @@
 <mod>
     <require file="character-mod.xml"/>
     
+    <require file="trap.xml"/>
+    
     <require file="hit-action.xml"/>
     <require file="move-action.xml"/>
     <require file="die-action.xml"/>

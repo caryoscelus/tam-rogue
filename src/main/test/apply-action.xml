@@ -5,7 +5,7 @@
         <arguments name="args"/>
         <code>
 func = subject.attr('apply')
-func.call(args)
+action(func, args)
         </code>
     </action>
 </mod>
