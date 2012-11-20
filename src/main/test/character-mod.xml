@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mod type="attrib">
+<mod>
     <map source="class" target="char">
         <value in="human" out="@"/>
         <value in="wall" out="-"/>

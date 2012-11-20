@@ -18,18 +18,7 @@ class Mod:
             raise EntityAttributeError(entity, source)
     
     def applyMod(self, world):
-        if self.modType == 'attrib':
-            for group in self.src:
-                if group.tag == 'map':
-                    source = group.attrib['source']
-                    target = group.attrib['target']
-                    values = {}
-                    for record in group:
-                        values[record.get('in')] = record.get('out')
-                    world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
-                else:
-                    raise NotImplementedError('only mapping supported')
-        elif self.modType == 'action':
+        if self.modType == 'action':
             action = Action.fromXml(self.src)
             world.actions[action.name] = action
         elif self.modType == 'mapGenerator':
@@ -41,6 +30,13 @@ class Mod:
                 if node.tag == 'require':
                     fname = node.attrib['file']
                     worldregistry.sysWorldRegistry.loadMod(fname)
+                elif node.tag == 'map':
+                    source = node.attrib['source']
+                    target = node.attrib['target']
+                    values = {}
+                    for record in node:
+                        values[record.get('in')] = record.get('out')
+                    world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
     
     def undoMod(self, world):
         raise NotImplementedError('undo is not supported now')
