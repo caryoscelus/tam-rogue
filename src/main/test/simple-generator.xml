@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<mod type="mapGenerator" name="simple">
-    <code>
-info('map generator')
-    </code>
-</mod>
