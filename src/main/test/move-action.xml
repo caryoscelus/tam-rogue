@@ -7,6 +7,17 @@
         
         <code>
 subject.move(dx, dy)
+
+# process traps
+tile = subject.getTile()
+traps = tile.get('trap')
+try:
+    ti = iter(traps)
+except TypeError:
+    traps = [traps]
+for trap in traps:
+    # TODO: random
+    trap.trigger(subject)
         </code>
     </action>
 </mod>

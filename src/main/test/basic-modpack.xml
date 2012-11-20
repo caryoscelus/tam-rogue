@@ -6,7 +6,6 @@
     <require file="move-action.xml"/>
     <require file="die-action.xml"/>
     <require file="hp-check-action.xml"/>
-    <require file="trap-action.xml"/>
     
     <require file="simple-generator.xml"/>
 </mod>
