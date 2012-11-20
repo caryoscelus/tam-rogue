@@ -6,7 +6,6 @@
     
     <action name="hp-check">
         <object name="subject"/>
-        <bindEntity entity="subject" attrib="hp"/>
         
         <code>
 hp = subject.attr('hp')
