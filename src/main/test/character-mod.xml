@@ -5,5 +5,6 @@
         <value in="wall" out="-"/>
         <value in="floor" out="."/>
         <value in="trap" out="^"/>
+        <value in="ladder" out=">"/>
     </map>
 </mod>

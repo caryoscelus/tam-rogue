@@ -21,9 +21,12 @@ def generateWorld():
     wall = Entity({'class':'wall'})
     human = Entity({'class':'human', 'hp':2})
     trap = Entity({'class':'trap', 'hurt':1})
+    ladder = Entity({'class':'ladder', 'destination':2})
     human.alive = True
     
-    map0 = TiledMap(20, 20, {'ground':None, 'trap':None, 'objects':[]}, ['ground', 'objects'])
+    map0 = TiledMap(20, 20,
+            {'ground':None, 'trap':None, 'objects':[], 'monster':None, 'feature':None},
+            ['ground', 'feature', 'trap', 'objects', 'monster'])
     map0.alive = True
     map0.exist = True
     map0.queue.push(human)
@@ -36,9 +39,10 @@ def generateWorld():
     for x in range(2, 18):
         map0.getTile(x, 10).put('ground', wall)
     
-    # human
-    map0.putOn(12, 4, 'objects', human)
+    # objects
+    map0.putOn(12, 4, 'monster', human)
     map0.putOn(15, 4, 'trap', trap)
+    map0.putOn(15, 7, 'feature', ladder)
     
     sysWorldRegistry.world.maps.append(map0)
     
