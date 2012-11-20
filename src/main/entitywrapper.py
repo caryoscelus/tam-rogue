@@ -13,7 +13,11 @@ class EntityWrapper:
         def closure(attrib):
             if attrib in self.entityApi:
                 try:
-                    return entity.__getattribute__(attrib)
+                    func = entity.__getattribute__(attrib)
+                    def wrappedFunc(*args):
+                        result = func(*args)
+                        return EntityWrapper(result)
+                    return wrappedFunc
                 except AttributeError as err:
                     logging.warning('could not find {0} which is in api'.format(attrib))
                     logging.debug(entity)
