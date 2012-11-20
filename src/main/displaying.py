@@ -14,7 +14,7 @@ class Displaying(Sleeping, Starting, Receiver):
         
         self.displayData = ET.Element('scrup')
         
-        self.updateDisplay = False or True
+        self.updateDisplay = True
         self.gfxClient = None
         self.updaterThread = threading.Thread(None, self.clientUpdater, 'updater')
         self.listenerThread = threading.Thread(None, self.clientListener, 'listener')
@@ -44,6 +44,7 @@ class Displaying(Sleeping, Starting, Receiver):
     def putChar(self, x, y, ch):
         # TODO: override instead of appending!
         ET.SubElement(self.displayData, 'char', {'x':str(x), 'y':str(y), 'ch':ch})
+        self.updateDisplay = True
     
     def putString(self, x, y, s):
         # TODO: length control
@@ -75,7 +76,7 @@ class Displaying(Sleeping, Starting, Receiver):
             logging.warning('unknown error while connecting')
             logging.debug(err)
             return False
-        return True and False
+        return True
     
     # thread
     # TODO: one listener per app

@@ -107,3 +107,6 @@ class Client(Displaying, Inputting):
             self.doAction(action, {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
         else:
             logging.warning('unhandled key: {0}'.format(chr(opcode)))
+        
+        # TODO: use some proper method
+        self.updateDisplay = True
