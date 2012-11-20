@@ -1,6 +1,7 @@
 import logging
 
 from sleeping import Sleeping
+from entitywatcher import EntityWatcher
 
 class World(Sleeping):
     def __init__(self):
@@ -56,3 +57,17 @@ class World(Sleeping):
     
     def watchPosition(self, target, name):
         self.watch(self.tileWatchers, target, name)
+    
+    def addBinding(self, targetType, event, action, opt, args):
+        if targetType == 'entity':
+            # TODO: proper bindings, don't just rely on watcher
+            binding = None
+            for key in args.keys():
+                if args[key] == 'target':
+                    binding = key
+            if event == 'attrib':
+                self.watchAttr(EntityWatcher(action, binding), opt['attrib'])
+            else:
+                logging.warning('addBinding: unknown event {0}'.format(event))
+        else:
+            logging.warning('addBinding: unknown targetType {0}'.format(targetType))

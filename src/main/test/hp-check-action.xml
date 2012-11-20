@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod>
+    <bind action="hp-check" target="entity" event="attrib" attrib="hp">
+        <subject value="target"/>
+    </bind>
+    
     <action name="hp-check">
         <object name="subject"/>
         <bindEntity entity="subject" attrib="hp"/>

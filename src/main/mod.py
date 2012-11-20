@@ -31,6 +31,15 @@ class Mod:
             elif node.tag == 'action':
                 action = Action.fromXml(node)
                 world.actions[action.name] = action
+            elif node.tag == 'bind':
+                actionName = node.attrib['action']
+                targetType = node.attrib['target']
+                event = node.attrib['event']
+                opt = {key:node.attrib[key] for key in node.attrib.keys() if not (key in (
+                    'action', 'target', 'event'
+                ))}
+                args = {e.tag : e.attrib['value'] for e in node}
+                world.addBinding(targetType, event, actionName, opt, args)
             else:
                 logging.warning('unknown mod xml node tagged "{0}"'.format(node.tag))
     

@@ -1,4 +1,5 @@
 import logging
+import worldregistry
 
 # TODO: merge with TileWatcher
 class EntityWatcher:
@@ -7,4 +8,6 @@ class EntityWatcher:
         self.binding = binding
     
     def notify(self, entity, name):
+        if isinstance(self.action, str):
+            self.action = worldregistry.sysWorldRegistry.world.actions[self.action]
         self.action.applyAction({self.binding:entity})
