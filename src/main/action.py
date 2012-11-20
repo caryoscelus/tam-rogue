@@ -17,7 +17,7 @@ import actionapi
 # action system:
 #   * entity handler asks to 
 class Action:
-    TYPES = {'object', 'integer', 'string'}
+    TYPES = {'object', 'integer', 'string', 'arguments'}
     
     def __init__(self):
         self.name = None
@@ -68,7 +68,11 @@ class Action:
         
         def launchCode(args):
             # TODO: make integer->int, string->str conversion more proper
-            def wrapper(obj, key):
+            def wrapper(args, key):
+                try:
+                    obj = args[key]
+                except KeyError:
+                    raise NotImplementedError('..')
                 if formalArgs[key] == 'object':
                     return EntityWrapper(obj)
                 elif formalArgs[key] == 'integer' and type(obj) == int:
@@ -85,15 +89,19 @@ class Action:
                     return ''
                 elif argType == 'object':
                     return None
+                elif argType == 'arguments':
+                    return {}
             
             # args that are not present in formalArgs passed
             if set(args.keys()).difference(set(formalArgs.keys())):
                 logging.debug(args)
                 logging.debug(formalArgs)
-                raise ActionError('undefined args passed')
+                #raise ActionError('undefined args passed')
             wrappers = {}
-            wrappers.update({key : defaultValue(formalArgs[key]) for key in formalArgs})
-            wrappers.update({key : wrapper(args[key], key) for key in args})
+            wrappers.update({
+                key : (defaultValue(formalArgs[key]) or wrapper(args, key)) \
+                    for key in formalArgs
+            })
             try:
                 exec(compiled, ns, wrappers)
             except:

@@ -2,9 +2,10 @@
 <mod>
     <action name="apply">
         <object name="subject"/>
+        <arguments name="args"/>
         <code>
 func = subject.attr('apply')
-func.call()
+func.call(args)
         </code>
     </action>
 </mod>
