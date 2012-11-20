@@ -13,13 +13,16 @@ subject.move(dx, dy)
 # process traps
 tile = subject.getTile()
 traps = tile.get('trap')
-try:
-    ti = iter(traps)
-except TypeError:
-    traps = [traps]
-for trap in traps:
-    # TODO: random
-    action('apply', {'subject' : trap, 'target' : subject})
+if traps:
+    try:
+        ti = iter(traps)
+    except TypeError:
+        traps = [traps]
+    for trap in traps:
+        # TODO: random
+        action('apply', {'subject' : trap, 'target' : subject})
+else:
+    info('user was lucky enough to not step on the trap')
         </code>
     </action>
 </mod>
