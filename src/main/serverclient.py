@@ -38,6 +38,11 @@ class ServerClient(Sleeping, EntityController):
         else:
             raise NotImplementedError('requesting entity to be choosed from server is not supported yet')
     
+    # to be called on client side
+    def stop(self):
+        # TODO: permissions!
+        self.server.stop()
+    
     def live(self, entity):
         if self.entity != entity:
             raise EntityControllerMismatchError(self.entity, entity)

@@ -114,10 +114,14 @@ class Client(Displaying, Inputting):
         # TODO: use some proper method
         self.updateDisplay = True
     
+    def gameOver(self):
+        self.putString(0, 0, 'game over, thou shall exit now')
+        logging.info('game over')
+        self.quit = True
+        self.serverClient.stop()
+    
     def attendFuneral(self, entity):
         if self.entity == entity:
-            self.putString(0, 0, 'game over, thou shall exit now')
-            logging.info('game over')
-            self.quit = True
+            self.gameOver()
         else:
             logging.warning('invited to funeral of {0}'.format(entity))
