@@ -1,4 +1,5 @@
-# safe builtins
+# safe & useful builtins
+# TODO: full list
 from builtins import Exception, \
                      int, str, dict, list
 

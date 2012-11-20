@@ -1,15 +1,13 @@
 import logging
 import traceback
-
-from action import Action
-from mapgenerator import MapGenerator
+import xml.etree.ElementTree as ET
 
 class Mod:
     def __init__(self, xml):
         self.src = xml
         if not self.src.tag == 'mod':
             raise RuntimeError('wrong mod xml')
-        self.modType = self.src.attrib['type']
+        self.modType = self.src.attr('type')
     
     def attrFunc(self, entity, target, source, values):
         try:
@@ -38,9 +36,16 @@ class Mod:
             generator = MapGenerator.fromXml(self.src)
             world.mapGenerators[generator.name] = generator
         else:
-            logging.warning('unknown mod type')
+            # TODO: port everything else here
+            for node in self.src:
+                if node.tag == 'require':
+                    fname = node.attrib['file']
+                    worldregistry.sysWorldRegistry.loadMod(fname)
     
     def undoMod(self, world):
         raise NotImplementedError('undo is not supported now')
 
 from entity import EntityAttributeError
+from action import Action
+from mapgenerator import MapGenerator
+import worldregistry
