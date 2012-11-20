@@ -22,6 +22,7 @@ class Server:
                 logging.error('unhandled exception in world server thread:')
                 logging.error(str(err))
                 logging.debug(traceback.format_exc())
+        logging.info('server main() quit')
     
     def start(self):
         self.thread = threading.Thread(None, self.main, 'world-server', ())

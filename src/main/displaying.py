@@ -35,6 +35,7 @@ class Displaying(Sleeping, Starting, Receiver):
                 logging.error('unhandled exception in clientUpdater thread:')
                 logging.error(str(err))
                 logging.debug(traceback.format_exc())
+        logging.info('clientUpdater() finished')
     
     def connectClient(self, gfxClient):
         self.gfxClient = gfxClient

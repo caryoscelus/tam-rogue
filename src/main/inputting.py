@@ -26,10 +26,12 @@ class Inputting(Starting, Receiver):
             except Exception as err:
                 logging.error('error while waiting key')
                 logging.debug(err)
+        logging.info('inputting loop() finished')
     
     def readKey(self):
         while not self.quit:
             try:
+                # TODO: don't wait forever
                 xml = self.listen()
                 root = ET.fromstring(xml)
                 if root.tag == 'input':
