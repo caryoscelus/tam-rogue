@@ -7,7 +7,7 @@ class Mod:
         self.src = xml
         if not self.src.tag == 'mod':
             raise RuntimeError('wrong mod xml')
-        self.modType = self.src.attr('type')
+        self.modType = self.src.get('type')
     
     def attrFunc(self, entity, target, source, values):
         try:

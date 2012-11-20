@@ -14,7 +14,6 @@ from tiledmap import *
 from tile import *
 from entity import *
 from worldregistry import *
-import modpack
 
 # TODO: remove from here; make proper loading/generation
 def generateWorld():
@@ -49,7 +48,7 @@ def generateWorld():
 def testClientServer(server, port):
     myServer = Server()
     
-    modpack.loadPack('basic-modpack.xml')
+    sysWorldRegistry.loadMod('basic-modpack.xml')
     human = generateWorld()
     
     myServer.start()
