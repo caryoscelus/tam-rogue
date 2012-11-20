@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mod type="action" name="move">
-    <!-- list of used objects -->
-    <object name="subject"/>
-    <integer name="dx"/>
-    <integer name="dy"/>
-    
-    <code>
+<mod>
+    <action name="move">
+        <object name="subject"/>
+        <integer name="dx"/>
+        <integer name="dy"/>
+        
+        <code>
 subject.move(dx, dy)
-    </code>
+        </code>
+    </action>
 </mod>

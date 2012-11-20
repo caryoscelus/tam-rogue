@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mod type="action" name="hp-check">
-    <object name="subject"/>
-    <bindEntity entity="subject" attrib="hp"/>
-    
-    <code>
+<mod>
+    <action name="hp-check">
+        <object name="subject"/>
+        <bindEntity entity="subject" attrib="hp"/>
+        
+        <code>
 hp = subject.attr('hp')
 if hp &lt;= 0:
     action('die', {'subject':subject, 'reason':'hp = {0}'.format(hp)})
-    </code>
+        </code>
+    </action>
 </mod>

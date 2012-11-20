@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mod type="action" name="hit">
-    <!-- list of used objects -->
-    <object name="actor"><attrs class="monster" /></object>
-    <object name="tool"/>
-    <object name="target"/>
-    
-    <code>
+<mod>
+    <action name="hit">
+        <!-- list of used objects -->
+        <object name="actor"><attrs class="monster" /></object>
+        <object name="tool"/>
+        <object name="target"/>
+        
+        <code>
 target.changeNumericAttr('hp', -1)
 info('hp: {0}'.format(target.attr('hp')))
-    </code>
+        </code>
+    </action>
 </mod>

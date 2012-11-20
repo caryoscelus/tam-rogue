@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mod type="action" name="trap">
-    <object name="subject"/>
-    <string name="notifyType"/>
-    <object name="tile"/>
-    <bindTile tile="tile" tileEntity="subject" notify="notifyType" position="objects"/>
-    
-    <code>
+<mod>
+    <action name="trap">
+        <object name="subject"/>
+        <string name="notifyType"/>
+        <object name="tile"/>
+        <bindTile tile="tile" tileEntity="subject" notify="notifyType" position="objects"/>
+        
+        <code>
 if notifyType == 'add':
     # TODO: direct notification to trap entity?
     # this should make it faster..
@@ -19,5 +20,6 @@ if notifyType == 'add':
             warning('this trap doesn\'t hurt or subject isn\'t hurtable!')
     else:
         debug('looks like there is no trap')
-    </code>
+        </code>
+    </action>
 </mod>

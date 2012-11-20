@@ -37,6 +37,8 @@ class Mod:
                     for record in node:
                         values[record.get('in')] = record.get('out')
                     world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
+                else:
+                    logging.warning('unknown mod xml node tagged "{0}"'.format(node.tag))
     
     def undoMod(self, world):
         raise NotImplementedError('undo is not supported now')
