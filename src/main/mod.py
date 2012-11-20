@@ -7,7 +7,6 @@ class Mod:
         self.src = xml
         if not self.src.tag == 'mod':
             raise RuntimeError('wrong mod xml')
-        self.modType = self.src.get('type')
     
     def attrFunc(self, entity, target, source, values):
         try:
@@ -18,32 +17,26 @@ class Mod:
             raise EntityAttributeError(entity, source)
     
     def applyMod(self, world):
-        if self.modType == 'mapGenerator':
-            generator = MapGenerator.fromXml(self.src)
-            world.mapGenerators[generator.name] = generator
-        else:
-            # TODO: port everything else here
-            for node in self.src:
-                if node.tag == 'require':
-                    fname = node.attrib['file']
-                    worldregistry.sysWorldRegistry.loadMod(fname)
-                elif node.tag == 'map':
-                    source = node.attrib['source']
-                    target = node.attrib['target']
-                    values = {}
-                    for record in node:
-                        values[record.get('in')] = record.get('out')
-                    world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
-                elif node.tag == 'action':
-                    action = Action.fromXml(node)
-                    world.actions[action.name] = action
-                else:
-                    logging.warning('unknown mod xml node tagged "{0}"'.format(node.tag))
+        for node in self.src:
+            if node.tag == 'require':
+                fname = node.attrib['file']
+                worldregistry.sysWorldRegistry.loadMod(fname)
+            elif node.tag == 'map':
+                source = node.attrib['source']
+                target = node.attrib['target']
+                values = {}
+                for record in node:
+                    values[record.get('in')] = record.get('out')
+                world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
+            elif node.tag == 'action':
+                action = Action.fromXml(node)
+                world.actions[action.name] = action
+            else:
+                logging.warning('unknown mod xml node tagged "{0}"'.format(node.tag))
     
     def undoMod(self, world):
         raise NotImplementedError('undo is not supported now')
 
 from entity import EntityAttributeError
 from action import Action
-from mapgenerator import MapGenerator
 import worldregistry
