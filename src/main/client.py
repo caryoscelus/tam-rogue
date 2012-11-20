@@ -27,6 +27,7 @@ class Client(Displaying, Inputting):
     def askForEntity(self, entity = None):
         try:
             self.serverClient.requestEntity(entity)
+            self.entity.watchDeath(self)
         except AttributeError:
             logging.warning('not connected')
     
@@ -112,3 +113,11 @@ class Client(Displaying, Inputting):
         
         # TODO: use some proper method
         self.updateDisplay = True
+    
+    def attendFuneral(self, entity):
+        if self.entity == entity:
+            self.putString(0, 0, 'game over, thou shall exit now')
+            logging.info('game over')
+            self.quit = True
+        else:
+            logging.warning('invited to funeral of {0}'.format(entity))

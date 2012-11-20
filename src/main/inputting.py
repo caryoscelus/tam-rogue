@@ -28,7 +28,7 @@ class Inputting(Starting, Receiver):
                 logging.debug(err)
     
     def readKey(self):
-        while True:
+        while not self.quit:
             try:
                 xml = self.listen()
                 root = ET.fromstring(xml)
@@ -50,6 +50,7 @@ class Inputting(Starting, Receiver):
                 logging.error('readKey: unknown exception')
             
             self.sleep()
+        return None
     
     def processKey(self, opcode):
         try:

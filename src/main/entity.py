@@ -20,6 +20,7 @@ class Entity:
         self.position = None
         
         self.watchers = {}
+        self.deathWatchers = set()
     
     def __str__(self):
         return '<Entity: {0} >'.format(self.attrib)
@@ -67,6 +68,14 @@ class Entity:
             logging.warning('destroying dead entity')
         
         self.dead = True
+        self.funeral()
+    
+    def watchDeath(self, watcher):
+        self.deathWatchers.update({watcher})
+    
+    def funeral(self):
+        for watcher in self.deathWatchers:
+            watcher.attendFuneral(self)
     
     def attr(self, name):
         self.check()
