@@ -105,8 +105,10 @@ class Client(Displaying, Inputting):
         elif ch in movement.keys():
             action = sysWorldRegistry.world.actions['move']
             self.doAction(action, {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
+        elif opcode == ord('r')-ord('a')+1:             # CTRL+R
+            logging.debug('manual redraw requested')
         else:
-            logging.warning('unhandled key: {0}'.format(chr(opcode)))
+            logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
         
         # TODO: use some proper method
         self.updateDisplay = True
