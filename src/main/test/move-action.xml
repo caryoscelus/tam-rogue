@@ -17,7 +17,7 @@ except TypeError:
     traps = [traps]
 for trap in traps:
     # TODO: random
-    trap.trigger(subject)
+    action('apply', {'subject' : trap, 'target' : subject})
         </code>
     </action>
 </mod>

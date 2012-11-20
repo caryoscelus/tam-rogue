@@ -10,7 +10,13 @@ from entity import EntityAttributeError
 def action(name, args):
     import worldregistry
     # TODO: proper action launching..
-    worldregistry.sysWorldRegistry.world.actions[name].applyAction(args)
+    try:
+        action = worldregistry.sysWorldRegistry.world.actions[name]
+    except KeyError:
+        warning('unknown action called')
+        traceback()
+    else:
+        action.applyAction(args)
 
 def traceback():
     import traceback

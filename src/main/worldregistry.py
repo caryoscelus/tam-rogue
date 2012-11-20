@@ -4,6 +4,7 @@ import logging
 from mod import Mod
 from world import World
 
+# TODO: eliminate class
 class WorldRegistry:
     def __init__(self):
         self.mods = {}
