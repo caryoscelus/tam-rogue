@@ -1,7 +1,7 @@
 # safe & useful builtins
 # TODO: full list
-from builtins import Exception, \
-                     int, str, dict, list
+from builtins import Exception, TypeError, \
+                     int, str, dict, list, iter
 
 from logging import debug, info, warning, error
 
