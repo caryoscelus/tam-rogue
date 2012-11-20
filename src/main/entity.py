@@ -114,8 +114,8 @@ class Entity:
             if name in watchList:
                 watcher.notify(self, name)
     
-    def getTile(self):
-        return self.onMap.getTile(self.x, self.y)
+    def getTile(self, dx = 0, dy = 0):
+        return self.onMap.getTile(self.x+dx, self.y+dy)
     
     def placeOn(self, onMap, x, y, position):
         self.onMap = onMap

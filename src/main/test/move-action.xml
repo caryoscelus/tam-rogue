@@ -8,10 +8,14 @@
         <integer name="dy"/>
         
         <code>
+# check if he can land there
+tile = subject.getTile(dx, dy)
+if not tile.get('ground').attr('standable'):
+    raise RuntimeError('entity tries to step on non-standable')
+
 subject.move(dx, dy)
 
 # process traps
-tile = subject.getTile()
 traps = tile.get('trap')
 if traps:
     try:
