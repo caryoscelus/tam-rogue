@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod>
+    <require file="apply-action.xml"/>
+    
     <action name="move">
         <object name="subject"/>
         <integer name="dx"/>

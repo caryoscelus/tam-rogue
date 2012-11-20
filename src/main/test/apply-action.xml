@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="apply">
+        <object name="subject"/>
+        <code>
+func = subject.attr('apply')
+func.call()
+        </code>
+    </action>
+</mod>
