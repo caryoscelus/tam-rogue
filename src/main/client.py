@@ -22,6 +22,13 @@ class Client(Displaying, Inputting):
         self.showingInv = False
         
         self.inputState = 'normal'
+        self.currentAction = None
+        self.actionArgs = None
+        self.actionArgsIter = None
+        self.actionArgsNext = None
+        
+        # keymaps
+        self.bindings = {}
     
     def loadMod(self, modFile):
         mod = worldregistry.modFromFile(modFile)
@@ -91,11 +98,54 @@ class Client(Displaying, Inputting):
             self.putString(40, 2, 'inventory is not empty')
             logging.warning('displaying inventory is not supported yet')
     
-    def bindKeys(self, keys, action, args):
-        pass
+    def bindKeys(self, keys, actionName, args):
+        # TODO: specific class?
+        action = (actionName, args)
+        for key in keys:
+            self.bindings[key] = action
+    
+    def processAction(self):
+        '''Try to process current action by replacing obvious arguments'''
+        while True:
+            argName = self.actionArgsNext
+            argType = self.actionArgs[argName]
+            if argType == 'entity':
+                self.actionArgs[argName] = self.entity
+                
+                try:
+                    self.actionArgsNext = next(self.actionArgsIter)
+                except StopIteration:
+                    # all args are processed, call action now
+                    self.doAction(self.currentAction, self.actionArgs)
+                    
+                    # TODO: move this to come cleaning function
+                    self.inputState = 'normal'
+                    self.actionArgsNext = None
+                    self.actionArgsIter = None
+                    self.actionArgs = None
+                    self.currentAction = None
+                    break
+            else:
+                logging.debug('unknown argType: {0}'.format(argType))
+                break
     
     def processKeyBindings(self, opcode):
-        raise UnknownKeyError
+        if self.inputState == 'normal':
+            ch = chr(opcode)
+            try:
+                actionName, args = self.bindings[ch]
+            except KeyError:
+                raise UnknownKeyError
+            
+            self.inputState = 'action'
+            self.currentAction = actionName
+            self.actionArgs = args
+            self.actionArgsIter = iter(args)
+            self.actionArgsNext = next(self.actionArgsIter)
+            
+            self.processAction()
+        else:
+            raise NotImplementedError('only "normal" inputState implemented')
     
     def processKey(self, opcode):
         # TODO: make customizable bindings
@@ -116,8 +166,6 @@ class Client(Displaying, Inputting):
             ch = chr(opcode)
             if ch == 'F':
                 self.doAction('hit', {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
-            elif ch == 'X':
-                self.doAction('suicide', {'subject':self.entity, 'reason':'user decided to die'})
             elif ch == '!':
                 self.showingLogs = not self.showingLogs
             elif ch == 'i':

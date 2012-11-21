@@ -26,6 +26,7 @@ class Inputting(Starting, Receiver):
             except Exception as err:
                 logging.error('error while waiting key')
                 logging.debug(err)
+                logging.debug(traceback.format_exc())
         logging.info('inputting loop() finished')
     
     def readKey(self):
