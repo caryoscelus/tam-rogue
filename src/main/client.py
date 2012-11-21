@@ -1,7 +1,7 @@
 import logging
 
 from displaying import Displaying
-from inputting import Inputting
+from inputting import Inputting, UnknownKeyError
 from mapvisualizer import MapVisualizer
 from action import Action
 import eventlogger
@@ -91,6 +91,9 @@ class Client(Displaying, Inputting):
             self.putString(40, 2, 'inventory is not empty')
             logging.warning('displaying inventory is not supported yet')
     
+    def processKeyBindings(self, opcode):
+        raise UnknownKeyError
+    
     def processKey(self, opcode):
         # TODO: make customizable bindings
         movement = {
@@ -104,22 +107,24 @@ class Client(Displaying, Inputting):
             'n' : (1, 1),
         }
         
-        ch = chr(opcode)
-        
-        if ch == 'F':
-            self.doAction('hit', {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
-        elif ch == 'X':
-            self.doAction('suicide', {'subject':self.entity, 'reason':'user decided to die'})
-        elif ch == '!':
-            self.showingLogs = not self.showingLogs
-        elif ch == 'i':
-            self.showingInv = not self.showingInv
-        elif ch in movement.keys():
-            self.doAction('move', {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
-        elif opcode == ord('r')-ord('a')+1:             # CTRL+R
-            logging.debug('manual redraw requested')
-        else:
-            logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
+        try:
+            self.processKeyBindings(opcode)
+        except UnknownKeyError:
+            ch = chr(opcode)
+            if ch == 'F':
+                self.doAction('hit', {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
+            elif ch == 'X':
+                self.doAction('suicide', {'subject':self.entity, 'reason':'user decided to die'})
+            elif ch == '!':
+                self.showingLogs = not self.showingLogs
+            elif ch == 'i':
+                self.showingInv = not self.showingInv
+            elif ch in movement.keys():
+                self.doAction('move', {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
+            elif opcode == ord('r')-ord('a')+1:             # CTRL+R
+                logging.debug('manual redraw requested')
+            else:
+                logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
         
         # TODO: use some proper method
         self.updateDisplay = True

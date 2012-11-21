@@ -59,3 +59,7 @@ class Inputting(Starting, Receiver):
             logging.debug('key pressed: {0}'.format(chr(opcode)))
         except Exception as err:
             logging.error(err)
+
+
+class UnknownKeyError(RuntimeError):
+    pass
