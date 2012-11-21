@@ -144,11 +144,19 @@ class Entity:
         self.position = None
     
     def move(self, dx, dy):
+        oldx = self.x
+        oldy = self.y
+        oldpos = self.position
+        
         # TODO: check movement
         x = self.x+dx
         y = self.y+dy
         
-        self.onMap.moveTo(self, x, y, self.position)
+        try:
+            self.onMap.moveTo(self, x, y, self.position)
+        except TileTakenError as err:
+            self.onMap.moveTo(self, oldx, oldy, oldpos)
+            raise err
     
     # TODO: merge with tile?
     def putChild(self, position, child):
@@ -178,6 +186,9 @@ class EntityPositionError(RuntimeError):
         self.entity = entity
         self.problem = problem
 
+class EntityCoordError(RuntimeError):
+    pass
+
 class EntityDeadError(RuntimeError):
     def __init__(self, entity = None):
         self.entity = entity
@@ -194,3 +205,4 @@ class EntityChildPositionError(RuntimeError):
     pass
 
 import worldregistry
+from tile import TileTakenError

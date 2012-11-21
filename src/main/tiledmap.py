@@ -1,8 +1,9 @@
 import xml.etree.ElementTree as ET
+import logging
 
 from tile import Tile
 from entityqueue import EntityQueue, EmptyQueueError
-from entity import EntityDeadError
+from entity import EntityDeadError, EntityCoordError
 from miscerrors import XmlLoadError
 import worldregistry
 
@@ -89,13 +90,20 @@ class TiledMap:
         
         x = entity.x
         y = entity.y
+        
+        if x == None or y == None:
+            raise EntityCoordError(entity)
+        
         position = entity.position
         entity.removeFrom(self, x, y, position)
         tile = self.getTile(x, y)
         tile.remove(entity, position)
     
     def moveTo(self, entity, x, y, position):
-        self.removeFromMap(entity, queueChange=False)
+        try:
+            self.removeFromMap(entity, queueChange=False)
+        except EntityCoordError:
+            logging.warning('moveTo() called when entity had no position')
         self.putOn(x, y, position, entity, queueChange=False)
     
     def step(self):
