@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 
 from entity import Entity, EntityDeadError
 from miscerrors import XmlLoadError
-from worldregistry import sysWorldRegistry
+import worldregistry
 
 class Tile:
     # order - list: int -> string
@@ -69,7 +69,7 @@ class Tile:
         self.order = order
         self.content = content
         
-        sysWorldRegistry.world.addTileLayers(emptyContent, order)
+        worldregistry.world.addTileLayers(emptyContent, order)
     
     def empty(self):
         if not self.content:
@@ -92,7 +92,7 @@ class Tile:
             self.content[position] = None
             return None
         except KeyError:                                # raised on no position
-            extPositions = sysWorldRegistry.world.layers
+            extPositions = worldregistry.world.layers
             try:
                 t = copy.deepcopy(extPositions[position])
                 self.content[position] = t
@@ -175,11 +175,11 @@ class Tile:
             return False
     
     def notify(self, position, entity, notification):
-        for watcher in self.watchers or sysWorldRegistry.world.tileWatchers:
+        for watcher in self.watchers or worldregistry.world.tileWatchers:
             try:
                 watchList = self.watchers[watcher]
             except KeyError:
-                watchList = sysWorldRegistry.world.tileWatchers[watcher]
+                watchList = worldregistry.world.tileWatchers[watcher]
             if position in watchList:
                 watcher.notify(self, position, notification, entity)
     

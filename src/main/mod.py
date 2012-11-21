@@ -20,7 +20,7 @@ class Mod:
         for node in self.src:
             if node.tag == 'require':
                 fname = node.attrib['file']
-                worldregistry.sysWorldRegistry.loadMod(fname)
+                worldregistry.loadMod(fname)
             elif node.tag == 'map':
                 source = node.attrib['source']
                 target = node.attrib['target']

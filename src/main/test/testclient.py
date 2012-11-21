@@ -44,7 +44,7 @@ def generateWorld():
     map0.putOn(15, 4, 'trap', trap)
     map0.putOn(15, 7, 'feature', ladder)
     
-    sysWorldRegistry.world.maps.append(map0)
+    worldregistry.world.maps.append(map0)
     
     return human
 
@@ -52,7 +52,7 @@ def generateWorld():
 def testClientServer(server, port):
     myServer = Server()
     
-    sysWorldRegistry.loadMod('basic-modpack.xml')
+    worldregistry.loadMod('basic-modpack.xml')
     human = generateWorld()
     
     myServer.start()

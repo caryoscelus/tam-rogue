@@ -9,7 +9,7 @@ from displaying import Displaying
 from inputting import Inputting
 from tiledmap import TiledMap
 from mapvisualizer import MapVisualizer
-from worldregistry import sysWorldRegistry
+import worldregistry
 from entity import Entity
 
 # TODO: port to actions
@@ -97,7 +97,7 @@ def main(argv):
     if len(argv) < 2:
         raise RuntimeError('not enough command line arguments')
     
-    sysWorldRegistry.loadMod('test/character-mod.xml')
+    worldregistry.loadMod('test/character-mod.xml')
     
     me = MapEditor()
     # TODO: remove constants

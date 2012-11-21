@@ -9,5 +9,5 @@ class EntityWatcher:
     
     def notify(self, entity, name):
         if isinstance(self.action, str):
-            self.action = worldregistry.sysWorldRegistry.world.actions[self.action]
+            self.action = worldregistry.world.actions[self.action]
         self.action.applyAction({self.binding:entity})

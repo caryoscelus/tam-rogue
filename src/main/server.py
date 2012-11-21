@@ -3,7 +3,7 @@ import traceback
 import logging
 
 from serverclient import ServerClient
-from worldregistry import sysWorldRegistry
+import worldregistry
 
 class Server:
     def __init__(self):
@@ -14,7 +14,7 @@ class Server:
     
     def main(self):
         # NOTE: this makes impossible to switch worlds
-        self.life = sysWorldRegistry.world.live()
+        self.life = worldregistry.world.live()
         while not self.quit:
             try:
                 next(self.life)

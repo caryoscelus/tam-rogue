@@ -44,7 +44,7 @@ class Action:
                 attrib = node.attrib['attrib']
                 binding = node.attrib['entity']
                 watcher = EntityWatcher(self, binding)
-                worldregistry.sysWorldRegistry.world.watchAttr(watcher, attrib)
+                worldregistry.world.watchAttr(watcher, attrib)
             elif node.tag == 'bindTile':
                 position = node.attrib['position']
                 # TODO: more proper checking?
@@ -54,7 +54,7 @@ class Action:
                     ))
                 }
                 watcher = TileWatcher(self, binding)
-                worldregistry.sysWorldRegistry.world.watchPosition(watcher, position)
+                worldregistry.world.watchPosition(watcher, position)
             elif node.tag == 'code':
                 code = node.text
             else:

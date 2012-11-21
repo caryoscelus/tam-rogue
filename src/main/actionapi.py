@@ -11,7 +11,7 @@ def action(name, args):
     import worldregistry
     # TODO: proper action launching..
     try:
-        action = worldregistry.sysWorldRegistry.world.actions[name]
+        action = worldregistry.world.actions[name]
     except KeyError:
         warning('unknown action called')
         traceback()

@@ -84,7 +84,7 @@ class Entity:
             return self.attrib[name]
         except KeyError:
             try:
-                return sysWorldRegistry.world.attrList[name](self)
+                return worldregistry.world.attrList[name](self)
             except AttributeError:                      # no world?..
                 logging.warning('could not reach modding')
                 raise EntityAttributeError(self, name)
@@ -115,11 +115,11 @@ class Entity:
             self.watchers[target] = {name}
     
     def notifyAttr(self, name):
-        for watcher in self.watchers or sysWorldRegistry.world.entityWatchers:
+        for watcher in self.watchers or worldregistry.world.entityWatchers:
             try:
                 watchList = self.watchers[watcher]
             except KeyError:
-                watchList = sysWorldRegistry.world.entityWatchers[watcher]
+                watchList = worldregistry.world.entityWatchers[watcher]
             if name in watchList:
                 watcher.notify(self, name)
     
@@ -193,4 +193,4 @@ class EntityAttributeError(RuntimeError):
 class EntityChildPositionError(RuntimeError):
     pass
 
-from worldregistry import sysWorldRegistry
+import worldregistry

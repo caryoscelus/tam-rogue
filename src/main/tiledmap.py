@@ -4,7 +4,7 @@ from tile import Tile
 from entityqueue import EntityQueue, EmptyQueueError
 from entity import EntityDeadError
 from miscerrors import XmlLoadError
-from worldregistry import sysWorldRegistry
+import worldregistry
 
 class TiledMap:
     def __init__(self, width = 0, height = 0, layers = {}, layersOrder = [], attrib = {}):
@@ -101,11 +101,11 @@ class TiledMap:
     def step(self):
         if not self.exist:
             # generate map
-            if not sysWorldRegistry.world.mapGenerators:
+            if not worldregistry.world.mapGenerators:
                 raise RuntimeError('no map generators')
             else:
                 # TODO: choose instead of getting first generator
-                generator = next(iter(sysWorldRegistry.world.mapGenerators.values()))
+                generator = next(iter(worldregistry.world.mapGenerators.values()))
                 generator.generate(self)
         if self.alive:
             return next(self.life)

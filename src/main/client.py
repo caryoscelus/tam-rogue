@@ -3,9 +3,9 @@ import logging
 from displaying import Displaying
 from inputting import Inputting
 from mapvisualizer import MapVisualizer
-from worldregistry import sysWorldRegistry
 from action import Action
 import eventlogger
+import worldregistry
 
 class Client(Displaying, Inputting):
     def __init__(self):
@@ -53,7 +53,7 @@ class Client(Displaying, Inputting):
         # - forbid direct access to world
         # - draw vision, not actual map
         # - draw current map
-        self.displayData = self.mapVisualizer.toXml(sysWorldRegistry.world.maps[0])
+        self.displayData = self.mapVisualizer.toXml(worldregistry.world.maps[0])
         
         if self.showingLogs:
             self.showLogs()
@@ -94,17 +94,17 @@ class Client(Displaying, Inputting):
         ch = chr(opcode)
         
         if ch == 'F':
-            action = sysWorldRegistry.world.actions['hit']
+            action = worldregistry.world.actions['hit']
             self.doAction(action, {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
         elif ch == 'X':
-            action = sysWorldRegistry.world.actions['die']
+            action = worldregistry.world.actions['die']
             self.doAction(action, {'subject':self.entity, 'reason':'user decided to die'})
         elif ch == '!':
             self.showingLogs = not self.showingLogs
         elif ch == 'i':
             self.showingInv = not self.showingInv
         elif ch in movement.keys():
-            action = sysWorldRegistry.world.actions['move']
+            action = worldregistry.world.actions['move']
             self.doAction(action, {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
         elif opcode == ord('r')-ord('a')+1:             # CTRL+R
             logging.debug('manual redraw requested')
