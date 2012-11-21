@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod>
     <keymap>
-        
+        <action name="suicide">
+            <bind key="X"/>
+        </action>
     </keymap>
 </mod>

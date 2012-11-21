@@ -20,6 +20,8 @@ class Client(Displaying, Inputting):
         # UI
         self.showingLogs = False
         self.showingInv = False
+        
+        self.inputState = 'normal'
     
     def loadMod(self, modFile):
         mod = worldregistry.modFromFile(modFile)
@@ -65,6 +67,13 @@ class Client(Displaying, Inputting):
         if self.showingInv:
             self.showInv()
         
+        if self.inputState == 'normal':
+            pass
+        elif self.inputState == 'direction':
+            self.putString(0, 20, 'direction?')
+        elif self.inputState == 'list':
+            self.putString(0, 20, 'list element?')
+        
         super().redraw()
     
     def showLogs(self):
@@ -100,7 +109,7 @@ class Client(Displaying, Inputting):
         if ch == 'F':
             self.doAction('hit', {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
         elif ch == 'X':
-            self.doAction('die', {'subject':self.entity, 'reason':'user decided to die'})
+            self.doAction('suicide', {'subject':self.entity, 'reason':'user decided to die'})
         elif ch == '!':
             self.showingLogs = not self.showingLogs
         elif ch == 'i':
