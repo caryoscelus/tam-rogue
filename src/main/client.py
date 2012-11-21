@@ -33,14 +33,18 @@ class Client(Displaying, Inputting):
         self.showingLogs = False
         self.showingInv = False
         
+        self.cleanActionState()
+        
+        # keymaps
+        self.bindings = {}
+    
+    def cleanActionState(self):
+        '''Reset all action inputting variables'''
         self.inputState = 'normal'
         self.currentAction = None
         self.actionArgs = None
         self.actionArgsIter = None
         self.actionArgsNext = None
-        
-        # keymaps
-        self.bindings = {}
     
     def loadMod(self, modFile):
         mod = worldregistry.modFromFile(modFile)
@@ -124,12 +128,7 @@ class Client(Displaying, Inputting):
             # all args are processed, call action now
             self.doAction(self.currentAction, self.actionArgs)
             
-            # TODO: move this to come cleaning function
-            self.inputState = 'normal'
-            self.actionArgsNext = None
-            self.actionArgsIter = None
-            self.actionArgs = None
-            self.currentAction = None
+            self.cleanActionState()
             return True
         return False
     
