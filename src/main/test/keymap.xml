@@ -8,7 +8,7 @@
         <action name="fight">
             <arg name="subject" value="entity"/>
             <arg name="target" value="direction"/>
-            <bind key="f"/>
+            <bind key="F"/>
         </action>
     </keymap>
 </mod>

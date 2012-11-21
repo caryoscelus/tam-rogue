@@ -191,9 +191,7 @@ class Client(Displaying, Inputting):
             self.processKeyBindings(opcode)
         except UnknownKeyError:
             ch = chr(opcode)
-            if ch == 'F':
-                self.doAction('hit', {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
-            elif ch == '!':
+            if ch == '!':
                 self.showingLogs = not self.showingLogs
             elif ch == 'i':
                 self.showingInv = not self.showingInv
