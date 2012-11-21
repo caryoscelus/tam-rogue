@@ -200,6 +200,9 @@ class TileTakenError(RuntimeError):
 class TilePositionError(RuntimeError):
     def __init__(self, key):
         self.key = key
+    
+    def __str__(self):
+        return 'TilePositionError: {0}'.format(self.key)
 
 class TileEntityError(RuntimeError):
     def __init__(self, position, entity):
