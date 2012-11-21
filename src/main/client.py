@@ -179,6 +179,8 @@ class Client(Displaying, Inputting):
                         self.processAction()
                 else:
                     raise UnknownKeyError
+            else:
+                raise RuntimeError('unknown input type requested: {0}'.format(argType))
     
     def processKey(self, opcode):
         # TODO: port everything to moddable bindings
