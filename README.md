@@ -48,7 +48,7 @@ Currenly supported actions:
     i               show inventory (doesn't work much currently)
     !               show game log
 
-<direction> is one of standard hjklyubn keys
+    <direction> is one of standard hjklyubn keys
 
 LICENSE
 -------
