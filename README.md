@@ -11,7 +11,14 @@ And i think that when real game would appear, it will be in separate
 repository, current will contain only engine.
 
 So, if you're not interested in development , you can just add this repo to
-bookmarks and return to see what happend to it later.
+bookmarks and return to see what happened to it later.
+
+If you are interested in modding or creating your game on top of this engine,
+you are too early too: engine core is not done and API could not be
+considered stable.
+
+And in case you want to take part in engine development, it's better to just
+contact me.
 
 GOALS
 -----
@@ -34,12 +41,14 @@ PLAYING
 Currenly supported actions:
 
     KEY             ACTION
-    hjklyubn        moving
-    F               "fight" (actually just decrease hp for now)
+    <direction>     moving
+    F <direction>   fight
     X               commit suicide
     
     i               show inventory (doesn't work much currently)
     !               show game log
+
+<direction> is one of standard hjklyubn keys
 
 LICENSE
 -------
