@@ -4,6 +4,7 @@
     
     <require file="trap.xml"/>
     <require file="suicide-action.xml"/>
+    <require file="fight-action.xml"/>
     
     <require file="hit-action.xml"/>
     <require file="move-action.xml"/>
