@@ -7,7 +7,10 @@
         
         <code>
 target.changeNumericAttr('hp', -1)
-info('hp: {0}'.format(target.attr('hp')))
+try:
+    info('hp: {0}'.format(target.attr('hp')))
+except EntityDeadError:
+    info('killed')
         </code>
     </action>
 </mod>

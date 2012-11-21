@@ -9,7 +9,8 @@ d = target
 x, y = d//3-1, d%3-1
 info('requested fight at {0}, {1}'.format(x, y))
 victim = subject.getTile(x, y).get('monster')
-action('hit', {'subject':subject, 'target':victim})
+if victim:
+    action('hit', {'subject':subject, 'target':victim})
         </code>
     </action>
 </mod>
