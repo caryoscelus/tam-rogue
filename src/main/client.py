@@ -8,6 +8,17 @@ import eventlogger
 import worldregistry
 
 class Client(Displaying, Inputting):
+    MOVEMENT = {
+        'h' : (-1, 0),
+        'j' : (0, 1),
+        'k' : (0, -1),
+        'l' : (1, 0),
+        'y' : (-1, -1),
+        'u' : (1, -1),
+        'b' : (-1, 1),
+        'n' : (1, 1),
+    }
+    
     def __init__(self):
         super().__init__()
         
@@ -104,6 +115,22 @@ class Client(Displaying, Inputting):
         for key in keys:
             self.bindings[key] = action
     
+    def tryLaunchAction(self):
+        try:
+            self.actionArgsNext = next(self.actionArgsIter)
+        except StopIteration:
+            # all args are processed, call action now
+            self.doAction(self.currentAction, self.actionArgs)
+            
+            # TODO: move this to come cleaning function
+            self.inputState = 'normal'
+            self.actionArgsNext = None
+            self.actionArgsIter = None
+            self.actionArgs = None
+            self.currentAction = None
+            return True
+        return False
+    
     def processAction(self):
         '''Try to process current action by replacing obvious arguments'''
         while True:
@@ -112,18 +139,7 @@ class Client(Displaying, Inputting):
             if argType == 'entity':
                 self.actionArgs[argName] = self.entity
                 
-                try:
-                    self.actionArgsNext = next(self.actionArgsIter)
-                except StopIteration:
-                    # all args are processed, call action now
-                    self.doAction(self.currentAction, self.actionArgs)
-                    
-                    # TODO: move this to come cleaning function
-                    self.inputState = 'normal'
-                    self.actionArgsNext = None
-                    self.actionArgsIter = None
-                    self.actionArgs = None
-                    self.currentAction = None
+                if self.tryLaunchAction():
                     break
             else:
                 logging.debug('unknown argType: {0}'.format(argType))
@@ -145,21 +161,27 @@ class Client(Displaying, Inputting):
             
             self.processAction()
         else:
-            raise NotImplementedError('only "normal" inputState implemented')
+            argName = self.actionArgsNext
+            argType = self.actionArgs[argName]
+            if argType == 'direction':
+                ch = chr(opcode)
+                if ch in self.MOVEMENT:
+                    direct = self.MOVEMENT[ch]
+                    # TODO: pass normal direction
+                    # currently passes integer
+                    x = direct[0]
+                    y = direct[1]
+                    # back formula: x, y = d//3-1, d%3-1
+                    d = (x+1)*3+(y+1)
+                    self.actionArgs[argName] = d
+                    
+                    if not self.tryLaunchAction():
+                        self.processAction()
+                else:
+                    raise UnknownKeyError
     
     def processKey(self, opcode):
-        # TODO: make customizable bindings
-        movement = {
-            'h' : (-1, 0),
-            'j' : (0, 1),
-            'k' : (0, -1),
-            'l' : (1, 0),
-            'y' : (-1, -1),
-            'u' : (1, -1),
-            'b' : (-1, 1),
-            'n' : (1, 1),
-        }
-        
+        # TODO: port everything to moddable bindings
         try:
             self.processKeyBindings(opcode)
         except UnknownKeyError:
@@ -170,8 +192,8 @@ class Client(Displaying, Inputting):
                 self.showingLogs = not self.showingLogs
             elif ch == 'i':
                 self.showingInv = not self.showingInv
-            elif ch in movement.keys():
-                self.doAction('move', {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
+            elif ch in self.MOVEMENT:
+                self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
             elif opcode == ord('r')-ord('a')+1:             # CTRL+R
                 logging.debug('manual redraw requested')
             else:
