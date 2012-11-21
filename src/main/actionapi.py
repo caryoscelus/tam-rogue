@@ -6,6 +6,7 @@ from builtins import Exception, TypeError, RuntimeError, \
 from logging import debug, info, warning, error
 
 from entity import EntityAttributeError
+from tile import TileTakenError
 
 def action(name, args):
     import worldregistry

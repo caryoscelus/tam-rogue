@@ -13,7 +13,10 @@ tile = subject.getTile(dx, dy)
 if not tile.get('ground').attr('standable'):
     raise RuntimeError('entity tries to step on non-standable')
 
-subject.move(dx, dy)
+try:
+    subject.move(dx, dy)
+except TileTakenError:
+    warning('trying to step on taken tile')
 
 # process traps
 traps = tile.get('trap')
