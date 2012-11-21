@@ -20,6 +20,7 @@ def generateWorld():
     floor = Entity({'class':'floor', 'standable':True})
     wall = Entity({'class':'wall'})
     human = Entity({'class':'human', 'hp':2})
+    fungus = Entity({'class':'fungus', 'hp':2})
     trap = Entity({'class':'trap', 'hurt':1})
     ladder = Entity({'class':'ladder', 'destination':2})
     human.alive = True
@@ -43,6 +44,7 @@ def generateWorld():
     map0.putOn(12, 4, 'monster', human)
     map0.putOn(15, 4, 'trap', trap)
     map0.putOn(15, 7, 'feature', ladder)
+    map0.putOn(6, 6, 'monster', fungus)
     
     worldregistry.world.maps.append(map0)
     
