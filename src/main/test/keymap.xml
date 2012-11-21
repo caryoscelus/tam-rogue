@@ -2,6 +2,7 @@
 <mod>
     <keymap>
         <action name="suicide">
+            <arg name="subject" value="entity"/>
             <bind key="X"/>
         </action>
     </keymap>

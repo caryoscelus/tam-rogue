@@ -40,6 +40,22 @@ class Mod:
                 ))}
                 args = {e.tag : e.attrib['value'] for e in node}
                 world.addBinding(targetType, event, actionName, opt, args)
+            elif node.tag == 'keymap':
+                client = world
+                # TODO: should it be here?
+                for snode in node:
+                    if snode.tag == 'action':
+                        actionName = snode.attrib['name']
+                        args = {
+                            e.attrib['name']:e.attrib['value'] \
+                                for e in snode if e.tag == 'arg'
+                        }
+                        bindings = [
+                            e.attrib['key'] for e in snode if e.tag == 'bind'
+                        ]
+                        client.bindKeys(bindings, actionName, args)
+                    else:
+                        logging.warning('unknown keymap mod xml node tagged "{0}"'.format(snode.tag))
             else:
                 logging.warning('unknown mod xml node tagged "{0}"'.format(node.tag))
     

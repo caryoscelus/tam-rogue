@@ -91,6 +91,9 @@ class Client(Displaying, Inputting):
             self.putString(40, 2, 'inventory is not empty')
             logging.warning('displaying inventory is not supported yet')
     
+    def bindKeys(self, keys, action, args):
+        pass
+    
     def processKeyBindings(self, opcode):
         raise UnknownKeyError
     
