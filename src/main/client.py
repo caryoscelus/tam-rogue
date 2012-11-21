@@ -98,18 +98,15 @@ class Client(Displaying, Inputting):
         ch = chr(opcode)
         
         if ch == 'F':
-            action = worldregistry.world.actions['hit']
-            self.doAction(action, {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
+            self.doAction('hit', {'actor':self.entity, 'tool':self.entity, 'target':self.entity})
         elif ch == 'X':
-            action = worldregistry.world.actions['die']
-            self.doAction(action, {'subject':self.entity, 'reason':'user decided to die'})
+            self.doAction('die', {'subject':self.entity, 'reason':'user decided to die'})
         elif ch == '!':
             self.showingLogs = not self.showingLogs
         elif ch == 'i':
             self.showingInv = not self.showingInv
         elif ch in movement.keys():
-            action = worldregistry.world.actions['move']
-            self.doAction(action, {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
+            self.doAction('move', {'subject':self.entity, 'dx':movement[ch][0], 'dy':movement[ch][1]})
         elif opcode == ord('r')-ord('a')+1:             # CTRL+R
             logging.debug('manual redraw requested')
         else:
