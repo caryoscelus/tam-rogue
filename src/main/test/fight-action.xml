@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod>
-    <action name="hit">
+    <action name="fight">
         <object name="actor"><attrs class="monster" /></object>
-        <object name="tool"/>
-        <object name="target"/>
+        <integer name="target"/>
         
         <code>
-target.changeNumericAttr('hp', -1)
-info('hp: {0}'.format(target.attr('hp')))
+info('requested fight at {0}'.format(target))
         </code>
     </action>
 </mod>

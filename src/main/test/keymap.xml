@@ -5,5 +5,10 @@
             <arg name="subject" value="entity"/>
             <bind key="X"/>
         </action>
+        <action name="fight">
+            <arg name="subject" value="entity"/>
+            <arg name="target" value="direction"/>
+            <bind key="f"/>
+        </action>
     </keymap>
 </mod>
