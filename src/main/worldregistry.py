@@ -8,6 +8,7 @@ mods = {}
 lastMod = 0
 world = World()
 
+# TODO: move it out from here
 def modFromFile(modFile):
     try:
         f = open(modFile)

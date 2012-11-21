@@ -59,6 +59,7 @@ def testClientServer(server, port):
     myClient = Client()
     myClient.connectClient((server, port)) #'localhost', 6985))
     myClient.connectServer(myServer)
+    myClient.loadMod('keymap.xml')
     
     # TODO: move to server
     myClient.askForEntity(human)

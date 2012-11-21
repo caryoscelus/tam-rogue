@@ -21,6 +21,10 @@ class Client(Displaying, Inputting):
         self.showingLogs = False
         self.showingInv = False
     
+    def loadMod(self, modFile):
+        mod = worldregistry.modFromFile(modFile)
+        mod.applyMod(self)
+    
     def connectServer(self, server):
         self.serverClient = server.connect(self)
     
