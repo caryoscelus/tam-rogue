@@ -1,4 +1,5 @@
 import logging
+import copy
 
 from displaying import Displaying
 from inputting import Inputting, UnknownKeyError
@@ -116,6 +117,7 @@ class Client(Displaying, Inputting):
             self.bindings[key] = action
     
     def tryLaunchAction(self):
+        '''Get next argument or if it's empty, launch action'''
         try:
             self.actionArgsNext = next(self.actionArgsIter)
         except StopIteration:
@@ -146,6 +148,7 @@ class Client(Displaying, Inputting):
                 break
     
     def processKeyBindings(self, opcode):
+        '''Process pressed key according to key bindings'''
         if self.inputState == 'normal':
             ch = chr(opcode)
             try:
@@ -155,11 +158,11 @@ class Client(Displaying, Inputting):
             
             self.inputState = 'action'
             self.currentAction = actionName
-            self.actionArgs = args
+            self.actionArgs = copy.deepcopy(args)
             self.actionArgsIter = iter(args)
-            self.actionArgsNext = next(self.actionArgsIter)
             
-            self.processAction()
+            if not self.tryLaunchAction():
+                self.processAction()
         else:
             argName = self.actionArgsNext
             argType = self.actionArgs[argName]
