@@ -83,7 +83,6 @@ class Client(Displaying, Inputting):
         # - gui
         # - forbid direct access to world
         # - draw vision, not actual map
-        # - draw current map
         currentMap = self.entity.onMap
         self.displayData = self.mapVisualizer.toXml(currentMap)
         

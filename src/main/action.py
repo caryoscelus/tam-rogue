@@ -52,6 +52,7 @@ class Action:
         compiled = compile(code, '<action mod>', 'exec')
         
         def launchCode(args):
+            '''launch action code, return True if successful'''
             # TODO: make integer->int, string->str conversion more proper
             def wrapper(args, key):
                 try:
@@ -79,21 +80,21 @@ class Action:
                 elif argType == 'arguments':
                     return {}
             
-            # args that are not present in formalArgs passed
-            if set(args.keys()).difference(set(formalArgs.keys())):
-                logging.debug(args)
-                logging.debug(formalArgs)
-                #raise ActionError('undefined args passed')
             wrappers = {}
             wrappers.update({
                 key : (defaultValue(formalArgs[key]) or wrapper(args, key)) \
                     for key in formalArgs
             })
+            wrappers.update({
+                '_result' : None
+            })
             try:
                 exec(compiled, ns, wrappers)
+                return wrappers['_result']
             except:
                 logging.error('action launching failed')
                 logging.debug(traceback.format_exc())
+                return False
         
         return launchCode
     

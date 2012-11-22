@@ -19,8 +19,9 @@ def action(name, args):
     except KeyError:
         warning('unknown action called')
         traceback()
+        return False
     else:
-        action.applyAction(args)
+        return action.applyAction(args)
 
 def traceback():
     import traceback
