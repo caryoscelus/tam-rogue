@@ -18,6 +18,9 @@ try:
 except TileTakenError:
     warning('trying to step on taken tile')
 
+# waste energy
+subject.changeNumericAttr('hungry', 0.1)
+
 # process traps
 traps = tile.get('trap')
 if traps:
