@@ -40,7 +40,10 @@ class DisplayServer:
                             x = int(cell.attrib['x'])
                             y = int(cell.attrib['y'])
                             ch = cell.attrib['ch']
-                            self.display.data[y][x].c = ch
+                            try:
+                                self.display.data[y][x].c = ch
+                            except IndexError:
+                                logging.warning('out of screen')
                         self.display.update = True
                     elif root.tag == 'close':
                         logging.info('connection closed, quitting')
