@@ -1,5 +1,6 @@
 import logging
 import xml.etree.ElementTree as ET
+import time
 
 class InputReader:
     def __init__(self, disp, backSender):
@@ -10,7 +11,10 @@ class InputReader:
         while not self.disp.quit:
             try:
                 opcode = self.disp.cScr.getch()
-                self.processKey(opcode)
+                if opcode != -1:
+                    self.processKey(opcode)
+                # TODO: move out sleeping
+                time.sleep(1/32)
             except Exception as err:
                 logging.error('unhandled exception in input reader')
                 logging.debug(err)

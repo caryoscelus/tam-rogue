@@ -35,6 +35,7 @@ class Display:
         curses.noecho()
         curses.cbreak()
         self.cScr.keypad(1)
+        self.cScr.nodelay(1)
         
         # TODO: remove constants
         self.height, self.width = 25, 80
