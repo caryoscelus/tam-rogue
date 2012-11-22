@@ -3,7 +3,7 @@ import logging
 
 from tile import Tile
 from entityqueue import EntityQueue, EmptyQueueError
-from entity import EntityDeadError, EntityCoordError
+from entity import Entity, EntityDeadError, EntityCoordError
 from miscerrors import XmlLoadError
 import worldregistry
 
@@ -106,7 +106,12 @@ class TiledMap:
             logging.warning('moveTo() called when entity had no position')
         self.putOn(x, y, position, entity, queueChange=False)
     
+    def createEntity(self, attrib, x, y, position):
+        entity = Entity(attrib)
+        self.putOn(x, y, position, entity)
+    
     def step(self):
+        '''Do one step of map live'''
         if not self.exist:
             # generate map
             # TODO: send event of non-existant map
@@ -118,6 +123,7 @@ class TiledMap:
             return False
     
     def live(self):
+        '''Generator-style function yilding entity.live() or False in case of queue reloading'''
         while True:
             # iterate over objects on map
             while True:
