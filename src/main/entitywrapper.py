@@ -30,6 +30,15 @@ class EntityWrapper:
             return
         
         def closure(attrib):
+            if attrib == 'iterable':
+                # TODO: make something with it?..
+                # this was added because iter(EntityWrapper) doesn't work for duck typing..
+                try:
+                    entity.__getitem__
+                    result = True
+                except AttributeError:
+                    result = False
+                return lambda: result
             if attrib in self.entityApi:
                 try:
                     func = entity.__getattribute__(attrib)

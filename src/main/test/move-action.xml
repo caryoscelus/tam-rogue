@@ -24,9 +24,7 @@ subject.changeNumericAttr('hungry', 0.1)
 # process traps
 traps = tile.get('trap')
 if traps:
-    try:
-        ti = iter(traps)
-    except TypeError:
+    if not traps.iterable():
         traps = [traps]
     for trap in traps:
         # TODO: random
