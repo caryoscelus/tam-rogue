@@ -45,6 +45,7 @@ class DisplayServer:
                     elif root.tag == 'close':
                         logging.info('connection closed, quitting')
                         self.quit = True
+                        self.display.quit = True
                     else:
                         logging.warning('unknown tag "{0}"'.format(root.tag))
                 except ET.ParseError:
