@@ -46,10 +46,14 @@ Currenly supported actions:
     X               commit suicide
     e               eat something from floor
     
-    i               show inventory (doesn't work much currently)
-    !               show game log
+    i               toggle displaying inventory (doesn't work much currently)
+    !               toggle displaying game log
 
     <direction> is one of standard hjklyubn keys
+
+Since in-game logs are not quite working, you can see
+src/main/test/testclient.log for more information (this includes some debug
+info as well now).
 
 LICENSE
 -------
