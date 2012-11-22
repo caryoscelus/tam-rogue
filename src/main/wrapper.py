@@ -1,6 +1,6 @@
 import logging
 
-class EntityWrapper:
+class Wrapper:
     '''Wraps Entity and other objects to forbid random access'''
     
     # TODO: move api somewhere?..
@@ -16,23 +16,23 @@ class EntityWrapper:
     
     def __new__(cls, src):
         # TODO: proper type handling
-        if type(src) == EntityWrapper:
+        if type(src) == Wrapper:
             return src
         if src == None:
             return src
         if type(src) in cls.ignoreTypes:
             return src
-        return super(EntityWrapper, cls).__new__(cls, src)
+        return super(Wrapper, cls).__new__(cls, src)
     
     def __init__(self, entity):
-        if type(entity) == EntityWrapper:
+        if type(entity) == Wrapper:
             self.closure = entity.closure
             return
         
         def closure(attrib):
             if attrib == 'iterable':
                 # TODO: make something with it?..
-                # this was added because iter(EntityWrapper) doesn't work for duck typing..
+                # this was added because iter(Wrapper) doesn't work for duck typing..
                 try:
                     entity.__getitem__
                     result = True
@@ -44,7 +44,7 @@ class EntityWrapper:
                     func = entity.__getattribute__(attrib)
                     def wrappedFunc(*args):
                         result = func(*args)
-                        return EntityWrapper(result)
+                        return Wrapper(result)
                     return wrappedFunc
                 except AttributeError as err:
                     logging.warning('could not find {0} which is in api'.format(attrib))

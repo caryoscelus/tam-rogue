@@ -2,7 +2,7 @@ import logging
 import traceback
 
 from miscerrors import XmlLoadError
-from entitywrapper import EntityWrapper
+from wrapper import Wrapper
 from entitywatcher import EntityWatcher
 from tilewatcher import TileWatcher
 import worldregistry
@@ -61,7 +61,7 @@ class Action:
                     return {k:args[k] for k in args if not (k in formalArgs)}
                 else:
                     if formalArgs[key] == 'object':
-                        return EntityWrapper(obj)
+                        return Wrapper(obj)
                     elif formalArgs[key] == 'integer' and type(obj) == int:
                         return obj
                     elif formalArgs[key] == 'string' and type(obj) == str:
