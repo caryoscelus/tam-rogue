@@ -100,7 +100,7 @@ class Action:
     
     def applyAction(self, args):
         eventlogger.processAction(self, args)
-        self.func(args)
+        return self.func(args)
 
 
 class ActionError(RuntimeError):

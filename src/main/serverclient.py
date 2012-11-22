@@ -2,6 +2,8 @@ from sleeping import Sleeping
 from entitycontroller import EntityController, EntityControllerMismatchError
 import worldregistry
 
+import logging
+
 class ServerClient(Sleeping, EntityController):
     def __init__(self, server, client):
         self.entity = None
@@ -58,7 +60,11 @@ class ServerClient(Sleeping, EntityController):
                 action = worldregistry.world.actions[action]
             except KeyError:
                 pass
-            action.applyAction(args)
+            result = action.applyAction(args)
+            if not result:
+                # TODO: do something with it
+                # maybe just loop over available actions?
+                logging.warning('action didn\'t finished successfully')
     
     def __str__(self):
         return ''
