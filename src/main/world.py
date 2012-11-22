@@ -24,7 +24,14 @@ class World(Sleeping):
             self.layers[l] = layers[l]
             self.layerOrder.append(l)
     
-    # TODO: use
+    def getMap(self, mapId):
+        '''Get map with given id; use this, don't use self.maps direct access'''
+        try:
+            return self.maps[mapId]
+        except IndexError:
+            raise NonExistantTiledMap(mapId)
+    
+    # TODO: use or eliminate
     def createMap(self, width, height, attrib = {}):
         newMap = Map(width, height, self.layers, self.layerOrder, attrib)
         self.maps.append(newMap)
@@ -33,7 +40,7 @@ class World(Sleeping):
         return next(self.life)
     
     def live(self):
-        # iterate over time
+        '''Generator-style function yielding map steps'''
         while True:
             # iterate over maps
             for tMap in self.maps:
@@ -46,6 +53,7 @@ class World(Sleeping):
                 self.sleep()
     
     def watch(self, what, watcher, name):
+        '''Generic watch function'''
         if watcher in what:
             what[watcher].update({name})
         else:
@@ -70,3 +78,8 @@ class World(Sleeping):
                 logging.warning('addBinding: unknown event {0}'.format(event))
         else:
             logging.warning('addBinding: unknown targetType {0}'.format(targetType))
+
+
+class NonExistantTiledMap(RuntimeError):
+    '''Raised when requested map doesn't existed (generated)'''
+    pass
