@@ -40,21 +40,6 @@ class Action:
         for node in xmlRoot:
             if node.tag in self.TYPES:
                 args[node.attrib['name']] = node.tag
-            elif node.tag == 'bindEntity':
-                attrib = node.attrib['attrib']
-                binding = node.attrib['entity']
-                watcher = EntityWatcher(self, binding)
-                worldregistry.world.watchAttr(watcher, attrib)
-            elif node.tag == 'bindTile':
-                position = node.attrib['position']
-                # TODO: more proper checking?
-                binding = {
-                    key : node.attrib[key] for key in node.attrib if not (key in (
-                        'position',
-                    ))
-                }
-                watcher = TileWatcher(self, binding)
-                worldregistry.world.watchPosition(watcher, position)
             elif node.tag == 'code':
                 code = node.text
             else:
