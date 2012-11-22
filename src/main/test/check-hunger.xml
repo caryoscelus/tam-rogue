@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <bind action="hunger-check" target="entity" event="attrib" attrib="hungry">
+        <subject value="target"/>
+    </bind>
+    
+    <action name="hunger-check">
+        <object name="subject"/>
+        
+        <code>
+hunger = subject.attr('hungry')
+maxHunger = subject.attr('maxHungry')
+if hunger &gt; maxHunger:
+    subject.changeNumericAttr('hp', -1)
+        </code>
+    </action>
+</mod>
