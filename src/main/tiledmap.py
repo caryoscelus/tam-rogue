@@ -109,12 +109,9 @@ class TiledMap:
     def step(self):
         if not self.exist:
             # generate map
-            if not worldregistry.world.mapGenerators:
-                raise RuntimeError('no map generators')
-            else:
-                # TODO: choose instead of getting first generator
-                generator = next(iter(worldregistry.world.mapGenerators.values()))
-                generator.generate(self)
+            # TODO: send event of non-existant map
+            # or maybe move the whole generation thing to entity action?..
+            raise NotImplementedError('map generation is not implemented')
         if self.alive:
             return next(self.life)
         else:

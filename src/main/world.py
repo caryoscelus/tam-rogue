@@ -15,7 +15,6 @@ class World(Sleeping):
         self.actions = {}
         self.entityWatchers = {}
         self.tileWatchers = {}
-        self.mapGenerators = {}
     
     def addTileLayers(self, layers, layerOrder):
         # TODO: calculate proper order
