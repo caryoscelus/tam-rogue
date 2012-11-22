@@ -10,5 +10,9 @@
             <arg name="target" value="direction"/>
             <bind key="F"/>
         </action>
+        <action name="eat-from-floor">
+            <arg name="subject" value="entity"/>
+            <bind key="e"/>
+        </action>
     </keymap>
 </mod>

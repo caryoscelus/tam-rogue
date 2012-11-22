@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="eat">
+        <object name="subject"/>
+        <object name="food"/>
+        
+        <code>
+subName = subject.attr('class')
+foodName = food.attr('class')
+info('{0} tried to eat {1}'.format(subName, foodName))
+        </code>
+    </action>
+</mod>

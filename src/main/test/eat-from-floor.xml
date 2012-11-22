@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <require file="eat.xml"/>
+    <action name="eat-from-floor">
+        <object name="subject"/>
+        
+        <code>
+tile = subject.getTile()
+objects = tile.get('objects')
+try:
+    object = objects[-1]
+except IndexError:
+    info('nothing to eat here')
+else:
+    action('eat', {'subject':subject, 'food':object})
+        </code>
+    </action>
+</mod>
