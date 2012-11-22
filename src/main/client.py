@@ -109,7 +109,7 @@ class Client(Displaying, Inputting):
         stringCount = min(5, len(log))
         for e in log[-stringCount:]:
             self.putString(x, y, str(e))
-            x += 1
+            y += 1
     
     def showInv(self):
         inv = self.entity.children
