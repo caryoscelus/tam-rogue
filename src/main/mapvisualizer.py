@@ -16,6 +16,9 @@ class MapVisualizer:
         except EntityAttributeError:
             logging.warning('unvisualizable entity')
             return None
+        except EntityDeadError:
+            logging.debug('entity dead while trying to visualize')
+            return None
     
     def toGfx(self, tiledMap):
         # TODO: remove stupid screen format
@@ -40,4 +43,4 @@ class MapVisualizer:
         
         return root
 
-from entity import EntityAttributeError
+from entity import EntityAttributeError, EntityDeadError
