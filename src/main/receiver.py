@@ -19,11 +19,15 @@ class Receiver:
     def allowListening(self, can = True):
         self.canListen = can
     
-    def listen(self):
+    def listen(self, timeout = None):
         if not self.canListen:
             raise ReceiverListeningForbidden(self)
         
-        (clientsocket, address) = self.listenerSocket.accept()
+        try:
+            self.listenerSocket.settimeout(timeout)
+            (clientsocket, address) = self.listenerSocket.accept()
+        except socket.timeout:
+            raise ReceiverTimeoutError
         
         # TODO: separate function?..
         data = bytearray()
@@ -39,3 +43,6 @@ class Receiver:
 class ReceiverListeningForbidden(RuntimeError):
     def __init__(self, receiver):
         pass
+
+class ReceiverTimeoutError(RuntimeError):
+    pass
