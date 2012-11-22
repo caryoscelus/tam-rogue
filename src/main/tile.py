@@ -114,6 +114,8 @@ class Tile:
                     pass
                 except TypeError:                       # on None
                     pass
+            except EntityDeadError:
+                self.remove(e)
         return None
     
     def put(self, position, entity):
