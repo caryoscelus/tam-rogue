@@ -11,6 +11,10 @@ info('requested fight at {0}, {1}'.format(x, y))
 victim = subject.getTile(x, y).get('monster')
 if victim:
     action('hit', {'subject':subject, 'target':victim})
+    _return = True
+else:
+    info('no victim')
+    _return = False
         </code>
     </action>
 </mod>

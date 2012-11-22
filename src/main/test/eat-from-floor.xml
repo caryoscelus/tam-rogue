@@ -11,8 +11,10 @@ try:
     object = objects[-1]
 except IndexError:
     info('nothing to eat here')
+    _return = False
 else:
     action('eat', {'subject':subject, 'food':object})
+    _return = True
         </code>
     </action>
 </mod>

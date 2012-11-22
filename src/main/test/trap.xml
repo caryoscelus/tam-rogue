@@ -4,6 +4,7 @@
         <object name="target"/>
         <code>
 target.changeNumericAttr('hp', -1)
+_return = True
         </code>
     </action>
     

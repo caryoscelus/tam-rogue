@@ -6,6 +6,7 @@
         <code>
 func = subject.attr('apply')
 action(func, args)
+_return = True
         </code>
     </action>
 </mod>

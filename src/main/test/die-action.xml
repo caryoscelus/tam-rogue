@@ -19,6 +19,7 @@ subject.die()
 if subjType != 'corpse' and random() &gt; 0.5:
     map.createEntity({'class':'corpse'}, x, y, 'objects')
     info('{0} is food now'.format(name))
+_return = True
         </code>
     </action>
 </mod>

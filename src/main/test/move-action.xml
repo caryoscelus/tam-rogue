@@ -17,6 +17,9 @@ try:
     subject.move(dx, dy)
 except TileTakenError:
     warning('trying to step on taken tile')
+    _return = False
+else:
+    _return = True
 
 # waste energy
 subject.changeNumericAttr('hungry', 0.1)

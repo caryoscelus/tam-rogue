@@ -4,7 +4,7 @@
         <object name="subject"/>
         
         <code>
-action('die', {'subject':subject, 'reason':'user committed suicide'})
+_return = action('die', {'subject':subject, 'reason':'user committed suicide'})
         </code>
     </action>
 </mod>
