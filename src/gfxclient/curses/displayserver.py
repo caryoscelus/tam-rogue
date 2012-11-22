@@ -41,7 +41,12 @@ class DisplayServer:
                             y = int(cell.attrib['y'])
                             ch = cell.attrib['ch']
                             self.display.data[y][x].c = ch
-                    self.display.update = True
+                        self.display.update = True
+                    elif root.tag == 'close':
+                        logging.info('connection closed, quitting')
+                        self.quit = True
+                    else:
+                        logging.warning('unknown tag "{0}"'.format(root.tag))
                 except ET.ParseError:
                     logging.error('parse error')
             except Exception as err:
