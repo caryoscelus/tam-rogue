@@ -7,18 +7,18 @@ import xml.etree.ElementTree as ET
 class MapVisualizer:
     # TODO: return full gfx, not only character
     def tileToGfx(self, tiledMap, x, y):
-        upper = tiledMap.getTile(x, y).getUpper()
-        if not upper:
-            return ' '
-        
-        try:
-            return upper.attr('char')
-        except EntityAttributeError:
-            logging.warning('unvisualizable entity')
-            return None
-        except EntityDeadError:
-            logging.debug('entity dead while trying to visualize')
-            return None
+        while True:
+            upper = tiledMap.getTile(x, y).getUpper()
+            if not upper:
+                return ' '
+            
+            try:
+                return upper.attr('char')
+            except EntityAttributeError:
+                logging.warning('unvisualizable entity')
+                return '?'
+            except EntityDeadError:
+                logging.debug('entity dead while trying to visualize')
     
     def toGfx(self, tiledMap):
         # TODO: remove stupid screen format
