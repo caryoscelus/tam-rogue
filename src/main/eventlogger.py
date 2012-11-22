@@ -9,11 +9,6 @@ def logEvent(action, args, result):
 # TODO: make it fancy and useful
 # or maybe just kill it?
 def processAction(action, args):
-    actionList.append(action)
-    text = action.name
-    textLog.append(text)
-    logging.debug(text)
+    logEvent(action, args, None)
 
-actionList = []
-textLog = []
 eventLog = []

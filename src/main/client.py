@@ -102,9 +102,14 @@ class Client(Displaying, Inputting):
         super().redraw()
     
     def showLogs(self):
-        # TODO: show full logs
-        # TODO: nice output
-        self.putString(0, 0, eventlogger.textLog[-1])
+        # TODO: make fancy & more universal
+        x = 0
+        y = 0
+        log = eventlogger.eventLog
+        stringCount = min(5, len(log))
+        for e in log[-stringCount:]:
+            self.putString(x, y, str(e))
+            x += 1
     
     def showInv(self):
         inv = self.entity.children

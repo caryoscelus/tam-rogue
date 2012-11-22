@@ -23,6 +23,7 @@ class Action:
         self.name = None
         self.arguments = {}
         self.func = None
+        self.attrs = {}
     
     def fromXml(xml):
         self = Action()
@@ -42,10 +43,19 @@ class Action:
                 args[node.attrib['name']] = node.tag
             elif node.tag == 'code':
                 code = node.text
+            elif node.tag == 'attr':
+                self.attrs[node.attrib['name']] = node.attrib['value']
             else:
                 logging.warning('unknown xml node while parsing action: {0}'.format(node))
         
         self.func = self.compileCode(code, args)
+    
+    # TODO
+    def attr(self, name):
+        try:
+            return self.attrs[name]
+        except KeyError:
+            return None
     
     def compileCode(self, code, formalArgs):
         ns = {'__builtins__':actionapi}
