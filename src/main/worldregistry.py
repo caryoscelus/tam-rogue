@@ -1,31 +1,14 @@
-import xml.etree.ElementTree as ET
 import logging
 
-from mod import Mod
 from world import World
+import loader
 
 mods = {}
 lastMod = 0
 world = World()
 
-# TODO: move it out from here
-def modFromFile(modFile):
-    try:
-        f = open(modFile)
-        modXml = f.read()
-        f.close()
-        
-        newMod = Mod(ET.fromstring(modXml))
-        
-        return newMod
-    except IOError:
-        logging.warning('cannot load mod file {0}'.format(modFile))
-    except ET.ParseError:
-        logging.warning('cannot parse mod file {0}'.format(modFile))
-    return None
-
 def loadMod(modFile):
-    newMod = modFromFile(modFile)
+    newMod = loader.modFromFile(modFile)
     if newMod:
         global lastMod
         lastMod += 1

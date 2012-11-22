@@ -7,6 +7,7 @@ from mapvisualizer import MapVisualizer
 from action import Action
 import eventlogger
 import worldregistry
+import loader
 
 class Client(Displaying, Inputting):
     MOVEMENT = {
@@ -47,7 +48,7 @@ class Client(Displaying, Inputting):
         self.actionArgsNext = None
     
     def loadMod(self, modFile):
-        mod = worldregistry.modFromFile(modFile)
+        mod = loader.modFromFile(modFile)
         mod.applyMod(self)
     
     def connectServer(self, server):
