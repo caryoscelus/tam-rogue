@@ -85,11 +85,7 @@ class Entity:
             watcher.attendFuneral(self)
     
     def attr(self, name):
-        '''Get entity attribute'''
-        
-        # TODO: maybe return None if no attribute?
-        # or create separate function for that?
-        # this is going to be more useful for API calls
+        '''Get entity attribute or None if no attribute'''
         
         self.check()
         
@@ -100,11 +96,11 @@ class Entity:
                 return worldregistry.world.attrList[name](self)
             except AttributeError:                      # no world?..
                 logging.warning('could not reach modding')
-                raise EntityAttributeError(self, name)
             except TypeError:
-                raise NotImplementedError('can\'t handle non-function extended attributes')
+                logging.warning('can\'t handle non-function extended attributes')
             except KeyError:
-                raise EntityAttributeError(self, name)
+                pass
+        return None
     
     def setAttr(self, name, value):
         '''Directly set new attribute value'''
