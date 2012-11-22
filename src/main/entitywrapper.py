@@ -9,7 +9,8 @@ class EntityWrapper:
         'move', 'die',
         'get', 'getTile', 'createEntity',
         'getMap',
-        'getCoord', 'getX', 'getY'
+        'getCoord', 'getX', 'getY',
+        '__getitem__'
     ]
     ignoreTypes = [int, str]
     
@@ -47,3 +48,6 @@ class EntityWrapper:
     
     def __getattr__(self, attrib):
         return self.closure(attrib)
+    
+    def __getitem__(self, *args):
+        return self.closure('__getitem__')(*args)
