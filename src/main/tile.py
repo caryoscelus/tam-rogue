@@ -105,17 +105,16 @@ class Tile:
         for position in reversed(self.order):
             try:
                 e = self.get(position)
-                e.check()
-                return e
-            except AttributeError:                      # on lists
-                try:
-                    return e[-1]
-                except IndexError:                      # on empty lists
-                    pass
-                except TypeError:                       # on None
-                    pass
-            except EntityDeadError:
-                self.remove(e)
+                entity = e[-1]
+                entity.check()
+                return entity
+            except TypeError:                           # on non-lists
+                if e != None:
+                    return e
+            except IndexError:                          # on empty lists
+                pass
+            except EntityDeadError:                     # found dead entity in list
+                self.remove(entity, position)
         return None
     
     def put(self, position, entity):
@@ -151,23 +150,24 @@ class Tile:
                     self.content[pos].remove(entity)
                     return
                 except ValueError:                      # not in list
-                    pass
+                    break
                 except TypeError:                       # entity or empty
                     if self.content[pos] == entity:
                         self.content[pos] = None
-                        return
-            raise TileEntityError(position, entity)
-        
-        content = self.get(position)
-        try:                                            # list
-            content.remove(entity)
-        except ValueError:                              # not in list
-            raise TileEntityError(position, entity)
-        except AttributeError:                          # entity or empty
-            if content != entity:
-                raise TileEntityError(position, entity)
+                        break
             else:
-                self.content[position] = None
+                raise TileEntityError(position, entity)
+        else:
+            content = self.get(position)
+            try:                                            # list
+                content.remove(entity)
+            except ValueError:                              # not in list
+                raise TileEntityError(position, entity)
+            except AttributeError:                          # entity or empty
+                if content != entity:
+                    raise TileEntityError(position, entity)
+                else:
+                    self.content[position] = None
         
         self.notify(position, entity, 'remove')
     
