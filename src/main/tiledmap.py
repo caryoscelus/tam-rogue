@@ -60,6 +60,12 @@ class TiledMap:
             
             self.getTile(x, y).loadXml(xmlTile)
     
+    def resize(self, w, h):
+        '''Set new map size & clear'''
+        self.width = w
+        self.height = h
+        self.clear()
+    
     def clear(self):
         def t(x, y):
             return Tile(self.layers, self.layersOrder)
@@ -144,3 +150,8 @@ class TiledMap:
 class TiledMapSizeError(RuntimeError):
     def __init__(self, tiledMap):
         self.tiledMap = tiledMap
+
+
+class TiledMapNotExist(RuntimeError):
+    '''Raised when map doesn't existed (generated)'''
+    pass

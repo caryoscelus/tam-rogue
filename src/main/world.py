@@ -2,6 +2,7 @@ import logging
 
 from sleeping import Sleeping
 from entitywatcher import EntityWatcher
+from tiledmap import TiledMap
 
 class World(Sleeping):
     def __init__(self):
@@ -29,12 +30,8 @@ class World(Sleeping):
         try:
             return self.maps[mapId]
         except IndexError:
-            raise NonExistantTiledMap(mapId)
-    
-    # TODO: use or eliminate
-    def createMap(self, width, height, attrib = {}):
-        newMap = Map(width, height, self.layers, self.layerOrder, attrib)
-        self.maps.append(newMap)
+            self.maps[mapId] = TiledMap()
+            return self.maps[mapId]
     
     def step(self):
         return next(self.life)
@@ -78,8 +75,3 @@ class World(Sleeping):
                 logging.warning('addBinding: unknown event {0}'.format(event))
         else:
             logging.warning('addBinding: unknown targetType {0}'.format(targetType))
-
-
-class NonExistantTiledMap(RuntimeError):
-    '''Raised when requested map doesn't existed (generated)'''
-    pass

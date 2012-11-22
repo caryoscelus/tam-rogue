@@ -51,6 +51,7 @@ class Client(Displaying, Inputting):
         mod = loader.modFromFile(modFile)
         mod.applyMod(self)
     
+    # TODO: use default serverClient instead of direct server
     def connectServer(self, server):
         self.serverClient = server.connect(self)
     
