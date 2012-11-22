@@ -23,9 +23,11 @@ class Entity:
         self.deathWatchers = set()
     
     def __str__(self):
+        # TODO: fancy output
         return '<Entity: {0} >'.format(self.attrib)
     
     def setHandler(self, handler):
+        '''Set handler object which will be requested to action when it's entity's turn'''
         self.handler = handler
     
     # static
@@ -43,10 +45,12 @@ class Entity:
         return ET.Element('entity', self.attrib)
     
     def check(self):
+        '''Raise EntityDeadError if entity is already dead'''
         if self.dead:
             raise EntityDeadError(self)
     
     def live(self):
+        '''One step of entity life'''
         self.check()
         if self.alive:
             try:
@@ -61,6 +65,7 @@ class Entity:
         return False
     
     def destroy(self):
+        '''Destroy this entity'''
         # object cannot be destroyed twice?..
         try:
             self.check()
@@ -71,13 +76,21 @@ class Entity:
         self.funeral()
     
     def watchDeath(self, watcher):
+        '''Receive signal when this entity will die'''
         self.deathWatchers.update({watcher})
     
     def funeral(self):
+        '''Notify all death watchers'''
         for watcher in self.deathWatchers:
             watcher.attendFuneral(self)
     
     def attr(self, name):
+        '''Get entity attribute'''
+        
+        # TODO: maybe return None if no attribute?
+        # or create separate function for that?
+        # this is going to be more useful for API calls
+        
         self.check()
         
         try:
@@ -94,6 +107,7 @@ class Entity:
                 raise EntityAttributeError(self, name)
     
     def changeNumericAttr(self, name, delta):
+        '''Add delta to some attribute; use this instead of direct attribute set if possible'''
         self.check()
         
         value = int(self.attr(name))
@@ -103,12 +117,13 @@ class Entity:
         
         self.notifyAttr(name)
     
-    # NOTE: different from destroy -> available in action api
     def die(self):
+        '''Similar to destroy, but available in API; could be handled differently later'''
         self.destroy()
     
     # TODO: separate to Watchable
     def watchAttr(self, target, name):
+        '''Notify when attribute is changed'''
         if target in self.watchers:
             self.watchers[target].update({name})
         else:
@@ -124,6 +139,7 @@ class Entity:
                 watcher.notify(self, name)
     
     def getTile(self, dx = 0, dy = 0):
+        '''Get tile on which this entity is placed (default) or offsetted entity'''
         return self.onMap.getTile(self.x+dx, self.y+dy)
     
     def placeOn(self, onMap, x, y, position):
@@ -144,6 +160,7 @@ class Entity:
         self.position = None
     
     def move(self, dx, dy):
+        '''Move object to new coords keeping map and position'''
         oldx = self.x
         oldy = self.y
         oldpos = self.position
@@ -190,11 +207,12 @@ class EntityCoordError(RuntimeError):
     pass
 
 class EntityDeadError(RuntimeError):
+    '''Raised when link to dead entity is used'''
     def __init__(self, entity = None):
         self.entity = entity
     
-    #def __str__(self):
-        #pass
+    def __str__(self):
+        return '<EntityDeadError: {0}>'.format(self.entity)
 
 class EntityAttributeError(RuntimeError):
     def __init__(self, entity = None, name = ''):
