@@ -44,6 +44,7 @@ Currenly supported actions:
     <direction>     moving
     F <direction>   fight
     X               commit suicide
+    e               eat something from floor
     
     i               show inventory (doesn't work much currently)
     !               show game log
