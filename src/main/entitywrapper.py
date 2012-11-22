@@ -10,9 +10,9 @@ class EntityWrapper:
         'get', 'getTile', 'createEntity',
         'getMap',
         'getCoord', 'getX', 'getY',
-        '__getitem__'
+        '__getitem__', '__str__'
     ]
-    ignoreTypes = [int, str]
+    ignoreTypes = [int, str, float]
     
     def __new__(cls, src):
         # TODO: proper type handling
@@ -51,3 +51,6 @@ class EntityWrapper:
     
     def __getitem__(self, *args):
         return self.closure('__getitem__')(*args)
+    
+    def __str__(self):
+        return self.closure('__str__')()

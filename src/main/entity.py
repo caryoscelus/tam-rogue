@@ -115,7 +115,7 @@ class Entity:
         '''Add delta to some attribute; use this instead of direct attribute set if possible'''
         self.check()
         
-        value = int(self.attr(name))
+        value = float(self.attr(name))
         value += delta
         
         self.attrib[name] = value
