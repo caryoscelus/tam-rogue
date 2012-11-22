@@ -49,6 +49,8 @@ class DisplayServer:
                         logging.warning('unknown tag "{0}"'.format(root.tag))
                 except ET.ParseError:
                     logging.error('parse error')
+                    logging.debug(traceback.format_exc())
+                    logging.debug('received data: '.format(data))
             except Exception as err:
                 logging.error('unhandled exception in display server thread:')
                 logging.error(str(err))

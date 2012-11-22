@@ -206,10 +206,13 @@ class Client(Displaying, Inputting):
         self.updateDisplay = True
     
     def gameOver(self):
+        '''Called when game is considered finished'''
+        # TODO: show some exit info, before actual exiting
         self.putString(0, 0, 'game over, thou shall exit now')
         logging.info('game over')
         self.quit = True
         self.serverClient.stop()
+        self.notifyDisconnection()
     
     def attendFuneral(self, entity):
         if self.entity == entity:

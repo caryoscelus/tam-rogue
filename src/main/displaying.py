@@ -79,6 +79,14 @@ class Displaying(Sleeping, Starting, Receiver):
             return False
         return True
     
+    def notifyDisconnection(self):
+        '''Notify gfx client about disconnection'''
+        # TODO: use proper generation?
+        if self.send(bytes('<?xml version="1.0" encoding="UTF-8"?><close/>\n', 'ascii')):
+            logging.info('gfx client was successfully notified about disconnection')
+        else:
+            logging.warning('gfx client wasn\'t notified, exiting anyway')
+    
     # thread
     # TODO: one listener per app
     def clientListener(self):
