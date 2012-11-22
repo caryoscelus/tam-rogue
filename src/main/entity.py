@@ -147,6 +147,22 @@ class Entity:
         '''Get tile on which this entity is placed (default) or offsetted entity'''
         return self.onMap.getTile(self.x+dx, self.y+dy)
     
+    def getPosition(self):
+        return self.position
+    
+    # TODO: make possible to access this from api
+    def getCoord(self):
+        return self.x, self.y
+    
+    def getX(self):
+        return self.x
+    def getY(self):
+        return self.y
+    
+    def getMap(self):
+        '''Return map containing this entity'''
+        return self.onMap
+    
     def placeOn(self, onMap, x, y, position):
         self.onMap = onMap
         self.x = x

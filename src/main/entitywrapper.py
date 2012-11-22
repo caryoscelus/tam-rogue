@@ -1,8 +1,16 @@
 import logging
 
 class EntityWrapper:
+    '''Wraps Entity and other objects to forbid random access'''
+    
     # TODO: move api somewhere?..
-    entityApi = ['changeNumericAttr', 'setAttr', 'attr', 'move', 'die', 'get', 'getTile']
+    entityApi = [
+        'changeNumericAttr', 'setAttr', 'attr',
+        'move', 'die',
+        'get', 'getTile', 'createEntity',
+        'getMap',
+        'getCoord', 'getX', 'getY'
+    ]
     ignoreTypes = [int, str]
     
     def __new__(cls, src):

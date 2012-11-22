@@ -101,7 +101,7 @@ class Tile:
                 raise TilePositionError(position)
     
     def getUpper(self):
-        # no need for modding cause objects cannot be placed in mod positions
+        '''Get top of the tile "stack"'''
         for position in reversed(self.order):
             try:
                 e = self.get(position)
@@ -117,6 +117,8 @@ class Tile:
         return None
     
     def put(self, position, entity):
+        '''Put entity onto position; raise error in case it's taken'''
+        
         # check if position is ok
         self.get(position)
         
@@ -140,6 +142,7 @@ class Tile:
         self.notify(position, entity, 'add')
     
     def remove(self, entity, position = None):
+        '''Remove entity from this tile; raise error if it's not present here'''
         if not position:
             for pos in self.content:
                 try:                                    # list
