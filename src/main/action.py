@@ -86,11 +86,11 @@ class Action:
                     for key in formalArgs
             })
             wrappers.update({
-                '_result' : None
+                '_return' : None
             })
             try:
                 exec(compiled, ns, wrappers)
-                return wrappers['_result']
+                return wrappers['_return']
             except:
                 logging.error('action launching failed')
                 logging.debug(traceback.format_exc())
