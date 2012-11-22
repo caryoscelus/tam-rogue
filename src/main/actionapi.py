@@ -5,6 +5,9 @@ from builtins import Exception, TypeError, RuntimeError, \
 
 from logging import debug, info, warning, error
 
+# TODO: more random functions; control seeds
+from random import random
+
 from entity import EntityAttributeError, EntityDeadError
 from tile import TileTakenError
 

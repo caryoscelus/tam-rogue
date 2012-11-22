@@ -106,6 +106,11 @@ class Entity:
             except KeyError:
                 raise EntityAttributeError(self, name)
     
+    def setAttr(self, name, value):
+        '''Directly set new attribute value'''
+        self.check()
+        self.attrib[name] = value
+    
     def changeNumericAttr(self, name, delta):
         '''Add delta to some attribute; use this instead of direct attribute set if possible'''
         self.check()

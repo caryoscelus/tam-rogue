@@ -8,7 +8,12 @@
 if not reason:
     reason = 'unknown reason'
 info('{0} died because: {1}'.format(subject.attr('class'), reason))
-subject.die()
+
+if random() &gt; 0.5:
+    # create corpse
+    subject.setAttr('class', 'corpse')
+else:
+    subject.die()
         </code>
     </action>
 </mod>
