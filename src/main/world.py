@@ -6,7 +6,7 @@ from tiledmap import TiledMap
 
 class World(Sleeping):
     def __init__(self):
-        self.maps = []
+        self.maps = {}
         self.life = self.live()
         
         # modding features
@@ -30,8 +30,9 @@ class World(Sleeping):
         try:
             return self.maps[mapId]
         except IndexError:
-            self.maps[mapId] = TiledMap()
-            return self.maps[mapId]
+            newMap = TiledMap(attrib={'id':mapId})
+            self.maps[mapId] = newMap
+            return newMap
     
     def step(self):
         return next(self.life)
@@ -40,7 +41,7 @@ class World(Sleeping):
         '''Generator-style function yielding map steps'''
         while True:
             # iterate over maps
-            for tMap in self.maps:
+            for tMap in self.maps.values():
                 # iterate over objects on map
                 while True:
                     t = tMap.step()

@@ -27,7 +27,8 @@ def generateWorld():
     
     map0 = TiledMap(20, 20,
             {'ground':None, 'trap':None, 'objects':[], 'monster':None, 'feature':None},
-            ['ground', 'feature', 'trap', 'objects', 'monster'])
+            ['ground', 'feature', 'trap', 'objects', 'monster'],
+            {'id':0})
     map0.alive = True
     map0.exist = True
     map0.queue.push(human)
@@ -47,7 +48,7 @@ def generateWorld():
     map0.putOn(6, 6, 'monster', fungus)
     
     # TODO: use something else
-    worldregistry.world.maps.append(map0)
+    worldregistry.world.maps[0] = map0
     
     return human
 
