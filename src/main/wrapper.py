@@ -4,13 +4,16 @@ class Wrapper:
     '''Wraps Entity and other objects to forbid random access'''
     
     # TODO: move api somewhere?..
+    # TODO: clean up
     entityApi = [
         'changeNumericAttr', 'setAttr', 'attr',
         'move', 'die',
         'get', 'getTile', 'createEntity',
         'getMap',
         'getCoord', 'getX', 'getY',
-        '__getitem__', '__str__'
+        '__getitem__', '__str__',
+        'removeFromMap',
+        'alive'
     ]
     ignoreTypes = [int, str, float]
     
@@ -43,6 +46,7 @@ class Wrapper:
                 try:
                     func = entity.__getattribute__(attrib)
                     def wrappedFunc(*args):
+                        # TODO: unwrap args passing to function?
                         result = func(*args)
                         return Wrapper(result)
                     return wrappedFunc
