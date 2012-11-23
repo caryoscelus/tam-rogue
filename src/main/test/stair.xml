@@ -11,7 +11,7 @@ currentMap = stair.getMap()
 nextMap = currentMap.attr('id')+1
 x = int(random()*10)
 y = int(random()*10)
-action('travel', {'subject':subject, 'mapid':nextMap, 'x':x, 'y':y})
+_return = action('travel', {'subject':subject, 'mapid':nextMap, 'x':x, 'y':y})
         </code>
     </action>
     

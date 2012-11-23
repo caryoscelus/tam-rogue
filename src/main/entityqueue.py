@@ -8,7 +8,11 @@ class EntityQueue:
         self.pos = 0
     
     def remove(self, entity):
-        self.content.remove(entity)
+        try:
+            self.content.remove(entity)
+        except ValueError:
+            logging.warning('trying to remove non-pressent Entity from EntityQueue')
+            logging.debug('Entity was: {0}'.format(entity))
     
     def pop(self):
         entity = None
