@@ -23,6 +23,10 @@ class TiledMap:
         self.queue = EntityQueue()
         self.life = self.live()
     
+    def attr(self, name):
+        # TODO
+        return self.attrib[name]
+    
     def fromXml(xmlRoot):
         self = TiledMap()
         self.loadXml(xmlRoot)

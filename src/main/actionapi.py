@@ -11,8 +11,10 @@ from random import random
 from entity import EntityAttributeError, EntityDeadError
 from tile import TileTakenError
 
+# TODO: remove this, import few functions
+import worldregistry
+
 def action(name, args):
-    import worldregistry
     # TODO: proper action launching..
     try:
         action = worldregistry.world.actions[name]

@@ -29,7 +29,7 @@ class World(Sleeping):
         '''Get map with given id; use this, don't use self.maps direct access'''
         try:
             return self.maps[mapId]
-        except IndexError:
+        except KeyError:
             newMap = TiledMap(attrib={'id':mapId})
             self.maps[mapId] = newMap
             return newMap
