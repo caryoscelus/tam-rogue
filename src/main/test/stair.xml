@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <require file="travel.xml"/>
+    <action name="climb-stair">
+        <object name="subject"/>
+        <object name="stair"/>
+        
+        <code>
+# This implements simple one-way stair which lead to the next level
+currentMap = stair.getMap()
+nextMap = currentMap.attr('id')+1
+x = int(random()*10)
+y = int(random()*10)
+action('travel', {'subject':subject, 'mapid':nextMap, 'x':x, 'y':y})
+        </code>
+    </action>
+    
+    <action name="climb-this-stair">
+        <object name="subject"/>
+        <code>
+tile = subject.getTile()
+stair = tile.get('feature')
+if stair and stair.attr('class') == 'ladder':
+    _return = action('climb-stair', {'subject':subject, 'stair':stair})
+else:
+    info('there is no stair')
+    _return = False
+        </code>
+    </action>
+</mod>

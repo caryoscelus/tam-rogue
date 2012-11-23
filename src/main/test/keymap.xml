@@ -14,5 +14,9 @@
             <arg name="subject" value="entity"/>
             <bind key="e"/>
         </action>
+        <action name="climb-this-stair">
+            <arg name="subject" value="entity"/>
+            <bind key=">"/>
+        </action>
     </keymap>
 </mod>

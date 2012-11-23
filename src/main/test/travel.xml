@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="travel">
+        <object name="subject"/>
+        <integer name="mapid"/>
+        <integer name="x"/>
+        <integer name="y"/>
+        <code>
+oldMap = subject.getMap()
+newMap = worldregistry.world.getMap(mapid)
+oldMap.removeFromMap(subject)
+newMap.putOn(subject)
+        </code>
+    </action>
+</mod>

@@ -3,6 +3,7 @@
     <require file="character-mod.xml"/>
     
     <require file="trap.xml"/>
+    <require file="stair.xml"/>
     <require file="suicide-action.xml"/>
     <require file="fight-action.xml"/>
     <require file="eat-from-floor.xml"/>
