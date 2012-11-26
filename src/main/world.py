@@ -37,7 +37,7 @@ class World(Sleeping):
             return self.maps[mapId]
         except KeyError:
             newMap = TiledMap(attrib={'id':mapId})
-            self.maps[mapId] = newMap
+            self.setMap(mapId, newMap)
             return newMap
     
     def step(self):
