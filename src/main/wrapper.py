@@ -23,7 +23,7 @@ class Wrapper:
         'changeNumericAttr', 'setAttr', 'attr',
         'move', 'die',
         'get', 'getTile', 'createEntity',
-        'getMap',
+        'getMap', 'getPosition',
         'getCoord', 'getX', 'getY',
         '__getitem__', '__str__',
         'removeFromMap',

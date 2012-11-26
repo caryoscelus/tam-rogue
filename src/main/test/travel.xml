@@ -6,10 +6,11 @@
         <integer name="x"/>
         <integer name="y"/>
         <code>
+oldPos = subject.getPosition()
 oldMap = subject.getMap()
 newMap = worldregistry.world.getMap(mapid)
 oldMap.removeFromMap(subject)
-newMap.putOn(subject)
+newMap.putOn(x, y, oldPos, subject)
         </code>
     </action>
 </mod>
