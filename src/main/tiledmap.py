@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import logging
+import traceback
 
 from tile import Tile
 from entityqueue import EntityQueue, EmptyQueueError
@@ -139,20 +140,21 @@ class TiledMap:
     def live(self):
         '''Generator-style function yilding entity.live() or False in case of queue reloading'''
         while True:
-            # iterate over objects on map
-            while True:
+            try:
+                entity = self.queue.pop()
+                entity.check()
+            except EmptyQueueError:
+                # reload queue
+                self.queue.reset()
+                yield False
+            except EntityDeadError:
+                self.removeFromMap(entity)
+            else:
                 try:
-                    entity = self.queue.pop()
-                    entity.check()
-                except EmptyQueueError:
-                    break
-                except EntityDeadError:
-                    self.removeFromMap(entity)
-                else:
                     yield entity.live()
-            # reload queue
-            self.queue.reset()
-            yield False
+                except Exception as err:
+                    logging.error('Error in TiledMap.live():')
+                    logging.debug(traceback.fromat_exc())
 
 
 class TiledMapSizeError(RuntimeError):
