@@ -1,5 +1,19 @@
 import logging
 
+# TODO: use something like bidict?
+_wrappers = {}
+_originals = {}
+
+def addWrapper(orig, wrapper):
+    _wrappers[orig] = wrapper
+    _originals[wrapper] = orig
+
+def orig(wrapper):
+    try:
+        return _originals[wrapper]
+    except KeyError:
+        return wrapper
+
 class Wrapper:
     '''Wraps Entity and other objects to forbid random access'''
     
@@ -25,7 +39,12 @@ class Wrapper:
             return src
         if type(src) in cls.ignoreTypes:
             return src
-        return super(Wrapper, cls).__new__(cls, src)
+        try:
+            return _wrappers[src]
+        except KeyError:
+            newWrapper = super(Wrapper, cls).__new__(cls, src)
+            addWrapper(src, newWrapper)
+            return newWrapper
     
     def __init__(self, entity):
         if type(entity) == Wrapper:
@@ -46,7 +65,7 @@ class Wrapper:
                 try:
                     func = entity.__getattribute__(attrib)
                     def wrappedFunc(*args):
-                        # TODO: unwrap args passing to function?
+                        args = (orig(arg) for arg in args)
                         result = func(*args)
                         return Wrapper(result)
                     return wrappedFunc
