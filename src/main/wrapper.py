@@ -26,7 +26,7 @@ class Wrapper:
         'getMap', 'getPosition',
         'getCoord', 'getX', 'getY',
         '__getitem__', '__str__',
-        'removeFromMap',
+        'removeFromMap', 'putOn',
         'alive'
     ]
     ignoreTypes = [int, str, float]
@@ -85,4 +85,4 @@ class Wrapper:
         return self.closure('__getitem__')(*args)
     
     def __str__(self):
-        return self.closure('__str__')()
+        return '<Wrapper around {0}>'.format(self.closure('__str__')())

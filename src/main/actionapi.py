@@ -11,12 +11,10 @@ from random import random
 from entity import EntityAttributeError, EntityDeadError
 from tile import TileTakenError
 
-# TODO: remove this, import few functions
-import worldregistry
-
 def action(name, args):
     # TODO: proper action launching..
     try:
+        import worldregistry
         action = worldregistry.world.actions[name]
     except KeyError:
         warning('unknown action called')
@@ -24,6 +22,11 @@ def action(name, args):
         return False
     else:
         return action.applyAction(args)
+
+def getMap(mapId):
+    import worldregistry
+    from wrapper import Wrapper
+    return Wrapper(worldregistry.world.getMap(mapId))
 
 def traceback():
     import traceback

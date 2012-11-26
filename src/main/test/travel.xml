@@ -8,7 +8,7 @@
         <code>
 oldPos = subject.getPosition()
 oldMap = subject.getMap()
-newMap = worldregistry.world.getMap(mapid)
+newMap = getMap(mapid)
 oldMap.removeFromMap(subject)
 newMap.putOn(x, y, oldPos, subject)
         </code>
