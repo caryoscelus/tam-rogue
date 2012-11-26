@@ -13,11 +13,9 @@ class Server:
         self.life = None
     
     def main(self):
-        # NOTE: this makes impossible to switch worlds
-        self.life = worldregistry.world.live()
         while not self.quit:
             try:
-                next(self.life)
+                worldregistry.world.step()
             except Exception as err:
                 logging.error('unhandled exception in world server thread:')
                 logging.error(str(err))
