@@ -3,10 +3,12 @@ import logging
 from sleeping import Sleeping
 from entitywatcher import EntityWatcher
 from tiledmap import TiledMap
+from entityqueue import EntityQueue, EmptyQueueError
 
 class World(Sleeping):
     def __init__(self):
         self.maps = {}
+        self.mapQueue = EntityQueue()
         self.life = self.live()
         
         # modding features
@@ -25,6 +27,10 @@ class World(Sleeping):
             self.layers[l] = layers[l]
             self.layerOrder.append(l)
     
+    def setMap(self, mapId, newMap):
+        self.maps[mapId] = newMap
+        self.mapQueue.push(newMap)
+    
     def getMap(self, mapId):
         '''Get map with given id; use this, don't use self.maps direct access'''
         try:
@@ -40,15 +46,18 @@ class World(Sleeping):
     def live(self):
         '''Generator-style function yielding map steps'''
         while True:
-            # iterate over maps
-            for tMap in self.maps.values():
+            try:
+                nextMap = self.mapQueue.pop()
+            except EmptyQueueError:
+                self.mapQueue.reset()
+                yield False
+            else:
                 # iterate over objects on map
                 while True:
-                    t = tMap.step()
+                    t = nextMap.step()
                     if not t:
                         break
                     yield t
-                self.sleep()
     
     def watch(self, what, watcher, name):
         '''Generic watch function'''

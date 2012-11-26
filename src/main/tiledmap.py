@@ -23,6 +23,10 @@ class TiledMap:
         self.queue = EntityQueue()
         self.life = self.live()
     
+    def check(self):
+        '''Compatibility with Entity'''
+        pass
+    
     def attr(self, name):
         # TODO
         return self.attrib[name]

@@ -48,7 +48,7 @@ def generateWorld():
     map0.putOn(6, 6, 'monster', fungus)
     
     # TODO: use something else
-    worldregistry.world.maps[0] = map0
+    worldregistry.world.setMap(0, map0)
     
     return human
 
