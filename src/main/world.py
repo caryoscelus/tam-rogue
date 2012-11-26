@@ -1,4 +1,5 @@
 import logging
+import traceback
 
 from sleeping import Sleeping
 from entitywatcher import EntityWatcher
@@ -51,10 +52,17 @@ class World(Sleeping):
             except EmptyQueueError:
                 self.mapQueue.reset()
                 yield False
+            except Exception as err:
+                logging.error('Error in World.live():')
+                logging.debug(traceback.format_exc())
             else:
                 # iterate over objects on map
                 while True:
-                    t = nextMap.step()
+                    try:
+                        t = nextMap.step()
+                    except Exception as err:
+                        logging.error('Error in World.live -> TiledMap.live():')
+                        logging.debug(traceback.format_exc())
                     if not t:
                         break
                     yield t
