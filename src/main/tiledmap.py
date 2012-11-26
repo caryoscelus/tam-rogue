@@ -149,12 +149,15 @@ class TiledMap:
                 yield False
             except EntityDeadError:
                 self.removeFromMap(entity)
+            except Exception as err:
+                logging.error('Error in TiledMap.live():')
+                logging.debug(traceback.format_exc())
             else:
                 try:
                     yield entity.live()
                 except Exception as err:
-                    logging.error('Error in TiledMap.live():')
-                    logging.debug(traceback.fromat_exc())
+                    logging.error('Error in TiledMap.live -> entity.live():')
+                    logging.debug(traceback.format_exc())
 
 
 class TiledMapSizeError(RuntimeError):
