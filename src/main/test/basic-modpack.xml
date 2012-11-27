@@ -18,4 +18,5 @@
     <require file="check-hunger.xml"/>
     
     <require file="map-generator.xml"/>
+    <require file="mole-map-generator.xml"/>
 </mod>

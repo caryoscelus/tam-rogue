@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="mole-map-generator">
+        <object name="newmap"/>
+        
+        <code>
+global putFloor, floored, randomDirect
+global mymap
+mymap = newmap
+def putFloor(x, y):
+    mymap.createEntity({'class':'floor'}, x, y, 'ground')
+
+def floored(x, y):
+    return mymap.getContent(x, y, 'ground')
+
+def randomDirect():
+    useX = bool(int(random()*2))
+    sign = int((int(random()*2)-0.5)*2)
+    if useX:
+        return (sign, 0)
+    else:
+        return (0, sign)
+
+def makeFloor():
+    square = width*height
+    floorPortion = random()*0.3+0.4
+    leftToFloor = int(floorPortion*square)
+    
+    global x, y, direct
+    x = int(random()*width)
+    y = int(random()*height)
+    direct = randomDirect()
+    
+    def checkBounds():
+        global x, y, direct
+        if x &gt;= width:
+            direct = (0, -1)
+            x = width-1
+        elif x &lt; 0:
+            direct = (0, 1)
+            x = 0
+        if y &gt;= height:
+            direct = (1, 0)
+            y = height-1
+        elif y &lt; 0:
+            direct = (-1, 0)
+            y = 0
+    
+    def makeStep():
+        global x, y, direct
+        if random() > 0.8:
+            direct = randomDirect()
+        x += direct[0]
+        y += direct[1]
+        checkBounds()
+    
+    while leftToFloor:
+        makeStep()
+        if not floored(x, y):
+            putFloor(x, y)
+            leftToFloor -= 1
+
+
+# size
+MIN_SIZE = 16
+MAX_SIZE = 32
+global width, height
+width = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
+height = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
+mymap.resize(width, height)
+
+global x, y, direct
+makeFloor()
+
+mymap.exist = True
+_return = True
+        </code>
+    </action>
+</mod>
