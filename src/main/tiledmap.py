@@ -86,7 +86,10 @@ class TiledMap:
         return [[func(x, y) for x in range(self.width)] for y in range(self.height)]
     
     def getTile(self, x, y):
-        return self.content[y][x]
+        try:
+            return self.content[y][x]
+        except IndexError:
+            raise TiledMapSizeError(self)
     
     def getContent(self, x, y, position):
         return self.getTile(x, y).get(position)
