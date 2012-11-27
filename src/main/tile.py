@@ -98,7 +98,9 @@ class Tile:
                 self.content[position] = t
                 return t
             except KeyError:
-                raise TilePositionError(position)
+                logging.warning('tile position not found, returning None')
+                return None
+                #raise TilePositionError(position)
     
     def getUpper(self):
         '''Get top of the tile "stack"'''
@@ -126,8 +128,10 @@ class Tile:
         try:                                            # try list
             self.content[position].append(entity)
         except KeyError:
-            logging.error('this could not happen!')
-            raise TilePositionError(position)
+            logging.warning('tile position not found, creating..')
+            self.content[position] = entity
+            #logging.error('this could not happen!')
+            #raise TilePositionError(position)
         except AttributeError:                          # non-list
             try:
                 self.content[position].check()
