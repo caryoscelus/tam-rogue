@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 import logging
 import traceback
 
-from tile import Tile
+from tile import Tile, TileEntityError
 from entityqueue import EntityQueue, EmptyQueueError
 from entity import Entity, EntityDeadError, EntityCoordError
 from miscerrors import XmlLoadError
@@ -118,7 +118,10 @@ class TiledMap:
         position = entity.position
         entity.removeFrom(self, x, y, position)
         tile = self.getTile(x, y)
-        tile.remove(entity, position)
+        try:
+            tile.remove(entity, position)
+        except TileEntityError:
+            logging.warning('trying to remove entity from tile which doesn\'t contain it')
     
     def moveTo(self, entity, x, y, position):
         try:
