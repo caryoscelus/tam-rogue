@@ -65,7 +65,7 @@ class Display:
                                 self.cPad.addstr(y, x, line[x].c)
                             except curses.error:
                                 logging.debug('addstr failed ({0}, {1})'.format(x, y))
-                    self.cPad.refresh(0, 0, 0, 0, 12, 80)
+                    self.cPad.refresh(0, 0, 0, 0, self.width, self.height)
                     self.cScr.refresh()
                     
                     self.update = False
