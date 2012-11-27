@@ -155,7 +155,7 @@ class Tile:
                     return
                 except ValueError:                      # not in list
                     break
-                except TypeError:                       # entity or empty
+                except AttributeError:                  # entity or empty
                     if self.content[pos] == entity:
                         self.content[pos] = None
                         break
