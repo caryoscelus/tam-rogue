@@ -11,7 +11,7 @@
 newmap.resize(32, 32)
 for x in range(32):
     for y in range(32):
-        newmap.createEntity({'class':'floor'}, x, y, 'ground')
+        newmap.createEntity({'class':'floor', 'standable':True}, x, y, 'ground')
 newmap.setExist(True)
         </code>
     </action>
