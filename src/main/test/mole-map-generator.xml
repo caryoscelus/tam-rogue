@@ -48,7 +48,7 @@ def makeFloor():
         if y &gt;= height-1:
             direct = (1, 0)
             y = height-2
-        elif y &lt; 1:
+        elif y &lt;= 0:
             direct = (-1, 0)
             y = 1
     
