@@ -4,14 +4,19 @@
         <object name="newmap"/>
         
         <code>
-global putFloor, putWall, floored, randomDirect
-global mymap
+global putFloor, putWall, putStairs, floored, randomDirect
+global mymap, mapId
 mymap = newmap
+mapId = mymap.attr('id')
 def putFloor(x, y):
     mymap.createEntity({'class':'floor'}, x, y, 'ground')
 
 def putWall(x, y):
     mymap.createEntity({'class':'wall'}, x, y, 'ground')
+
+def putStairs(x, y):
+    mymap.createEntity({'class':'stairs', 'destination':mapId+1}, x, y, 'feature')
+    debug('created stairs at ({0}, {1})'.format(x, y))
 
 def floored(x, y):
     try:
@@ -28,17 +33,19 @@ def randomDirect():
         return (0, sign)
 
 def makeFloor():
+    global x, y, direct, totalFloor
+    
     square = width*height
     floorPortion = random()*0.3+0.4
-    leftToFloor = int(floorPortion*square)
+    totalFloor = int(floorPortion*square)
+    leftToFloor = totalFloor
     
-    global x, y, direct
     x = int(random()*width)
     y = int(random()*height)
     direct = randomDirect()
     
     def checkBounds():
-        global x, y, direct
+        global x, y, direct, totalFloor
         if x &gt;= width-1:
             direct = (0, -1)
             x = width-2
@@ -53,7 +60,7 @@ def makeFloor():
             y = 1
     
     def makeStep():
-        global x, y, direct
+        global x, y, direct, totalFloor
         if random() > 0.8:
             direct = randomDirect()
         x += direct[0]
@@ -66,16 +73,26 @@ def makeFloor():
             putFloor(x, y)
             leftToFloor -= 1
 
-def fillWalls():
+def fillWallsAndStairs():
+    placedStairs = False
+    stairsProbability = 1.0/totalFloor
     for y in range(height):
         for x in range(width):
-            if not floored(x, y):
+            if floored(x, y):
+                latestStairsPosition = (x, y)
+                if not placedStairs and random() > stairsProbability:
+                    placedStairs = True
+                    putStairs(x, y)
+            else:
                 ns = (
                     (floored(xd+x, yd+y) for dx in range(-1, 2)) \
                         for dy in range(-1, 2)
                 )
                 if reduce(lambda v1, v2: v1 and v2, ns):
                     putWall(x, y)
+    if not placedStairs:
+        putStairs(*latestStairsPosition)
+        placedStairs = True
 
 # size
 MIN_SIZE = 16
@@ -85,9 +102,10 @@ width = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
 height = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
 mymap.resize(width, height)
 
-global x, y, direct
+global x, y, direct, totalFloor
+totalFloor = 0
 makeFloor()
-fillWalls()
+fillWallsAndStairs()
 
 mymap.setExist(True)
 _return = True
