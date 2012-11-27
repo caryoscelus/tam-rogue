@@ -49,6 +49,11 @@ class DisplayServer:
                         logging.info('connection closed, quitting')
                         self.quit = True
                         self.display.quit = True
+                    elif root.tag == 'resize':
+                        logging.debug('resize')
+                        width = root.attrib['width']
+                        height = root.attrib['height']
+                        self.display.resize(width, height)
                     else:
                         logging.warning('unknown tag "{0}"'.format(root.tag))
                 except ET.ParseError:

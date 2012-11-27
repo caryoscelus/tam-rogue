@@ -23,8 +23,13 @@ class Display:
         self.cScr = None
         self.cPad = None
     
+    def resize(self, w, h):
+        self.width = w
+        self.height = h
+        self.filldata()
+    
     def filldata(self):
-        self.data = [[Cell('a') for x in range(self.width)] for y in range(self.height)]
+        self.data = [[Cell(' ') for x in range(self.width)] for y in range(self.height)]
     
     def init(self):
         # TODO: move to special curses-wrapping class
