@@ -33,7 +33,7 @@ class Wrapper:
         'clear', 'resize',
         'setExist'
     ]
-    ignoreTypes = [int, str, float]
+    ignoreTypes = [int, str, float, bool]
     
     def __new__(cls, src):
         # TODO: proper type handling
