@@ -101,9 +101,9 @@ class TiledMap:
         if queueChange and entity.alive:
             self.queue.push(entity)
         
+        entity.placeOn(self, x, y, position)
         tile = self.getTile(x, y)
         tile.put(position, entity)
-        entity.placeOn(self, x, y, position)
     
     def removeFromMap(self, entity, queueChange = True):
         if queueChange and entity.alive:
