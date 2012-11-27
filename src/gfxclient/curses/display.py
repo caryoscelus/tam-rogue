@@ -63,7 +63,10 @@ class Display:
                     for y in range(self.height):
                         line = self.data[y]
                         for x in range(self.width):
-                            self.cPad.addstr(y, x, line[x].c)
+                            try:
+                                self.cPad.addstr(y, x, line[x].c)
+                            except curses.error:
+                                logging.debug('addstr failed ({0}, {1})'.format(x, y))
                     self.cPad.refresh(0, 0, 0, 0, 12, 80)
                     self.cScr.refresh()
                     
