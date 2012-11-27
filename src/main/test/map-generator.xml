@@ -9,7 +9,9 @@
         
         <code>
 newmap.resize(32, 32)
-newmap.createEntity({'class':'floor'}, 2, 2, 'ground')
+for x in range(32):
+    for y in range(32):
+        newmap.createEntity({'class':'floor'}, x, y, 'ground')
         </code>
     </action>
 </mod>
