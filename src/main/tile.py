@@ -98,7 +98,7 @@ class Tile:
                 self.content[position] = t
                 return t
             except KeyError:
-                logging.warning('tile position not found, returning None')
+                #logging.warning('tile position not found, returning None')
                 return None
                 #raise TilePositionError(position)
     
@@ -128,7 +128,7 @@ class Tile:
         try:                                            # try list
             self.content[position].append(entity)
         except KeyError:
-            logging.warning('tile position not found, creating..')
+            #logging.warning('tile position not found, creating..')
             self.content[position] = entity
             #logging.error('this could not happen!')
             #raise TilePositionError(position)

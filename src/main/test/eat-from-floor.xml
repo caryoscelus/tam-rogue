@@ -9,12 +9,16 @@ tile = subject.getTile()
 objects = tile.get('objects')
 try:
     object = objects[-1]
+    _return = True
 except IndexError:
     info('nothing to eat here')
     _return = False
-else:
-    action('eat', {'subject':subject, 'food':object})
+except AttributeError:
+    warning('objects position is not list')
+    object = objects
     _return = True
+if _return == True:
+    action('eat', {'subject':subject, 'food':object})
         </code>
     </action>
 </mod>
