@@ -10,7 +10,10 @@ oldPos = subject.getPosition()
 oldMap = subject.getMap()
 newMap = getMap(mapid)
 oldMap.removeFromMap(subject)
-newMap.putOn(x, y, oldPos, subject)
+try:
+    newMap.putOn(x, y, oldPos, subject)
+except TiledMapSizeError:
+    info('user traveled to non-existant map')
         </code>
     </action>
 </mod>

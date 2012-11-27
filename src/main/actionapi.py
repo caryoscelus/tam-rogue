@@ -10,6 +10,7 @@ from random import random
 
 from entity import EntityAttributeError, EntityDeadError
 from tile import TileTakenError
+from tiledmap import TiledMapSizeError
 
 def action(name, args):
     # TODO: proper action launching..
