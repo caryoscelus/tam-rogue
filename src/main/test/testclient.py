@@ -19,7 +19,7 @@ from worldregistry import *
 def generateWorld():
     floor = Entity({'class':'floor', 'standable':True})
     wall = Entity({'class':'wall'})
-    human = Entity({'class':'human', 'hp':2, 'hungry':0, 'maxHungry':2})
+    human = Entity({'class':'human', 'hp':2, 'hungry':0, 'maxHungry':10})
     fungus = Entity({'class':'fungus', 'hp':2})
     trap = Entity({'class':'trap', 'hurt':1})
     ladder = Entity({'class':'ladder', 'destination':2})
