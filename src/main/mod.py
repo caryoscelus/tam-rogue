@@ -2,6 +2,26 @@ import logging
 import traceback
 import xml.etree.ElementTree as ET
 
+# TODO: use this more generally
+def convert(value, tp):
+    '''Convert value to given type'''
+    if not tp:
+        return value
+    elif tp == 'bool':
+        try:
+            return bool(int(value))
+        except ValueError:
+            return bool(value)
+    elif tp == 'int':
+        return int(value)
+    elif tp == 'float':
+        return float(value)
+    elif tp == 'str':
+        return str(value)
+    else:
+        logging.warning('convert: unknown type {0}'.format(tp))
+        return value
+
 class Mod:
     def __init__(self, xml):
         self.src = xml
@@ -24,9 +44,10 @@ class Mod:
             elif node.tag == 'map':
                 source = node.attrib['source']
                 target = node.attrib['target']
+                tp = node.get('type')
                 values = {}
                 for record in node:
-                    values[record.get('in')] = record.get('out')
+                    values[record.get('in')] = convert(record.get('out'), tp)
                 world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
             elif node.tag == 'action':
                 action = Action.fromXml(node)
