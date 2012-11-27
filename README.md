@@ -45,6 +45,7 @@ Currenly supported actions:
     F <direction>   fight
     X               commit suicide
     e               eat something from floor
+    >               use stairs
     
     i               toggle displaying inventory (doesn't work much currently)
     !               toggle displaying game log
