@@ -10,6 +10,8 @@
         <code>
 # check if he can land there
 tile = subject.getTile(dx, dy)
+if not tile.get('ground'):
+    raise RuntimeError('entity tries to step on no ground')
 if not tile.get('ground').attr('standable'):
     raise RuntimeError('entity tries to step on non-standable')
 
