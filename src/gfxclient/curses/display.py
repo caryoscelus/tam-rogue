@@ -27,6 +27,7 @@ class Display:
         self.width = w
         self.height = h
         self.filldata()
+        self.cPad = curses.newpad(self.height, self.width+1)
     
     def filldata(self):
         self.data = [[Cell(' ') for x in range(self.width)] for y in range(self.height)]
@@ -43,10 +44,7 @@ class Display:
         self.cScr.nodelay(1)
         
         # TODO: remove constants
-        self.height, self.width = 25, 80
-        
-        self.filldata()
-        self.cPad = curses.newpad(self.height, self.width+1)
+        self.resize(25, 80)
         
         self.ready = True
     
