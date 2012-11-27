@@ -131,11 +131,17 @@ class TiledMap:
             # generate map
             # TODO: send event of non-existant map
             # or maybe move the whole generation thing to entity action?..
-            raise NotImplementedError('map generation is not implemented')
+            self.notifyEmpty()
+            return False
         if self.alive:
             return next(self.life)
         else:
             return False
+    
+    def notifyEmpty(self):
+        '''Notify about map being empty, not generated yet'''
+        for watcher in worldregistry.world.mapWatchers:
+            watcher.notify(self, 'empty')
     
     def live(self):
         '''Generator-style function yilding entity.live() or False in case of queue reloading'''

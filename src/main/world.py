@@ -19,6 +19,7 @@ class World(Sleeping):
         self.actions = {}
         self.entityWatchers = {}
         self.tileWatchers = {}
+        self.mapWatchers = set()
     
     def addTileLayers(self, layers, layerOrder):
         # TODO: calculate proper order
@@ -80,6 +81,9 @@ class World(Sleeping):
     def watchPosition(self, target, name):
         self.watch(self.tileWatchers, target, name)
     
+    def watchMap(self, target):
+        self.mapWatchers.update({target})
+    
     def addBinding(self, targetType, event, action, opt, args):
         if targetType == 'entity':
             # TODO: proper bindings, don't just rely on watcher
@@ -97,6 +101,8 @@ class World(Sleeping):
                 if args[key] == 'target':
                     binding = key
             if event == 'empty':
-                logging.debug('assign map-empty binding..')
+                self.watchMap(EntityWatcher(action, binding))
+            else:
+                logging.warning('addBinding: unknown map event {0}'.format(event))
         else:
             logging.warning('addBinding: unknown targetType {0}'.format(targetType))
