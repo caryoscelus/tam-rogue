@@ -5,7 +5,7 @@
         <value in="wall" out="#"/>
         <value in="floor" out="."/>
         <value in="trap" out="^"/>
-        <value in="ladder" out=">"/>
+        <value in="stairs" out=">"/>
         <value in="fungus" out="F"/>
         <value in="corpse" out="%"/>
     </map>

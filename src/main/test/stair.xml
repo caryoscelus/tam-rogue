@@ -20,7 +20,7 @@ _return = action('travel', {'subject':subject, 'mapid':nextMap, 'x':x, 'y':y})
         <code>
 tile = subject.getTile()
 stair = tile.get('feature')
-if stair and stair.attr('class') == 'ladder':
+if stair and stair.attr('class') == 'stairs':
     _return = action('climb-stair', {'subject':subject, 'stair':stair})
 else:
     info('there is no stair')

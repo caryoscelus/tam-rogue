@@ -22,7 +22,7 @@ def generateWorld():
     human = Entity({'class':'human', 'hp':2, 'hungry':0, 'maxHungry':10})
     fungus = Entity({'class':'fungus', 'hp':2})
     trap = Entity({'class':'trap', 'hurt':1})
-    ladder = Entity({'class':'ladder', 'destination':2})
+    stairs = Entity({'class':'stairs', 'destination':2})
     human.alive = True
     
     map0 = TiledMap(20, 20,
@@ -44,7 +44,7 @@ def generateWorld():
     # objects
     map0.putOn(12, 4, 'monster', human)
     map0.putOn(15, 4, 'trap', trap)
-    map0.putOn(15, 7, 'feature', ladder)
+    map0.putOn(15, 7, 'feature', stairs)
     map0.putOn(6, 6, 'monster', fungus)
     
     # TODO: use something else
