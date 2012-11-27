@@ -141,18 +141,29 @@ class Entity:
     
     def getTile(self, dx = 0, dy = 0):
         '''Get tile on which this entity is placed (default) or offsetted entity'''
-        return self.onMap.getTile(self.x+dx, self.y+dy)
+        return self.onMap.getTile(self.getX()+dx, self.getY()+dy)
     
     def getPosition(self):
         return self.position
     
     # TODO: make possible to access this from api
     def getCoord(self):
-        return self.x, self.y
+        return self.getX(), self.getY()
     
     def getX(self):
+        try:
+            self.x+0
+        except TypeError:
+            logging.warning('entity.x undefined, defaulting to 0')
+            self.x = 0
         return self.x
+    
     def getY(self):
+        try:
+            self.y+0
+        except TypeError:
+            logging.warning('entity.y undefined, defaulting to 0')
+            self.y = 0
         return self.y
     
     def getMap(self):
@@ -183,8 +194,8 @@ class Entity:
         oldpos = self.position
         
         # TODO: check movement
-        x = self.x+dx
-        y = self.y+dy
+        x = self.getX()+dx
+        y = self.getY()+dy
         
         try:
             self.onMap.moveTo(self, x, y, self.position)
