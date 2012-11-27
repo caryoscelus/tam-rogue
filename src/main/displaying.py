@@ -53,6 +53,10 @@ class Displaying(Sleeping, Starting, Receiver):
             self.putChar(x, y, ch)
             x += 1
     
+    def resize(self, width, height):
+        logging.debug('resize')
+        self.send(bytes('<resize width="{0}" height="{1}"/>'.format(width, height), 'ascii'))
+    
     def redraw(self):
         # TODO: optimize xml
         msg = bytes(ET.tostring(self.displayData))
