@@ -8,34 +8,37 @@
         <object name="newmap"/>
         
         <code>
-mapId = newmap.attr('id')
+result = action('mole-map-generator', {'newmap':newmap})
+if not result:
+    warning('mole generator is not available, falling back to some stupid one')
+    mapId = newmap.attr('id')
 
-MIN_SIZE = 16
-MAX_SIZE = 32
-width = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
-height = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
-newmap.resize(width, height)
-# fill with floor
-for x in range(width):
-    for y in range(height):
-        newmap.createEntity({'class':'floor'}, x, y, 'ground')
-newmap.setExist(True)
+    MIN_SIZE = 16
+    MAX_SIZE = 32
+    width = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
+    height = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
+    newmap.resize(width, height)
+    # fill with floor
+    for x in range(width):
+        for y in range(height):
+            newmap.createEntity({'class':'floor'}, x, y, 'ground')
+    newmap.setExist(True)
 
-# random fungie
-MIN_FUNGIE = 2
-MAX_FUNGIE = 16
-fungie = random()*(MAX_FUNGIE-MIN_FUNGIE)+MIN_FUNGIE
+    # random fungie
+    MIN_FUNGIE = 2
+    MAX_FUNGIE = 16
+    fungie = random()*(MAX_FUNGIE-MIN_FUNGIE)+MIN_FUNGIE
 
-while fungie &gt; 0:
+    while fungie &gt; 0:
+        x = int(random()*width)
+        y = int(random()*height)
+        newmap.createEntity({'class':'fungus', 'hp':2}, x, y, 'monster')
+        fungie -= 1
+
+    # random stairs
     x = int(random()*width)
     y = int(random()*height)
-    newmap.createEntity({'class':'fungus', 'hp':2}, x, y, 'monster')
-    fungie -= 1
-
-# random stairs
-x = int(random()*width)
-y = int(random()*height)
-newmap.createEntity({'class':'ladder', 'destination':mapId+1}, x, y, 'feature')
+    newmap.createEntity({'class':'ladder', 'destination':mapId+1}, x, y, 'feature')
         </code>
     </action>
 </mod>
