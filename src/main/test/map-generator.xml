@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <bind action="simple-map-generator" target="map" event="empty">
+        <newmap value="target"/>
+    </bind>
+    
+    <action name="simple-map-generator">
+        <object name="newmap"/>
+        
+        <code>
+info('generate map')
+        </code>
+    </action>
+</mod>

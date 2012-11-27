@@ -91,5 +91,12 @@ class World(Sleeping):
                 self.watchAttr(EntityWatcher(action, binding), opt['attrib'])
             else:
                 logging.warning('addBinding: unknown event {0}'.format(event))
+        elif targetType == 'map':
+            binding = None
+            for key in args.keys():
+                if args[key] == 'target':
+                    binding = key
+            if event == 'empty':
+                logging.debug('assign map-empty binding..')
         else:
             logging.warning('addBinding: unknown targetType {0}'.format(targetType))
