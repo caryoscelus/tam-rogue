@@ -9,8 +9,11 @@
         
         <code>
 mapId = newmap.attr('id')
-height = 20
-width = 20
+
+MIN_SIZE = 16
+MAX_SIZE = 32
+width = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
+height = int(random()*(MAX_SIZE-MIN_SIZE))+MIN_SIZE
 newmap.resize(width, height)
 # fill with floor
 for x in range(width):
