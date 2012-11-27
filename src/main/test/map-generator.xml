@@ -8,7 +8,8 @@
         <object name="newmap"/>
         
         <code>
-info('generate map')
+newmap.resize(32, 32)
+newmap.createEntity({'class':'floor'}, 2, 2, 'ground')
         </code>
     </action>
 </mod>

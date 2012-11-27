@@ -27,7 +27,8 @@ class Wrapper:
         'getCoord', 'getX', 'getY',
         '__getitem__', '__str__',
         'removeFromMap', 'putOn',
-        'alive'
+        'alive',
+        'clear', 'resize'
     ]
     ignoreTypes = [int, str, float]
     
