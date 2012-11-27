@@ -17,7 +17,7 @@ from worldregistry import *
 
 # TODO: remove from here; make proper loading/generation
 def generateWorld():
-    floor = Entity({'class':'floor', 'standable':True})
+    floor = Entity({'class':'floor'})
     wall = Entity({'class':'wall'})
     human = Entity({'class':'human', 'hp':2, 'hungry':0, 'maxHungry':10})
     fungus = Entity({'class':'fungus', 'hp':2})

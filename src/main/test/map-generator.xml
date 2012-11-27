@@ -18,7 +18,7 @@ newmap.resize(width, height)
 # fill with floor
 for x in range(width):
     for y in range(height):
-        newmap.createEntity({'class':'floor', 'standable':True}, x, y, 'ground')
+        newmap.createEntity({'class':'floor'}, x, y, 'ground')
 newmap.setExist(True)
 
 # random fungie
