@@ -30,7 +30,8 @@ class Wrapper:
         '__getitem__', '__str__',
         'removeFromMap', 'putOn',
         'alive',
-        'clear', 'resize'
+        'clear', 'resize',
+        'setExist'
     ]
     ignoreTypes = [int, str, float]
     

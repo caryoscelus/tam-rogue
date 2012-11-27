@@ -80,6 +80,9 @@ class TiledMap:
             return Tile(self.layers, self.layersOrder)
         self.content = self.genMap(t)
     
+    def setExist(self, value):
+        self.exist = value
+    
     def genMap(self, func):
         if self.width < 0 or self.height < 0:
             raise TiledMapSizeError(self)
