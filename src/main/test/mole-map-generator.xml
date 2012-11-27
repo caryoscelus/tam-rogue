@@ -89,7 +89,7 @@ global x, y, direct
 makeFloor()
 fillWalls()
 
-mymap.exist = True
+mymap.setExist(True)
 _return = True
         </code>
     </action>
