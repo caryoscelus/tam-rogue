@@ -80,7 +80,7 @@ def fillWallsAndStairs():
         for x in range(width):
             if floored(x, y):
                 latestStairsPosition = (x, y)
-                if not placedStairs and random() > stairsProbability:
+                if not placedStairs and random() &lt; stairsProbability:
                     placedStairs = True
                     putStairs(x, y)
             else:
