@@ -86,6 +86,11 @@ class Client(Displaying, Inputting):
         currentMap = self.entity.onMap
         self.displayData = self.mapVisualizer.toXml(currentMap)
         
+        # TODO: don't resize on every iteration
+        w = currentMap.width
+        h = currentMap.height
+        self.resize(w+20, h+2)
+        
         if self.showingLogs:
             self.showLogs()
         
