@@ -18,9 +18,15 @@ for x in range(width):
 newmap.setExist(True)
 
 # random fungie
-x = int(random()*width)
-y = int(random()*height)
-newmap.createEntity({'class':'fungus', 'hp':2}, x, y, 'monster')
+MIN_FUNGIE = 2
+MAX_FUNGIE = 16
+fungie = random()*(MAX_FUNGIE-MIN_FUNGIE)+MIN_FUNGIE
+
+while fungie &gt; 0:
+    x = int(random()*width)
+    y = int(random()*height)
+    newmap.createEntity({'class':'fungus', 'hp':2}, x, y, 'monster')
+    fungie -= 1
         </code>
     </action>
 </mod>
