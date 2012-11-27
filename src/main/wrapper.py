@@ -13,6 +13,8 @@ def orig(wrapper):
         return _originals[wrapper]
     except KeyError:
         return wrapper
+    except TypeError:                           # unhashable
+        return wrapper
 
 class Wrapper:
     '''Wraps Entity and other objects to forbid random access'''
