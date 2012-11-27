@@ -3,6 +3,8 @@
 from builtins import Exception, TypeError, RuntimeError, IndexError, KeyError, AttributeError, \
                      int, float, bool, str, dict, list, iter, range
 
+from functools import reduce
+
 from logging import debug, info, warning, error
 
 # TODO: more random functions; control seeds
