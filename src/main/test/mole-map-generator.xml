@@ -20,8 +20,12 @@ def putStairs(x, y):
 
 def floored(x, y):
     try:
-        return mymap.getContent(x, y, 'ground')
+        ground = mymap.getContent(x, y, 'ground')
+        if not ground: return False
+        return ground.attr('class') == 'floor'
     except IndexError:
+        return False
+    except TiledMapSizeError:
         return False
 
 def randomDirect():
@@ -36,7 +40,7 @@ def makeFloor():
     global x, y, direct, totalFloor
     
     square = width*height
-    floorPortion = random()*0.3+0.4
+    floorPortion = random()*0.2+0.3
     totalFloor = int(floorPortion*square)
     leftToFloor = totalFloor
     
@@ -47,16 +51,16 @@ def makeFloor():
     def checkBounds():
         global x, y, direct, totalFloor
         if x &gt;= width-1:
-            direct = (0, -1)
+            direct = randomDirect()
             x = width-2
         elif x &lt;= 0:
-            direct = (0, 1)
+            direct = randomDirect()
             x = 1
         if y &gt;= height-1:
-            direct = (1, 0)
+            direct = randomDirect()
             y = height-2
         elif y &lt;= 0:
-            direct = (-1, 0)
+            direct = randomDirect()
             y = 1
     
     def makeStep():
@@ -85,10 +89,12 @@ def fillWallsAndStairs():
                     putStairs(x, y)
             else:
                 ns = (
-                    (floored(xd+x, yd+y) for dx in range(-1, 2)) \
+                    (floored(dx+x, dy+y) for dx in range(-1, 2)) \
                         for dy in range(-1, 2)
                 )
-                if reduce(lambda v1, v2: v1 and v2, ns):
+                ns = tuple((v for l in ns for v in l))
+                debug(ns)
+                if reduce(lambda v1, v2: v1 or v2, ns):
                     putWall(x, y)
     if not placedStairs:
         putStairs(*latestStairsPosition)
