@@ -1,7 +1,7 @@
 # safe & useful builtins
 # TODO: full list
 from builtins import Exception, TypeError, RuntimeError, IndexError, KeyError, AttributeError, \
-                     int, float, bool, str, dict, list, iter, range
+                     int, float, bool, str, dict, list, tuple, iter, range
 
 from functools import reduce
 
