@@ -210,11 +210,9 @@ class Client(Displaying, Inputting):
                 self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
             elif opcode == ord('r')-ord('a')+1:             # CTRL+R
                 logging.debug('manual redraw requested')
+                self.updateDisplay = True
             else:
                 logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
-        
-        # TODO: use some proper method
-        self.updateDisplay = True
     
     def gameOver(self):
         '''Called when game is considered finished'''
