@@ -61,6 +61,7 @@ class ServerClient(Sleeping, EntityController):
             except KeyError:
                 pass
             result = action.applyAction(args)
+            self.client.worldChanged()
             if not result:
                 # TODO: do something with it
                 # maybe just loop over available actions?
