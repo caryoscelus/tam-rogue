@@ -9,12 +9,9 @@ from miscerrors import XmlLoadError
 import worldregistry
 
 class TiledMap:
-    def __init__(self, width = 0, height = 0, layers = {}, layersOrder = [], attrib = {}):
+    def __init__(self, width = 0, height = 0, attrib = {}):
         self.width = width
         self.height = height
-        
-        self.layers = layers
-        self.layersOrder = layersOrder
         
         self.clear()
         
@@ -77,7 +74,7 @@ class TiledMap:
     
     def clear(self):
         def t(x, y):
-            return Tile(self.layers, self.layersOrder)
+            return Tile()
         self.content = self.genMap(t)
     
     def setExist(self, value):

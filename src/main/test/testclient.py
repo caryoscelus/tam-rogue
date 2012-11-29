@@ -25,13 +25,16 @@ def generateWorld():
     stairs = Entity({'class':'stairs', 'destination':2})
     human.alive = True
     
-    map0 = TiledMap(20, 20,
-            {'ground':None, 'trap':None, 'objects':[], 'monster':None, 'feature':None},
-            ['ground', 'feature', 'trap', 'objects', 'monster'],
-            {'id':0})
+    map0 = TiledMap(20, 20, {'id':0})
     map0.alive = True
     map0.exist = True
     map0.queue.push(human)
+    
+    # TODO: use something else
+    worldregistry.world.setMap(0, map0)
+    worldregistry.world.layers = {'ground':None, 'trap':None, 'objects':[], 'monster':None, 'feature':None}
+    worldregistry.world.layersOrder = ['ground', 'feature', 'trap', 'objects', 'monster']
+    
     # floor
     for y in range(1, 10):
         for x in range(2, 18):
@@ -46,9 +49,6 @@ def generateWorld():
     map0.putOn(15, 4, 'trap', trap)
     map0.putOn(15, 7, 'feature', stairs)
     map0.putOn(6, 6, 'monster', fungus)
-    
-    # TODO: use something else
-    worldregistry.world.setMap(0, map0)
     
     return human
 
