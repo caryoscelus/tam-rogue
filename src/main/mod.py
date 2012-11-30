@@ -49,6 +49,9 @@ class Mod:
                 for record in node:
                     values[record.get('in')] = convert(record.get('out'), tp)
                 world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
+            elif node.tag == 'layers':
+                order, content, emptyContent = tile.loadXMLLayers(node)
+                worldregistry.world.addTileLayers(content, order)
             elif node.tag == 'action':
                 action = Action.fromXml(node)
                 world.actions[action.name] = action
@@ -86,3 +89,5 @@ class Mod:
 from entity import EntityAttributeError
 from action import Action
 import worldregistry
+import tile
+

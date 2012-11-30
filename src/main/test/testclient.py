@@ -32,8 +32,6 @@ def generateWorld():
     
     # TODO: use something else
     worldregistry.world.setMap(0, map0)
-    worldregistry.world.layers = {'ground':None, 'trap':None, 'objects':[], 'monster':None, 'feature':None}
-    worldregistry.world.layersOrder = ['ground', 'feature', 'trap', 'objects', 'monster']
     
     # floor
     for y in range(1, 10):

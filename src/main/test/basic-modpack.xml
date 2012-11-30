@@ -2,6 +2,8 @@
 <mod>
     <require file="character-mod.xml"/>
     
+    <require file="layers.xml"/>
+    
     <require file="ground.xml"/>
     
     <require file="trap.xml"/>
