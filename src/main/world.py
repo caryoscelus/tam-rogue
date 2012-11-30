@@ -22,12 +22,12 @@ class World(Sleeping):
         self.mapWatchers = set()
     
     def addTileLayers(self, layers, layerOrder):
-        # TODO: calculate proper order
         # TODO: check for conflicts
         missing = set(layers.keys()).difference(self.layers.keys())
-        for l in missing:
-            self.layers[l] = layers[l]
-            self.layerOrder.append(l)
+        for l in layerOrder:
+            if l in missing:
+                self.layers[l] = layers[l]
+                self.layerOrder.append(l)
     
     def setMap(self, mapId, newMap):
         self.maps[mapId] = newMap
