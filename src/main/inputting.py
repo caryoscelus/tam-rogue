@@ -45,7 +45,7 @@ class Inputting(Starting, Receiver):
                 else:
                     logging.warning('unknown xml node type')
             except ReceiverListeningForbidden:
-                logging.debug('readKey: listening is forbidden')
+                pass
             except ReceiverTimeoutError:
                 pass
             except ET.ParseError:

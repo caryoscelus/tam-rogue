@@ -34,8 +34,6 @@ if traps:
     for trap in traps:
         # TODO: random
         action('apply', {'subject' : trap, 'target' : subject})
-else:
-    info('user was lucky enough to not step on the trap')
         </code>
     </action>
 </mod>
