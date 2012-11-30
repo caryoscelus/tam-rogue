@@ -54,7 +54,6 @@ class Displaying(Sleeping, Starting, Receiver):
             x += 1
     
     def resize(self, width, height):
-        logging.debug('resize')
         self.send(bytes('<resize width="{0}" height="{1}"/>'.format(width, height), 'ascii'))
     
     def redraw(self):

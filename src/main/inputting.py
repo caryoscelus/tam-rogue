@@ -47,7 +47,7 @@ class Inputting(Starting, Receiver):
             except ReceiverListeningForbidden:
                 logging.debug('readKey: listening is forbidden')
             except ReceiverTimeoutError:
-                logging.debug('readKey: timeout')
+                pass
             except ET.ParseError:
                 logging.warning('readKey: received message is unparsable')
                 logging.debug(traceback.format_exc())
