@@ -11,7 +11,7 @@ def loadXMLLayers(xml):
     content = {}
     emptyContent = {}
     
-    for layer in xmlTile:
+    for layer in xml:
         if layer.tag == 'layer':
             try:
                 name = layer.attrib['name']
