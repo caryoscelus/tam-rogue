@@ -6,7 +6,7 @@
         <code>
 # TODO: use object system instead of thousands globals
 
-global putFloor, putWall, putStairs, floored, randomDirect
+global putFloor, putWall, putStairs, putFungus, putTrap, floored, randomDirect
 global mymap, mapId
 mymap = newmap
 mapId = mymap.attr('id')
@@ -18,7 +18,12 @@ def putWall(x, y):
 
 def putStairs(x, y):
     mymap.createEntity({'class':'stairs', 'destination':mapId+1}, x, y, 'feature')
-    debug('created stairs at ({0}, {1})'.format(x, y))
+
+def putTrap(x, y):
+    mymap.createEntity({'class':'trap', 'hurt':1}, x, y, 'trap')
+
+def putFungus(x, y):
+    mymap.createEntity({'class':'fungus', 'hp':2}, x, y, 'monster')
 
 def floored(x, y):
     try:
@@ -79,9 +84,20 @@ def makeFloor():
             putFloor(x, y)
             leftToFloor -= 1
 
-def fillWallsAndStairs():
+def fillWallsAndStuff():
     placedStairs = False
     stairsProbability = 1.0/totalFloor
+    
+    trapsPortion = random()/32+1/32
+    trapsProbability = trapsPortion
+    trapsAmount = trapsPortion*totalFloor
+    trapsLeft = trapsAmount
+    
+    fungiePortion = random()/16+1/16
+    fungieProbability = fungiePortion
+    fungieAmount = fungiePortion*totalFloor
+    fungieLeft = fungieAmount
+    
     for y in range(height):
         for x in range(width):
             if floored(x, y):
@@ -89,6 +105,12 @@ def fillWallsAndStairs():
                 if not placedStairs and random() &lt; stairsProbability:
                     placedStairs = True
                     putStairs(x, y)
+                elif trapsLeft &gt; 0 and random() &lt; trapsProbability:
+                    trapsLeft -= 1
+                    putTrap(x, y)
+                elif fungieLeft &gt; 0 and random() &lt; fungieProbability:
+                    fungieLeft -= 1
+                    putFungus(x, y)
             else:
                 ns = (
                     (floored(dx+x, dy+y) for dx in range(-1, 2)) \
@@ -112,7 +134,7 @@ mymap.resize(width, height)
 global x, y, direct, totalFloor
 totalFloor = 0
 makeFloor()
-fillWallsAndStairs()
+fillWallsAndStuff()
 
 mymap.setExist(True)
 _return = True
