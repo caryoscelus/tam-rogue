@@ -6,6 +6,36 @@ from entity import Entity, EntityDeadError
 from miscerrors import XmlLoadError
 import worldregistry
 
+def loadXMLLayers(xml):
+    order = []
+    content = {}
+    emptyContent = {}
+    
+    for layer in xmlTile:
+        if layer.tag == 'layer':
+            try:
+                name = layer.attrib['name']
+                if layer.attrib['type'] == 'object':
+                    try:
+                        layerContent = Entity.fromXml(layer[0])
+                    except IndexError:
+                        layerContent = None
+                    emptyLayer = None
+                elif layer.attrib['type'] == 'list':
+                    layerContent = [Entity.fromXml(e) for e in layer]
+                    emptyLayer = []
+                else:
+                    logging.warning('unknown xml tile layer type')
+            except KeyError:
+                raise XmlLoadError(layer)
+            order.append(name)
+            content[name] = layerContent
+            emptyContent[name] = emptyLayer
+        else:
+            logging.warning('unknown xml node type')
+    
+    return order, content, emptyContent
+
 class Tile:
     # order - list: int -> string
     # content - dict: string -> Entity/list
@@ -39,33 +69,7 @@ class Tile:
         if xmlTile.tag != 'tile':
             raise XmlLoadError(xmlTile)
         
-        order = []
-        content = {}
-        emptyContent = {}
-        
-        for layer in xmlTile:
-            if layer.tag == 'layer':
-                try:
-                    name = layer.attrib['name']
-                    if layer.attrib['type'] == 'object':
-                        try:
-                            layerContent = Entity.fromXml(layer[0])
-                        except IndexError:
-                            layerContent = None
-                        emptyLayer = None
-                    elif layer.attrib['type'] == 'list':
-                        layerContent = [Entity.fromXml(e) for e in layer]
-                        emptyLayer = []
-                    else:
-                        logging.warning('unknown xml tile layer type')
-                except KeyError:
-                    raise XmlLoadError(layer)
-                order.append(name)
-                content[name] = layerContent
-                emptyContent[name] = emptyLayer
-            else:
-                logging.warning('unknown xml node type')
-        
+        order, content, emptyContent = loadXMLLayers(xmlTile)
         self.order = order
         self.content = content
         
