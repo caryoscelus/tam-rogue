@@ -114,6 +114,7 @@ class Tile:
                 return entity
             except TypeError:                           # on non-lists
                 if e != None:
+                    e.check()
                     return e
             except IndexError:                          # on empty lists
                 pass
@@ -140,9 +141,6 @@ class Tile:
                 self.content[position] = entity
             except EntityDeadError:                     # raised on destroyed
                 self.content[position] = entity
-        
-        # TODO: proper order
-        self.order.append(position)
         
         self.notify(position, entity, 'add')
     

@@ -74,7 +74,7 @@ class TiledMap:
     
     def clear(self):
         def t(x, y):
-            return Tile()
+            return Tile(worldregistry.world.layers, worldregistry.world.layerOrder)
         self.content = self.genMap(t)
     
     def setExist(self, value):
