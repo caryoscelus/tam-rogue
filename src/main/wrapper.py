@@ -5,8 +5,11 @@ _wrappers = {}
 _originals = {}
 
 def addWrapper(orig, wrapper):
-    _wrappers[orig] = wrapper
-    _originals[wrapper] = orig
+    try:
+        _wrappers[orig] = wrapper
+        _originals[wrapper] = orig
+    except TypeError:
+        pass
 
 def orig(wrapper):
     try:
@@ -46,6 +49,10 @@ class Wrapper:
         try:
             return _wrappers[src]
         except KeyError:
+            newWrapper = super(Wrapper, cls).__new__(cls, src)
+            addWrapper(src, newWrapper)
+            return newWrapper
+        except TypeError:                       # unhashable
             newWrapper = super(Wrapper, cls).__new__(cls, src)
             addWrapper(src, newWrapper)
             return newWrapper
