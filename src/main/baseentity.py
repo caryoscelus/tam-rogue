@@ -1,4 +1,4 @@
-from entity import EntityDeadError
+import entity
 
 class BaseEntity:
     '''Basic class for entity, tile, etc. Containes attributes & children handling'''
@@ -12,7 +12,7 @@ class BaseEntity:
             return self.content[position]
         except AttributeError:                          # raised on lists
             return self.content[position]
-        except EntityDeadError:                         # raised on destroyed object
+        except entity.EntityDeadError:                         # raised on destroyed object
             self.content[position] = None
             return None
         except KeyError:                                # raised on no position
@@ -41,7 +41,7 @@ class BaseEntity:
                 raise PositionTakenError(position)
             except AttributeError:                      # raised on non-entity objects (only None is allowed)
                 self.content[position] = entity
-            except EntityDeadError:                     # raised on destroyed
+            except entity.EntityDeadError:                     # raised on destroyed
                 self.content[position] = entity
         
         self.notify(position, entity, 'add')

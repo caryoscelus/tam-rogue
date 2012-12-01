@@ -2,10 +2,12 @@ import logging
 import traceback
 import xml.etree.ElementTree as ET
 
+import baseentity
+
 # NOTE: should be used multi-pointer friendly
 # DO NOT use it in immutable manner
 # NOTE: catch EntityDeadError and remove dead links
-class Entity:
+class Entity(baseentity.BaseEntity):
     def __init__(self, attrib = {}, alive = False, handler = None):
         self.attrib = attrib
         self.children = {}
@@ -199,7 +201,7 @@ class Entity:
         
         try:
             self.onMap.moveTo(self, x, y, self.position)
-        except PositionTakenError as err:
+        except baseentity.PositionTakenError as err:
             self.onMap.moveTo(self, oldx, oldy, oldpos)
             raise err
     
@@ -251,4 +253,3 @@ class EntityChildPositionError(RuntimeError):
     pass
 
 import worldregistry
-from baseentity import PositionTakenError
