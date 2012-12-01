@@ -2,6 +2,7 @@ import copy
 import logging
 import xml.etree.ElementTree as ET
 
+from baseentity import BaseEntity
 from entity import Entity, EntityDeadError
 from miscerrors import XmlLoadError
 import worldregistry
@@ -36,7 +37,7 @@ def loadXMLLayers(xml):
     
     return order, content, emptyContent
 
-class Tile:
+class Tile(BaseEntity):
     # order - list: int -> string
     # content - dict: string -> Entity/list
     # if list, it's extandable position
@@ -86,24 +87,6 @@ class Tile:
         
         return True
     
-    def get(self, position):
-        try:
-            self.content[position].check()
-            return self.content[position]
-        except AttributeError:                          # raised on lists
-            return self.content[position]
-        except EntityDeadError:                         # raised on destroyed object
-            self.content[position] = None
-            return None
-        except KeyError:                                # raised on no position
-            extPositions = worldregistry.world.layers
-            try:
-                t = copy.deepcopy(extPositions[position])
-                self.content[position] = t
-                return t
-            except KeyError:
-                raise TilePositionError(position)
-    
     def getUpper(self):
         '''Get top of the tile "stack"'''
         for position in reversed(self.order):
@@ -122,63 +105,12 @@ class Tile:
                 self.remove(entity, position)
         return None
     
-    def put(self, position, entity):
-        '''Put entity onto position; raise error in case it's taken'''
-        
-        # check if position is ok
-        self.get(position)
-        
-        try:                                            # try list
-            self.content[position].append(entity)
-        except KeyError:
-            logging.error('this could not happen!')
-            raise TilePositionError(position)
-        except AttributeError:                          # non-list
-            try:
-                self.content[position].check()
-                raise TileTakenError(position)
-            except AttributeError:                      # raised on non-entity objects (only None is allowed)
-                self.content[position] = entity
-            except EntityDeadError:                     # raised on destroyed
-                self.content[position] = entity
-        
-        self.notify(position, entity, 'add')
-    
-    def remove(self, entity, position = None):
-        '''Remove entity from this tile; raise error if it's not present here'''
-        if not position:
-            for pos in self.content:
-                try:                                    # list
-                    self.content[pos].remove(entity)
-                    return
-                except ValueError:                      # not in list
-                    break
-                except AttributeError:                  # entity or empty
-                    if self.content[pos] == entity:
-                        self.content[pos] = None
-                        break
-            else:
-                raise TileEntityError(position, entity)
-        else:
-            content = self.get(position)
-            try:                                            # list
-                content.remove(entity)
-            except ValueError:                              # not in list
-                raise TileEntityError(position, entity)
-            except AttributeError:                          # entity or empty
-                if content != entity:
-                    raise TileEntityError(position, entity)
-                else:
-                    self.content[position] = None
-        
-        self.notify(position, entity, 'remove')
-    
     # is it useful?..
     def isValid(self, position):
         try:
             self.get(position)
             return True
-        except TilePositionError:
+        except PositionNameError:
             return False
     
     def notify(self, position, entity, notification):
@@ -195,23 +127,3 @@ class Tile:
             self.watchers[target].update({name})
         else:
             self.watchers[target] = {name}
-
-class TileTakenError(RuntimeError):
-    def __init__(self, key):
-        self.key = key
-    
-    def __str__(self):
-        # TODO: fancy output
-        return repr(self.key)
-
-class TilePositionError(RuntimeError):
-    def __init__(self, key):
-        self.key = key
-    
-    def __str__(self):
-        return 'TilePositionError: {0}'.format(self.key)
-
-class TileEntityError(RuntimeError):
-    def __init__(self, position, entity):
-        self.position = position
-        self.entity = entity

@@ -199,7 +199,7 @@ class Entity:
         
         try:
             self.onMap.moveTo(self, x, y, self.position)
-        except TileTakenError as err:
+        except PositionTakenError as err:
             self.onMap.moveTo(self, oldx, oldy, oldpos)
             raise err
     
@@ -251,4 +251,4 @@ class EntityChildPositionError(RuntimeError):
     pass
 
 import worldregistry
-from tile import TileTakenError
+from baseentity import PositionTakenError
