@@ -67,14 +67,14 @@ class BaseEntity:
             except KeyError:
                 raise PositionNameError(position)
     
-    def put(self, position, entity):
-        '''Put entity onto position; raise error in case it's taken'''
+    def put(self, position, anEntity):
+        '''Put anEntity onto position; raise error in case it's taken'''
         
         # check if position is ok
         self.get(position)
         
         try:                                            # try list
-            self.content[position].append(entity)
+            self.content[position].append(anEntity)
         except KeyError:
             logging.error('this could not happen!')
             raise PositionNameError(position)
@@ -82,43 +82,44 @@ class BaseEntity:
             try:
                 self.content[position].check()
                 raise PositionTakenError(position)
-            except AttributeError:                      # raised on non-entity objects (only None is allowed)
-                self.content[position] = entity
+            except AttributeError:                      # raised on non-anEntity objects (only None is allowed)
+                self.content[position] = anEntity
             except BaseEntityDeadError:                     # raised on destroyed
-                self.content[position] = entity
+                self.content[position] = anEntity
         
-        self.notify(position, entity, 'add')
+        self.notify(position, anEntity, 'add')
     
-    def remove(self, entity, position = None):
-        '''Remove entity from this tile; raise error if it's not present here'''
+    def remove(self, anEntity, position = None):
+        '''Remove anEntity from this tile; raise error if it's not present here'''
         if not position:
             for pos in self.content:
                 try:                                    # list
-                    self.content[pos].remove(entity)
-                    return
-                except ValueError:                      # not in list
+                    self.content[pos].remove(anEntity)
                     break
-                except AttributeError:                  # entity or empty
-                    if self.content[pos] == entity:
+                except ValueError:                      # not in list
+                    pass
+                except AttributeError:                  # anEntity or empty
+                    if self.content[pos] == anEntity:
                         self.content[pos] = None
                         break
             else:
-                raise PositionEntityError(position, entity)
+                raise PositionEntityError(position, anEntity)
         else:
             content = self.get(position)
-            try:                                            # list
-                content.remove(entity)
+            try:
+                iter(content)
+                content.remove(anEntity)
             except ValueError:                              # not in list
-                raise PositionEntityError(position, entity)
-            except AttributeError:                          # entity or empty
-                if content != entity:
-                    raise PositionEntityError(position, entity)
+                raise PositionEntityError(position, anEntity)
+            except TypeError:                          # anEntity or empty
+                if content != anEntity:
+                    raise PositionEntityError(position, anEntity)
                 else:
                     self.content[position] = None
         
-        self.notify(position, entity, 'remove')
+        self.notify(position, anEntity, 'remove')
     
-    def notify(self, position, entity, event):
+    def notify(self, position, anEntity, event):
         logging.warning('BaseEntity was notified')
 
 class PositionTakenError(RuntimeError):
@@ -137,16 +138,16 @@ class PositionNameError(RuntimeError):
         return 'PositionNameError: {0}'.format(self.key)
 
 class PositionEntityError(RuntimeError):
-    def __init__(self, position, entity):
+    def __init__(self, position, anEntity):
         self.position = position
-        self.entity = entity
+        self.anEntity = anEntity
 
 class BaseEntityDeadError(RuntimeError):
-    '''Raised when link to dead entity is used'''
-    def __init__(self, entity = None):
-        self.entity = entity
+    '''Raised when link to dead anEntity is used'''
+    def __init__(self, anEntity = None):
+        self.anEntity = anEntity
     
     def __str__(self):
-        return '<BaseEntityDeadError: {0}>'.format(self.entity)
+        return '<BaseEntityDeadError: {0}>'.format(self.anEntity)
 
 import worldregistry

@@ -41,9 +41,9 @@ class TiledMap:
         xmlRoot = ET.Element('tiledmap', {'width':str(self.width), 'height':str(self.height)})
         for y in range(self.height):
             for x in range(self.width):
-                tile = self.getTile(x, y)
-                if not tile.empty():
-                    xmlRoot.append(tile.saveXml(x, y))
+                aTile = self.getTile(x, y)
+                if not aTile.empty():
+                    xmlRoot.append(aTile.saveXml(x, y))
         return xmlRoot
     
     def loadXml(self, xmlRoot):
@@ -100,8 +100,8 @@ class TiledMap:
             self.queue.push(anEntity)
         
         anEntity.placeOn(self, x, y, position)
-        tile = self.getTile(x, y)
-        tile.put(position, anEntity)
+        aTile = self.getTile(x, y)
+        aTile.put(position, anEntity)
     
     def removeFromMap(self, anEntity, queueChange = True):
         if queueChange and anEntity.alive:
@@ -115,12 +115,12 @@ class TiledMap:
         
         position = anEntity.position
         anEntity.removeFrom(self, x, y, position)
-        tile = self.getTile(x, y)
+        aTile = self.getTile(x, y)
         try:
-            tile.remove(anEntity, position)
+            aTile.remove(anEntity, position)
         except PositionEntityError:
-            logging.warning('trying to remove entity from tile which doesn\'t contain it')
-            logging.debug('tile: {0}, entity: {1}, position: {2}'.format(tile, anEntity, position))
+            logging.warning('trying to remove entity from aTile which doesn\'t contain it')
+            logging.debug('aTile: {0}, entity: {1}, position: {2}'.format(aTile, anEntity, position))
     
     def moveTo(self, anEntity, x, y, position):
         try:
