@@ -10,7 +10,6 @@ import baseentity
 class Entity(baseentity.BaseEntity):
     def __init__(self, attrib = {}, alive = False, handler = None):
         self.attrib = attrib
-        self.children = {}
         
         self.alive = alive
         self.setHandler(handler)
@@ -204,28 +203,6 @@ class Entity(baseentity.BaseEntity):
         except baseentity.PositionTakenError as err:
             self.onMap.moveTo(self, oldx, oldy, oldpos)
             raise err
-    
-    # TODO: merge with tile?
-    def putChild(self, position, child):
-        try:
-            self.children[position]
-        except KeyError:
-            self.children[position] = child
-        else:
-            try:
-                self.children[position].append(child)
-            except AttributeError:
-                if self.children[position] == None:
-                    self.children[position] = child
-                else:
-                    raise EntityChildPositionError(self, position)
-    
-    # NOTE: could return list actually
-    def getChild(self, position):
-        return self.children[position]
-    
-    def removeChild(self, child):
-        pass
 
 
 class EntityPositionError(RuntimeError):
