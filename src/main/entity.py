@@ -45,7 +45,7 @@ class Entity(baseentity.BaseEntity):
     def check(self):
         '''Raise BaseEntityDeadError if entity is already dead'''
         if self.dead:
-            raise BaseEntityDeadError(self)
+            raise baseentity.BaseEntityDeadError(self)
     
     def live(self):
         '''One step of entity life'''
