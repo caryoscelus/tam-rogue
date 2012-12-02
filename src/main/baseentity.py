@@ -1,3 +1,5 @@
+import logging
+
 # NOTE: should be used multi-pointer friendly
 # DO NOT use it in immutable manner
 # NOTE: catch BaseEntityDeadError and remove dead links
@@ -75,6 +77,9 @@ class BaseEntity:
                     self.content[position] = None
         
         self.notify(position, entity, 'remove')
+    
+    def notify(self, position, entity, event):
+        logging.warning('BaseEntity was notified')
 
 class PositionTakenError(RuntimeError):
     def __init__(self, key):
