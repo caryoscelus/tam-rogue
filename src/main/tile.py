@@ -23,7 +23,7 @@ class Tile(BaseEntity):
                 contentType = 'object'
             except AttributeError:
                 try:
-                    contentXml = [entity.saveXml() for entity in layer]
+                    contentXml = [e.saveXml() for e in layer]
                     contentType = 'list'
                 except TypeError:
                     # just ignore empty layer for size optimization
@@ -59,9 +59,9 @@ class Tile(BaseEntity):
         for position in reversed(self.order):
             try:
                 e = self.get(position)
-                entity = e[-1]
-                entity.check()
-                return entity
+                anEntity = e[-1]
+                anEntity.check()
+                return anEntity
             except TypeError:                           # on non-lists
                 if e != None:
                     e.check()
@@ -69,7 +69,7 @@ class Tile(BaseEntity):
             except IndexError:                          # on empty lists
                 pass
             except BaseEntityDeadError:                     # found dead entity in list
-                self.remove(entity, position)
+                self.remove(anEntity, position)
         return None
     
     # is it useful?..
@@ -80,14 +80,14 @@ class Tile(BaseEntity):
         except PositionNameError:
             return False
     
-    def notify(self, position, entity, notification):
+    def notify(self, position, anEntity, notification):
         for watcher in self.watchers or worldregistry.world.tileWatchers:
             try:
                 watchList = self.watchers[watcher]
             except KeyError:
                 watchList = worldregistry.world.tileWatchers[watcher]
             if position in watchList:
-                watcher.notify(self, position, notification, entity)
+                watcher.notify(self, position, notification, anEntity)
     
     def watchPosition(self, target, name):
         if target in self.watchers:
