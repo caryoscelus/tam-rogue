@@ -75,7 +75,6 @@ class Client(Displaying, Inputting):
     
     # called from server
     def worldChanged(self):
-        logging.debug('world changed')
         self.updateDisplay = True
     
     def redraw(self):

@@ -7,33 +7,33 @@ class EntityQueue:
         self.content = []
         self.pos = 0
     
-    def remove(self, entity):
+    def remove(self, anEntity):
         try:
-            self.content.remove(entity)
+            self.content.remove(anEntity)
         except ValueError:
             logging.warning('trying to remove non-pressent Entity from EntityQueue')
-            logging.debug('Entity was: {0}'.format(entity))
+            logging.debug('Entity was: {0}'.format(anEntity))
     
     def pop(self):
-        entity = None
-        while not entity:
+        anEntity = None
+        while not anEntity:
             try:
-                entity = self.content[self.pos]
-                entity.check()
+                anEntity = self.content[self.pos]
+                anEntity.check()
                 break
             except IndexError:
                 raise EmptyQueueError(self)
             except BaseEntityDeadError:
                 del self.content[self.pos]
         self.pos += 1
-        return entity
+        return anEntity
     
     def reset(self):
         self.pos = 0
     
-    def push(self, entity):
-        entity.check()
-        self.content.append(entity)
+    def push(self, anEntity):
+        anEntity.check()
+        self.content.append(anEntity)
 
 
 class EmptyQueueError(Exception):
