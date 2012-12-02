@@ -95,42 +95,42 @@ class TiledMap:
     def getContent(self, x, y, position):
         return self.getTile(x, y).get(position)
     
-    def putOn(self, x, y, position, entity, queueChange = True):
-        if queueChange and entity.alive:
-            self.queue.push(entity)
+    def putOn(self, x, y, position, anEntity, queueChange = True):
+        if queueChange and anEntity.alive:
+            self.queue.push(anEntity)
         
-        entity.placeOn(self, x, y, position)
+        anEntity.placeOn(self, x, y, position)
         tile = self.getTile(x, y)
-        tile.put(position, entity)
+        tile.put(position, anEntity)
     
-    def removeFromMap(self, entity, queueChange = True):
-        if queueChange and entity.alive:
-            self.queue.remove(entity)
+    def removeFromMap(self, anEntity, queueChange = True):
+        if queueChange and anEntity.alive:
+            self.queue.remove(anEntity)
         
-        x = entity.x
-        y = entity.y
+        x = anEntity.x
+        y = anEntity.y
         
         if x == None or y == None:
-            raise entity.EntityCoordError(entity)
+            raise entity.EntityCoordError(anEntity)
         
-        position = entity.position
-        entity.removeFrom(self, x, y, position)
+        position = anEntity.position
+        anEntity.removeFrom(self, x, y, position)
         tile = self.getTile(x, y)
         try:
-            tile.remove(entity, position)
+            tile.remove(anEntity, position)
         except PositionEntityError:
             logging.warning('trying to remove entity from tile which doesn\'t contain it')
     
-    def moveTo(self, entity, x, y, position):
+    def moveTo(self, anEntity, x, y, position):
         try:
-            self.removeFromMap(entity, queueChange=False)
+            self.removeFromMap(anEntity, queueChange=False)
         except entity.EntityCoordError:
             logging.warning('moveTo() called when entity had no position')
-        self.putOn(x, y, position, entity, queueChange=False)
+        self.putOn(x, y, position, anEntity, queueChange=False)
     
     def createEntity(self, attrib, x, y, position):
-        entity = entity.Entity(attrib)
-        self.putOn(x, y, position, entity)
+        anEntity = entity.Entity(attrib)
+        self.putOn(x, y, position, anEntity)
     
     def step(self):
         '''Do one step of map live'''
@@ -154,22 +154,22 @@ class TiledMap:
         '''Generator-style function yilding entity.live() or False in case of queue reloading'''
         while True:
             try:
-                entity = self.queue.pop()
-                entity.check()
+                anEntity = self.queue.pop()
+                anEntity.check()
             except EmptyQueueError:
                 # reload queue
                 self.queue.reset()
                 yield False
             except BaseEntityDeadError:
-                self.removeFromMap(entity)
+                self.removeFromMap(anEntity)
             except Exception as err:
                 logging.error('Error in TiledMap.live():')
                 logging.debug(traceback.format_exc())
             else:
                 try:
-                    yield entity.live()
+                    yield anEntity.live()
                 except Exception as err:
-                    logging.error('Error in TiledMap.live -> entity.live():')
+                    logging.error('Error in TiledMap.live -> anEntity.live():')
                     logging.debug(traceback.format_exc())
 
 
