@@ -10,8 +10,8 @@ from logging import debug, info, warning, error
 # TODO: more random functions; control seeds
 from random import random
 
-from entity import EntityAttributeError, EntityDeadError
-from baseentity import PositionTakenError
+from entity import EntityAttributeError
+from baseentity import PositionTakenError, BaseEntityDeadError
 from tiledmap import TiledMapSizeError
 
 def action(name, args):

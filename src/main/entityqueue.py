@@ -1,6 +1,6 @@
 import logging
 
-from entity import EntityDeadError
+from baseentity import BaseEntityDeadError
 
 class EntityQueue:
     def __init__(self):
@@ -23,7 +23,7 @@ class EntityQueue:
                 break
             except IndexError:
                 raise EmptyQueueError(self)
-            except EntityDeadError:
+            except BaseEntityDeadError:
                 del self.content[self.pos]
         self.pos += 1
         return entity

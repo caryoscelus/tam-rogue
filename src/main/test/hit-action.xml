@@ -10,7 +10,7 @@ target.changeNumericAttr('hp', -1)
 try:
     info('hp: {0}'.format(target.attr('hp')))
     _return = True
-except EntityDeadError:
+except BaseEntityDeadError:
     info('killed')
         </code>
     </action>

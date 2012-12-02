@@ -17,7 +17,7 @@ class MapVisualizer:
             except EntityAttributeError:
                 logging.warning('unvisualizable entity')
                 return '?'
-            except EntityDeadError:
+            except BaseEntityDeadError:
                 logging.debug('entity dead while trying to visualize')
     
     def toGfx(self, tiledMap):
@@ -43,4 +43,5 @@ class MapVisualizer:
         
         return root
 
-from entity import EntityAttributeError, EntityDeadError
+from entity import EntityAttributeError
+from baseentity import BaseEntityDeadError

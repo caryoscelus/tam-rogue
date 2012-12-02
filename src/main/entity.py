@@ -4,9 +4,6 @@ import xml.etree.ElementTree as ET
 
 import baseentity
 
-# NOTE: should be used multi-pointer friendly
-# DO NOT use it in immutable manner
-# NOTE: catch EntityDeadError and remove dead links
 class Entity(baseentity.BaseEntity):
     def __init__(self, attrib = {}, alive = False, handler = None):
         self.attrib = attrib
@@ -46,9 +43,9 @@ class Entity(baseentity.BaseEntity):
         return ET.Element('entity', self.attrib)
     
     def check(self):
-        '''Raise EntityDeadError if entity is already dead'''
+        '''Raise BaseEntityDeadError if entity is already dead'''
         if self.dead:
-            raise EntityDeadError(self)
+            raise BaseEntityDeadError(self)
     
     def live(self):
         '''One step of entity life'''
@@ -70,7 +67,7 @@ class Entity(baseentity.BaseEntity):
         # object cannot be destroyed twice?..
         try:
             self.check()
-        except EntityDeadError:
+        except BaseEntityDeadError:
             logging.warning('destroying dead entity')
         
         self.dead = True
@@ -212,14 +209,6 @@ class EntityPositionError(RuntimeError):
 
 class EntityCoordError(RuntimeError):
     pass
-
-class EntityDeadError(RuntimeError):
-    '''Raised when link to dead entity is used'''
-    def __init__(self, entity = None):
-        self.entity = entity
-    
-    def __str__(self):
-        return '<EntityDeadError: {0}>'.format(self.entity)
 
 class EntityAttributeError(RuntimeError):
     def __init__(self, entity = None, name = ''):

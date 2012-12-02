@@ -1,5 +1,6 @@
-import entity
-
+# NOTE: should be used multi-pointer friendly
+# DO NOT use it in immutable manner
+# NOTE: catch BaseEntityDeadError and remove dead links
 class BaseEntity:
     '''Basic class for entity, tile, etc. Containes attributes & children handling'''
     
@@ -12,7 +13,7 @@ class BaseEntity:
             return self.content[position]
         except AttributeError:                          # raised on lists
             return self.content[position]
-        except entity.EntityDeadError:                         # raised on destroyed object
+        except BaseEntityDeadError:                         # raised on destroyed object
             self.content[position] = None
             return None
         except KeyError:                                # raised on no position
@@ -41,7 +42,7 @@ class BaseEntity:
                 raise PositionTakenError(position)
             except AttributeError:                      # raised on non-entity objects (only None is allowed)
                 self.content[position] = entity
-            except entity.EntityDeadError:                     # raised on destroyed
+            except BaseEntityDeadError:                     # raised on destroyed
                 self.content[position] = entity
         
         self.notify(position, entity, 'add')
@@ -94,4 +95,12 @@ class PositionEntityError(RuntimeError):
     def __init__(self, position, entity):
         self.position = position
         self.entity = entity
+
+class BaseEntityDeadError(RuntimeError):
+    '''Raised when link to dead entity is used'''
+    def __init__(self, entity = None):
+        self.entity = entity
+    
+    def __str__(self):
+        return '<BaseEntityDeadError: {0}>'.format(self.entity)
 

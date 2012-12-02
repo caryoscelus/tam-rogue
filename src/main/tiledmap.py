@@ -3,9 +3,9 @@ import logging
 import traceback
 
 from tile import Tile
-from baseentity import PositionEntityError
+from baseentity import PositionEntityError, BaseEntityDeadError
 from entityqueue import EntityQueue, EmptyQueueError
-from entity import Entity, EntityDeadError, EntityCoordError
+from entity import Entity, EntityCoordError
 from miscerrors import XmlLoadError
 import worldregistry
 
@@ -160,7 +160,7 @@ class TiledMap:
                 # reload queue
                 self.queue.reset()
                 yield False
-            except EntityDeadError:
+            except BaseEntityDeadError:
                 self.removeFromMap(entity)
             except Exception as err:
                 logging.error('Error in TiledMap.live():')

@@ -2,8 +2,8 @@ import copy
 import logging
 import xml.etree.ElementTree as ET
 
-from baseentity import BaseEntity
-from entity import Entity, EntityDeadError
+from baseentity import BaseEntity, BaseEntityDeadError
+from entity import Entity
 from miscerrors import XmlLoadError
 import worldregistry
 
@@ -101,7 +101,7 @@ class Tile(BaseEntity):
                     return e
             except IndexError:                          # on empty lists
                 pass
-            except EntityDeadError:                     # found dead entity in list
+            except BaseEntityDeadError:                     # found dead entity in list
                 self.remove(entity, position)
         return None
     
