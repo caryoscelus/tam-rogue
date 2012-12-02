@@ -2,6 +2,11 @@ import logging
 import traceback
 import xml.etree.ElementTree as ET
 
+import entity
+from action import Action
+import worldregistry
+import baseentity
+
 # TODO: use this more generally
 def convert(value, tp):
     '''Convert value to given type'''
@@ -50,7 +55,7 @@ class Mod:
                     values[record.get('in')] = convert(record.get('out'), tp)
                 world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
             elif node.tag == 'layers':
-                order, content, emptyContent = tile.loadXMLLayers(node)
+                order, content, emptyContent = baseentity.loadXMLLayers(node)
                 worldregistry.world.addTileLayers(content, order)
             elif node.tag == 'action':
                 action = Action.fromXml(node)
@@ -85,9 +90,3 @@ class Mod:
     
     def undoMod(self, world):
         raise NotImplementedError('undo is not supported now')
-
-from entity import EntityAttributeError
-from action import Action
-import worldregistry
-import tile
-

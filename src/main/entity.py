@@ -19,6 +19,8 @@ class Entity(baseentity.BaseEntity):
         
         self.watchers = {}
         self.deathWatchers = set()
+        
+        super().__init__()
     
     def __str__(self):
         # TODO: fancy output

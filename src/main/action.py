@@ -7,7 +7,6 @@ from entitywatcher import EntityWatcher
 from tilewatcher import TileWatcher
 import worldregistry
 import eventlogger
-import actionapi
 
 # action types:
 #   * move
@@ -58,6 +57,7 @@ class Action:
             return None
     
     def compileCode(self, code, formalArgs):
+        import actionapi
         ns = {'__builtins__':actionapi}
         compiled = compile(code, '<action mod>', 'exec')
         

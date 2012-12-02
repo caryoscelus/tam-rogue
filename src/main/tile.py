@@ -1,50 +1,17 @@
-import copy
 import logging
 import xml.etree.ElementTree as ET
 
-from baseentity import BaseEntity, BaseEntityDeadError
-from entity import Entity
+from baseentity import BaseEntity, BaseEntityDeadError, loadXMLLayers
+import entity
 from miscerrors import XmlLoadError
 import worldregistry
-
-def loadXMLLayers(xml):
-    order = []
-    content = {}
-    emptyContent = {}
-    
-    for layer in xml:
-        if layer.tag == 'layer':
-            try:
-                name = layer.attrib['name']
-                if layer.attrib['type'] == 'object':
-                    try:
-                        layerContent = Entity.fromXml(layer[0])
-                    except IndexError:
-                        layerContent = None
-                    emptyLayer = None
-                elif layer.attrib['type'] == 'list':
-                    layerContent = [Entity.fromXml(e) for e in layer]
-                    emptyLayer = []
-                else:
-                    logging.warning('unknown xml tile layer type')
-            except KeyError:
-                raise XmlLoadError(layer)
-            order.append(name)
-            content[name] = layerContent
-            emptyContent[name] = emptyLayer
-        else:
-            logging.warning('unknown xml node type')
-    
-    return order, content, emptyContent
 
 class Tile(BaseEntity):
     # order - list: int -> string
     # content - dict: string -> Entity/list
     # if list, it's extandable position
     def __init__(self, content = {}, order = []):
-        self.order = order
-        self.content = copy.deepcopy(content)
-        self.watchers = {}
+        super().__init__(content, order)
     
     # TODO: store x/y at tile?..
     def saveXml(self, x, y):

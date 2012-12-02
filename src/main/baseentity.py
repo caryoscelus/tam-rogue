@@ -1,4 +1,39 @@
+import copy
 import logging
+
+# TODO: remove this dependency
+import entity
+
+def loadXMLLayers(xml):
+    order = []
+    content = {}
+    emptyContent = {}
+    
+    for layer in xml:
+        if layer.tag == 'layer':
+            try:
+                name = layer.attrib['name']
+                if layer.attrib['type'] == 'object':
+                    try:
+                        layerContent = entity.Entity.fromXml(layer[0])
+                    except IndexError:
+                        layerContent = None
+                    emptyLayer = None
+                elif layer.attrib['type'] == 'list':
+                    layerContent = [entity.Entity.fromXml(e) for e in layer]
+                    emptyLayer = []
+                else:
+                    logging.warning('unknown xml tile layer type')
+            except KeyError:
+                raise XmlLoadError(layer)
+            order.append(name)
+            content[name] = layerContent
+            emptyContent[name] = emptyLayer
+        else:
+            logging.warning('unknown xml node type')
+    
+    return order, content, emptyContent
+
 
 # NOTE: should be used multi-pointer friendly
 # DO NOT use it in immutable manner
@@ -6,8 +41,10 @@ import logging
 class BaseEntity:
     '''Basic class for entity, tile, etc. Containes attributes & children handling'''
     
-    def __init__(self):
-        pass
+    def __init__(self, content = {}, order = []):
+        self.order = order
+        self.content = copy.deepcopy(content)
+        self.watchers = {}
     
     def get(self, position):
         try:
@@ -109,3 +146,4 @@ class BaseEntityDeadError(RuntimeError):
     def __str__(self):
         return '<BaseEntityDeadError: {0}>'.format(self.entity)
 
+import worldregistry

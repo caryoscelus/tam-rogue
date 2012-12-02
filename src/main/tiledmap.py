@@ -2,10 +2,10 @@ import xml.etree.ElementTree as ET
 import logging
 import traceback
 
-from tile import Tile
+import tile
 from baseentity import PositionEntityError, BaseEntityDeadError
 from entityqueue import EntityQueue, EmptyQueueError
-from entity import Entity, EntityCoordError
+import entity
 from miscerrors import XmlLoadError
 import worldregistry
 
@@ -23,7 +23,7 @@ class TiledMap:
         self.life = self.live()
     
     def check(self):
-        '''Compatibility with Entity'''
+        '''Compatibility with entity.Entity'''
         pass
     
     def attr(self, name):
@@ -75,7 +75,7 @@ class TiledMap:
     
     def clear(self):
         def t(x, y):
-            return Tile(worldregistry.world.layers, worldregistry.world.layerOrder)
+            return tile.Tile(worldregistry.world.layers, worldregistry.world.layerOrder)
         self.content = self.genMap(t)
     
     def setExist(self, value):
@@ -111,7 +111,7 @@ class TiledMap:
         y = entity.y
         
         if x == None or y == None:
-            raise EntityCoordError(entity)
+            raise entity.EntityCoordError(entity)
         
         position = entity.position
         entity.removeFrom(self, x, y, position)
@@ -124,12 +124,12 @@ class TiledMap:
     def moveTo(self, entity, x, y, position):
         try:
             self.removeFromMap(entity, queueChange=False)
-        except EntityCoordError:
+        except entity.EntityCoordError:
             logging.warning('moveTo() called when entity had no position')
         self.putOn(x, y, position, entity, queueChange=False)
     
     def createEntity(self, attrib, x, y, position):
-        entity = Entity(attrib)
+        entity = entity.Entity(attrib)
         self.putOn(x, y, position, entity)
     
     def step(self):
