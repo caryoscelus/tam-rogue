@@ -73,7 +73,7 @@ class Displaying(Sleeping, Starting, Receiver):
             sock.shutdown(socket.SHUT_RDWR)
             sock.close()
         except socket.error as err:
-            logging.warning('net error')
+            logging.info('net error')
             logging.debug(err)
             return False
         except Exception as err:

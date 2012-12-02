@@ -26,6 +26,9 @@ class Entity(baseentity.BaseEntity):
         # TODO: fancy output
         return '<Entity: {0} >'.format(self.attrib)
     
+    def __repr__(self):
+        return str(self)
+    
     def setHandler(self, handler):
         '''Set handler object which will be requested to action when it's entity's turn'''
         self.handler = handler

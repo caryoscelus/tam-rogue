@@ -46,6 +46,9 @@ class BaseEntity:
         self.content = copy.deepcopy(content)
         self.watchers = {}
     
+    def __str__(self):
+        return '<BaseEntity {0}>'.format(self.content)
+    
     def get(self, position):
         try:
             self.content[position].check()

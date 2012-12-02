@@ -120,6 +120,7 @@ class TiledMap:
             tile.remove(anEntity, position)
         except PositionEntityError:
             logging.warning('trying to remove entity from tile which doesn\'t contain it')
+            logging.debug('tile: {0}, entity: {1}, position: {2}'.format(tile, anEntity, position))
     
     def moveTo(self, anEntity, x, y, position):
         try:

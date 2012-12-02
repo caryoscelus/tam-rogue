@@ -13,6 +13,9 @@ class Tile(BaseEntity):
     def __init__(self, content = {}, order = []):
         super().__init__(content, order)
     
+    def __str__(self):
+        return '<Tile {0}>'.format(super().__str__())
+    
     # TODO: store x/y at tile?..
     def saveXml(self, x, y):
         tileXml = ET.Element('tile', {'x':str(x), 'y':str(y)})
