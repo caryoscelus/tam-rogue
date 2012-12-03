@@ -6,7 +6,8 @@
         <code>
 object = subject.get('weapon')
 debug('{0} dropping {1}'.format(subject.attr('class'), object.attr('class')))
-subject.remove(object)
+subject.remove(object, 'weapon')
+info('{0} dropped {1}'.format(subject.attr('class'), object.attr('class')))
 _return = True
         </code>
     </action>
