@@ -18,5 +18,9 @@
             <arg name="subject" value="entity"/>
             <bind key=">"/>
         </action>
+        <action name="drop">
+            <arg name="subject" value="entity"/>
+            <bind key="d"/>
+        </action>
     </keymap>
 </mod>

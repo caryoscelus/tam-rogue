@@ -12,6 +12,8 @@
     <require file="fight-action.xml"/>
     <require file="eat-from-floor.xml"/>
     
+    <require file="drop.xml"/>
+    
     <require file="hit-action.xml"/>
     <require file="move-action.xml"/>
     <require file="die-action.xml"/>
