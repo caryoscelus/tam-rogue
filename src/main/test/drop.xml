@@ -4,7 +4,9 @@
         <object name="subject"/>
         
         <code>
-info('trying to drop something')
+object = subject.get('weapon')
+debug('{0} dropping {1}'.format(subject.attr('class'), object.attr('class')))
+subject.remove(object)
 _return = True
         </code>
     </action>

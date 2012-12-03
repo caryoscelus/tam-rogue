@@ -27,7 +27,7 @@ class Wrapper:
     entityApi = [
         'changeNumericAttr', 'setAttr', 'attr',
         'move', 'die',
-        'get', 'getTile', 'createEntity',
+        'get', 'put', 'remove', 'getTile', 'createEntity',
         'getMap', 'getPosition',
         'getCoord', 'getX', 'getY',
         '__getitem__', '__str__',
