@@ -13,7 +13,7 @@ oldMap.removeFromMap(subject)
 try:
     newMap.putOn(x, y, oldPos, subject)
 except TiledMapSizeError:
-    info('user traveled to non-existant map')
+    debug('user traveled to non-existant map')
         </code>
     </action>
 </mod>

@@ -154,7 +154,6 @@ class Client(Displaying, Inputting):
                 if self.tryLaunchAction():
                     break
             else:
-                logging.debug('unknown argType: {0}'.format(argType))
                 break
     
     def processKeyBindings(self, opcode):
