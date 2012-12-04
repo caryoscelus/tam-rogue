@@ -92,6 +92,7 @@ class BaseEntity:
     def remove(self, anEntity, position = None):
         '''Remove anEntity from this tile; raise error if it's not present here'''
         if not position:
+            # TODO: this seems to not work properly; fix it
             for pos in self.content:
                 try:                                    # list
                     self.content[pos].remove(anEntity)

@@ -13,6 +13,7 @@
     <require file="eat-from-floor.xml"/>
     
     <require file="drop.xml"/>
+    <require file="pickup.xml"/>
     
     <require file="hit-action.xml"/>
     <require file="move-action.xml"/>

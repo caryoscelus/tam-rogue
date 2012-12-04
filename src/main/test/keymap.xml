@@ -22,5 +22,9 @@
             <arg name="subject" value="entity"/>
             <bind key="d"/>
         </action>
+        <action name="pickup">
+            <arg name="subject" value="entity"/>
+            <bind key=","/>
+        </action>
     </keymap>
 </mod>
