@@ -10,10 +10,22 @@ x, y = d//3-1, d%3-1
 info('requested fight at {0}, {1}'.format(x, y))
 victim = subject.getTile(x, y).get('monster')
 if victim:
-    action('hit', {'subject':subject, 'target':victim})
+    weapon = subject.get('weapon')
+    probability = 0
+    if not weapon:
+        info('fighting bare-handed')
+        probability = 0.3
+    else:
+        info('fighting with {0}'.format(weapon.attr('class')))
+        probability = 0.6
+    if random() &lt; probability:
+        info('{0} hits {1}'.format(subject.attr('class'), victim.attr('class')))
+        action('hit', {'subject':subject, 'target':victim})
+    else:
+        info('{0} misses {1}'.format(subject.attr('class'), victim.attr('class')))
     _return = True
 else:
-    info('no victim')
+    info('no victim to fight with')
     _return = False
         </code>
     </action>
