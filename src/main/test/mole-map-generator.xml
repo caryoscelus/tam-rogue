@@ -108,7 +108,6 @@ def fillWallsAndStuff():
     for y in range(height):
         for x in range(width):
             if floored(x, y):
-                latestStairsPosition = (x, y)
                 if not placedStairs and random() &lt; stairsProbability:
                     placedStairs = True
                     putStairs(x, y)
@@ -121,6 +120,8 @@ def fillWallsAndStuff():
                 elif fungieLeft &gt; 0 and random() &lt; fungieProbability:
                     fungieLeft -= 1
                     putFungus(x, y)
+                else:
+                    latestStairsPosition = (x, y)
             else:
                 ns = (
                     (floored(dx+x, dy+y) for dx in range(-1, 2)) \
@@ -129,9 +130,18 @@ def fillWallsAndStuff():
                 ns = tuple((v for l in ns for v in l))
                 if reduce(lambda v1, v2: v1 or v2, ns):
                     putWall(x, y)
+    if not placedStairs and not placedBackStairs:
+        # damn, can't place stairs and backstairs at one position
+        putStairs(*latestStairsPosition)
+        for y in range(height):
+            for x in range(width):
+                if floored(x, y) and not placedBackStairs:
+                    placedBackStairs(x, y)
+                    placedBackStairs = True
     if not placedStairs:
         putStairs(*latestStairsPosition)
-        placedStairs = True
+    if not placedBackStairs:
+        putBackStairs(*latestStairsPosition)
 
 # size
 MIN_SIZE = 16
