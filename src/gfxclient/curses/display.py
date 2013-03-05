@@ -44,7 +44,7 @@ class Display:
         self.cScr.nodelay(1)
         
         # TODO: remove constants
-        self.resize(25, 80)
+        self.resize(80, 25)
         
         self.ready = True
     
@@ -58,8 +58,10 @@ class Display:
         while not self.quit:
             try:
                 if self.update or self.alwaysUpdate:
+                    logging.debug("update {0} {1}".format(self.width, self.height))
                     for y in range(self.height):
                         line = self.data[y]
+                        logging.debug(''.join([str(e) for e in line]))
                         for x in range(self.width):
                             try:
                                 self.cPad.addstr(y, x, line[x].c)
