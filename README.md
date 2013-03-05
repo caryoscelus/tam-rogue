@@ -45,16 +45,17 @@ Currenly supported actions:
     F <direction>   fight
     X               commit suicide
     e               eat something from floor
-    >               use stairs
+    >               climb down the stairs
+    <               climb up the stairs
     
     i               toggle displaying inventory (doesn't work much currently)
     !               toggle displaying game log
 
     <direction> is one of standard hjklyubn keys
 
-Since in-game logs are not quite working, you can see
-src/main/test/testclient.log for more information (this includes some debug
-info as well now).
+Game logs are now working and enabled by default, but if you want to get more
+logs, you can use src/main/test/testclient.log for more information (this
+includes some debug info as well now).
 
 LICENSE
 -------
