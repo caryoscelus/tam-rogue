@@ -135,6 +135,7 @@ class TiledMap:
     def createEntity(self, attrib, x, y, position):
         anEntity = entity.Entity(attrib)
         self.putOn(x, y, position, anEntity)
+        return anEntity
     
     def step(self):
         '''Do one step of map live'''

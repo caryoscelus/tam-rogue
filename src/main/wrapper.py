@@ -34,7 +34,8 @@ class Wrapper:
         'removeFromMap', 'putOn',
         'alive',
         'clear', 'resize',
-        'setExist', 'getContent'
+        'setExist', 'getContent',
+        'notifyEmpty'
     ]
     ignoreTypes = [int, str, float, bool]
     

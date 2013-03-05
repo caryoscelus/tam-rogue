@@ -8,13 +8,20 @@
         <code>
 # This implements simple one-way stair
 currentMap = stair.getMap()
+cmapId = currentMap.attr('id')
+
 direct = stair.attr('stair-direction')
 if direct == None:
     direct = 1
-nextMap = currentMap.attr('id')+direct
+nextMap = cmapId+direct
+
+tmap = getMap(nextMap)
 
 # make sure map exist
-tmap = getMap(nextMap)
+try:
+    tmap.getTile(0, 0)
+except TiledMapSizeError:
+    tmap.notifyEmpty()
 
 sd = 'stairs-down' if direct &gt; 0 else 'stairs-up'
 x, y = tmap.attr(sd)
