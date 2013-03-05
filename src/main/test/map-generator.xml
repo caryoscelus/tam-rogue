@@ -39,7 +39,7 @@ if not result:
     # random stairs
     x = int(random()*width)
     y = int(random()*height)
-    newmap.createEntity({'class':'stairs', 'destination':mapId+1}, x, y, 'feature')
+    newmap.createEntity({'class':'stairs', 'stair-direction':1}, x, y, 'feature')
         </code>
     </action>
 </mod>

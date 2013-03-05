@@ -26,7 +26,7 @@ def generateWorld():
     human.put('weapon', dagger)
     fungus = Entity({'class':'fungus', 'hp':2})
     trap = Entity({'class':'trap', 'hurt':1})
-    stairs = Entity({'class':'stairs', 'destination':2})
+    stairs = Entity({'class':'stairs', 'stair-direction':1})
     human.alive = True
     
     map0 = TiledMap(20, 20, {'id':0})

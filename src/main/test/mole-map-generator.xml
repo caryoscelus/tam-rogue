@@ -18,7 +18,7 @@ def putWall(x, y):
     mymap.createEntity({'class':'wall'}, x, y, 'ground')
 
 def putStairs(x, y):
-    mymap.createEntity({'class':'stairs', 'destination':mapId+1}, x, y, 'feature')
+    mymap.createEntity({'class':'stairs', 'stair-direction':1}, x, y, 'feature')
 
 def putTrap(x, y):
     mymap.createEntity({'class':'trap', 'hurt':1}, x, y, 'trap')

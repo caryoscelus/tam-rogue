@@ -6,11 +6,19 @@
         <object name="stair"/>
         
         <code>
-# This implements simple one-way stair which lead to the next level
+# This implements simple one-way stair
 currentMap = stair.getMap()
-nextMap = currentMap.attr('id')+1
+direct = stair.attr('stair-direction')
+if direct == None:
+    direct = 1
+nextMap = currentMap.attr('id')+direct
+
+# make sure map exist
+getMap(nextMap)
+
 x = int(random()*10)
 y = int(random()*10)
+info('you climb the stairs')
 _return = action('travel', {'subject':subject, 'mapid':nextMap, 'x':x, 'y':y})
         </code>
     </action>
