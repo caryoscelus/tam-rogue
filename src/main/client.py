@@ -205,6 +205,7 @@ class Client(Displaying, Inputting):
             ch = chr(opcode)
             if ch == '!':
                 self.showingLogs = not self.showingLogs
+                self.updateDisplay = True
             elif ch == 'i':
                 self.showingInv = not self.showingInv
                 self.updateDisplay = True
