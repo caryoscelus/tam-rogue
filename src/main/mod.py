@@ -40,14 +40,18 @@ class Mod:
             logging.debug('attribute doesn\'t exist')
         except Exception as err:
             logging.warning('error while handling attribute mod:')
-            logging.debug(err)
-            #raise entity.EntityAttributeError(anEntity, source)
+            logging.debug(traceback.format_exc())
+            raise entity.EntityAttributeError(anEntity, source)
+    
+    def makeAttrFunc(self, target, source, values):
+        return lambda entity: self.attrFunc(entity, target, source, values)
     
     def applyMod(self, world):
         for node in self.src:
             if node.tag == 'require':
                 fname = node.attrib['file']
                 worldregistry.loadMod(fname)
+            
             elif node.tag == 'map':
                 source = node.attrib['source']
                 target = node.attrib['target']
@@ -55,13 +59,19 @@ class Mod:
                 values = {}
                 for record in node:
                     values[record.get('in')] = convert(record.get('out'), tp)
-                world.attrList[target] = lambda entity: self.attrFunc(entity, target, source, values)
+                
+                if not (target in world.attrList):
+                    world.attrList[target] = []
+                world.attrList[target].append(self.makeAttrFunc(target, source, values))
+            
             elif node.tag == 'layers':
                 order, content, emptyContent = baseentity.loadXMLLayers(node)
                 worldregistry.world.addTileLayers(content, order)
+            
             elif node.tag == 'action':
                 action = Action.fromXml(node)
                 world.actions[action.name] = action
+            
             elif node.tag == 'bind':
                 actionName = node.attrib['action']
                 targetType = node.attrib['target']
@@ -71,6 +81,7 @@ class Mod:
                 ))}
                 args = {e.tag : e.attrib['value'] for e in node}
                 world.addBinding(targetType, event, actionName, opt, args)
+            
             elif node.tag == 'keymap':
                 client = world
                 # TODO: should it be here?
@@ -87,6 +98,7 @@ class Mod:
                         client.bindKeys(bindings, actionName, args)
                     else:
                         logging.warning('unknown keymap mod xml node tagged "{0}"'.format(snode.tag))
+            
             else:
                 logging.warning('unknown mod xml node tagged "{0}"'.format(node.tag))
     

@@ -101,13 +101,22 @@ class Entity(baseentity.BaseEntity):
             return self.attrib[name]
         except KeyError:
             try:
-                return worldregistry.world.attrList[name](self)
-            except AttributeError:                      # no world?..
-                logging.warning('could not reach modding')
-            except TypeError:
-                logging.warning('can\'t handle non-function extended attributes')
+                mlist = worldregistry.world.attrList[name]
             except KeyError:
                 pass
+            except AttributeError:                      # no world?..
+                logging.warning('could not reach modding')
+            else:
+                # reversed: later added mod has more priority
+                # TODO: make explicit priority?
+                for mod in reversed(mlist):
+                    logging.debug('trying {0}'.format(mod))
+                    try:
+                        return mod(self)
+                    except TypeError:
+                        logging.warning('can\'t handle non-function extended attributes')
+                    except EntityAttributeError:
+                        pass
         return None
     
     def setAttr(self, name, value):
