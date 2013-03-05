@@ -12,6 +12,7 @@
 hunger = subject.attr('hungry')
 maxHunger = subject.attr('maxHungry')
 if hunger &gt; maxHunger:
+    info('{0} is starving'.format(subject.attr('class')))
     subject.changeNumericAttr('hp', -1)
 _return = True
         </code>
