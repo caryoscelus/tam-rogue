@@ -7,7 +7,7 @@
         <code>
 # TODO: use object system instead of thousands globals
 
-global putFloor, putWall, putStairs, putFungus, putTrap, floored, randomDirect
+global putFloor, putWall, putStairs, putBackStairs, putFungus, putTrap, floored, randomDirect
 global mymap, mapId
 mymap = newmap
 mapId = mymap.attr('id')
@@ -19,6 +19,9 @@ def putWall(x, y):
 
 def putStairs(x, y):
     mymap.createEntity({'class':'stairs', 'stair-direction':1}, x, y, 'feature')
+
+def putBackStairs(x, y):
+    mymap.createEntity({'class':'stairs', 'stair-direction':-1}, x, y, 'feature')
 
 def putTrap(x, y):
     mymap.createEntity({'class':'trap', 'hurt':1}, x, y, 'trap')
@@ -87,7 +90,8 @@ def makeFloor():
 
 def fillWallsAndStuff():
     placedStairs = False
-    stairsProbability = 1.0/totalFloor
+    placedBackStairs = False
+    stairsProbability = 1.0/totalFloor*2
     
     trapsPortion = random()/32+1/32
     trapsProbability = trapsPortion
@@ -106,6 +110,9 @@ def fillWallsAndStuff():
                 if not placedStairs and random() &lt; stairsProbability:
                     placedStairs = True
                     putStairs(x, y)
+                elif not placedBackStairs and random() &lt; stairsProbability:
+                    placedBackStairs = True
+                    putBackStairs(x, y)
                 elif trapsLeft &gt; 0 and random() &lt; trapsProbability:
                     trapsLeft -= 1
                     putTrap(x, y)
