@@ -31,15 +31,28 @@ _return = action('travel', {'subject':subject, 'mapid':nextMap, 'x':x, 'y':y})
         </code>
     </action>
     
-    <action name="climb-this-stair">
+    <action name="climb-down">
         <object name="subject"/>
         <code>
 tile = subject.getTile()
 stair = tile.get('feature')
-if stair and stair.attr('class') == 'stairs':
+if stair and stair.attr('class') == 'stairs' and stair.attr('stair-direction') &gt; 0:
     _return = action('climb-stair', {'subject':subject, 'stair':stair})
 else:
-    info('there is no stair')
+    info('you can\'t climb down here')
+    _return = False
+        </code>
+    </action>
+    
+    <action name="climb-up">
+        <object name="subject"/>
+        <code>
+tile = subject.getTile()
+stair = tile.get('feature')
+if stair and stair.attr('class') == 'stairs' and stair.attr('stair-direction') &lt; 0:
+    _return = action('climb-stair', {'subject':subject, 'stair':stair})
+else:
+    info('you can\'t climb up here')
     _return = False
         </code>
     </action>

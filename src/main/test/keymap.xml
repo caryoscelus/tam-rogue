@@ -14,9 +14,13 @@
             <arg name="subject" value="entity"/>
             <bind key="e"/>
         </action>
-        <action name="climb-this-stair">
+        <action name="climb-down">
             <arg name="subject" value="entity"/>
             <bind key=">"/>
+        </action>
+        <action name="climb-up">
+            <arg name="subject" value="entity"/>
+            <bind key="&lt;"/>
         </action>
         <action name="drop">
             <arg name="subject" value="entity"/>
