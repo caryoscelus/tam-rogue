@@ -55,10 +55,11 @@ class Mod:
             elif node.tag == 'map':
                 source = node.attrib['source']
                 target = node.attrib['target']
-                tp = node.get('type')
+                sType = node.get('source-type')
+                tType = node.get('type')
                 values = {}
                 for record in node:
-                    values[record.get('in')] = convert(record.get('out'), tp)
+                    values[convert(record.get('in'), sType)] = convert(record.get('out'), tType)
                 
                 if not (target in world.attrList):
                     world.attrList[target] = []
