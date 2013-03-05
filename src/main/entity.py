@@ -23,11 +23,16 @@ class Entity(baseentity.BaseEntity):
         super().__init__()
     
     def __str__(self):
-        # TODO: fancy output
-        return '<Entity: {0} >'.format(self.attrib)
+        # TODO: use plugin instead?..
+        try:
+            cl = self.attrib['class']
+        except KeyError:
+            logging.warning('Entity {0} has no class'.format(repr(self)))
+            cl = 'unknown object'
+        return '{0}'.format(cl)
     
     def __repr__(self):
-        return str(self)
+        return '<Entity: {0} >'.format(self.attrib)
     
     def setHandler(self, handler):
         '''Set handler object which will be requested to action when it's entity's turn'''
