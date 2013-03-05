@@ -5,6 +5,7 @@
     </bind>
     
     <action name="hunger-check">
+        <attr name="descriptor" value=""/>
         <object name="subject"/>
         
         <code>

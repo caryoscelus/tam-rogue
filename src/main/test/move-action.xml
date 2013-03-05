@@ -3,6 +3,7 @@
     <require file="apply-action.xml"/>
     
     <action name="move">
+        <attr name="descriptor" value=""/>
         <object name="subject"/>
         <integer name="dx"/>
         <integer name="dy"/>

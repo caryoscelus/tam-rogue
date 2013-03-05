@@ -5,6 +5,7 @@
     </bind>
     
     <action name="simple-map-generator">
+        <attr name="descriptor" value=""/>
         <object name="newmap"/>
         
         <code>

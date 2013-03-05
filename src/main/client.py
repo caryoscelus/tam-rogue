@@ -112,8 +112,10 @@ class Client(Displaying, Inputting):
         log = eventlogger.eventLog
         stringCount = min(5, len(log))
         for e in log[-stringCount:]:
-            self.putString(x, y, str(e))
-            y += 1
+            s = str(e)
+            if s:
+                self.putString(x, y, s)
+                y += 1
     
     def showInv(self):
         cnt = self.entity.content

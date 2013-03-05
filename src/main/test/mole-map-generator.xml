@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod>
     <action name="mole-map-generator">
+        <attr name="descriptor" value=""/>
         <object name="newmap"/>
         
         <code>
