@@ -50,9 +50,9 @@ class DisplayServer:
                         self.quit = True
                         self.display.quit = True
                     elif root.tag == 'resize':
-                        logging.debug('resize')
                         width = int(root.attrib['width'])
                         height = int(root.attrib['height'])
+                        logging.debug('resize to {0}x{1}'.format(width, height))
                         self.display.resize(width, height)
                     else:
                         logging.warning('unknown tag "{0}"'.format(root.tag))
