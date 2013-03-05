@@ -5,7 +5,7 @@ from builtins import Exception, TypeError, RuntimeError, IndexError, KeyError, A
 
 from functools import reduce
 
-from logging import debug, info, warning, error
+from logging import debug, warning, error
 
 # TODO: more random functions; control seeds
 from random import random
@@ -34,3 +34,9 @@ def getMap(mapId):
 def traceback():
     import traceback
     debug(traceback.format_exc())
+
+def info(s):
+    from eventlogger import logString
+    import logging
+    logging.info(s)
+    logString(s)

@@ -2,9 +2,13 @@ from event import Event
 
 import logging
 
+def logString(s):
+    eventLog.append(s)
+
 def logEvent(action, args, result):
     event = Event(action, args, result)
-    eventLog.append(event)
+    # TODO: use events again?
+    #eventLog.append(event)
 
 # TODO: make it fancy and useful
 # or maybe just kill it?
