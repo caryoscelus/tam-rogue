@@ -33,13 +33,15 @@ class Mod:
         if not self.src.tag == 'mod':
             raise RuntimeError('wrong mod xml')
     
-    def attrFunc(self, entity, target, source, values):
+    def attrFunc(self, anEntity, target, source, values):
         try:
-            return values[entity.attr(source)]
+            return values[anEntity.attr(source)]
+        except entity.EntityAttributeError:
+            logging.debug('attribute doesn\'t exist')
         except Exception as err:
-            logging.debug('while handling attribute mod:')
+            logging.warning('error while handling attribute mod:')
             logging.debug(err)
-            raise EntityAttributeError(entity, source)
+            #raise entity.EntityAttributeError(anEntity, source)
     
     def applyMod(self, world):
         for node in self.src:
