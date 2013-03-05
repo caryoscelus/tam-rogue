@@ -31,7 +31,7 @@ class Client(Displaying, Inputting):
         self.entity = None
         
         # UI
-        self.showingLogs = False
+        self.showingLogs = True
         self.showingInv = False
         
         self.cleanActionState()
