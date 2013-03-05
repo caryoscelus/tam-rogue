@@ -120,10 +120,10 @@ class Client(Displaying, Inputting):
         inv = [v for k, v in cnt.items() if v != None]
         if not inv:
             # TODO: no constants!
-            self.putString(20, 2, 'inventory is empty')
+            self.putString(30, 2, 'inventory is empty')
         else:
             # TODO: make this work
-            self.putString(20, 2, 'inventory is not empty')
+            self.putString(30, 2, 'inventory is not empty')
             logging.warning('displaying inventory is not supported yet')
     
     def bindKeys(self, keys, actionName, args):
@@ -205,6 +205,7 @@ class Client(Displaying, Inputting):
                 self.showingLogs = not self.showingLogs
             elif ch == 'i':
                 self.showingInv = not self.showingInv
+                self.updateDisplay = True
             elif ch in self.MOVEMENT:
                 self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
             elif opcode == ord('r')-ord('a')+1:             # CTRL+R
