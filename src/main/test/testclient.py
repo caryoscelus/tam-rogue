@@ -76,7 +76,7 @@ def testClientServer(server, port):
     logging.info('client started')
 
 if __name__ == '__main__':
-    logging.basicConfig(filename='testclient.log', level=logging.INFO)
+    logging.basicConfig(filename='testclient.log', level=logging.DEBUG)
     try:
         from sys import argv
         if len(argv) < 3:

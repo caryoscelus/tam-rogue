@@ -88,7 +88,7 @@ class Client(Displaying, Inputting):
         # TODO: don't resize on every iteration
         w = currentMap.width
         h = currentMap.height
-        self.resize(w+20, h+2)
+        self.resize(w+40, h+2)
         
         if self.showingLogs:
             self.showLogs()
@@ -116,13 +116,14 @@ class Client(Displaying, Inputting):
             y += 1
     
     def showInv(self):
-        inv = self.entity.children
+        cnt = self.entity.content
+        inv = [v for k, v in cnt.items() if v != None]
         if not inv:
             # TODO: no constants!
-            self.putString(40, 2, 'inventory is empty')
+            self.putString(20, 2, 'inventory is empty')
         else:
             # TODO: make this work
-            self.putString(40, 2, 'inventory is not empty')
+            self.putString(20, 2, 'inventory is not empty')
             logging.warning('displaying inventory is not supported yet')
     
     def bindKeys(self, keys, actionName, args):
