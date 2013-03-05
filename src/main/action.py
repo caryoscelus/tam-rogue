@@ -24,6 +24,12 @@ class Action:
         self.func = None
         self.attrs = {}
     
+    def __str__(self):
+        return self.name
+    
+    def __repr__(self):
+        return str(self)
+    
     def fromXml(xml):
         self = Action()
         self.loadXml(xml)
