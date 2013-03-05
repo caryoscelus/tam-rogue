@@ -122,9 +122,11 @@ class Client(Displaying, Inputting):
             # TODO: no constants!
             self.putString(30, 2, 'inventory is empty')
         else:
-            # TODO: make this work
-            self.putString(30, 2, 'inventory is not empty')
-            logging.warning('displaying inventory is not supported yet')
+            self.putString(30, 2, 'inventory:')
+            ln = 3
+            for obj in inv:
+                self.putString(30, ln, str(obj))
+                ln += 1
     
     def bindKeys(self, keys, actionName, args):
         # TODO: specific class?
