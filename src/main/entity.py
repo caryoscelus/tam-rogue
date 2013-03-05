@@ -110,7 +110,6 @@ class Entity(baseentity.BaseEntity):
                 # reversed: later added mod has more priority
                 # TODO: make explicit priority?
                 for mod in reversed(mlist):
-                    logging.debug('trying {0}'.format(mod))
                     try:
                         return mod(self)
                     except TypeError:

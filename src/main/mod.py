@@ -36,8 +36,8 @@ class Mod:
     def attrFunc(self, anEntity, target, source, values):
         try:
             return values[anEntity.attr(source)]
-        except entity.EntityAttributeError:
-            logging.debug('attribute doesn\'t exist')
+        except KeyError:
+            raise entity.EntityAttributeError(anEntity, source)
         except Exception as err:
             logging.warning('error while handling attribute mod:')
             logging.debug(traceback.format_exc())
