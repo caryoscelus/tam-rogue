@@ -83,12 +83,12 @@ class Client(Displaying, Inputting):
         # - forbid direct access to world
         # - draw vision, not actual map
         currentMap = self.entity.onMap
-        self.displayData = self.mapVisualizer.toXml(currentMap)
+        self.displayData = self.mapVisualizer.toXml(currentMap, 0, 6)
         
         # TODO: don't resize on every iteration
         w = currentMap.width
         h = currentMap.height
-        self.resize(w+40, h+2)
+        self.resize(w+40, h+8)
         
         if self.showingLogs:
             self.showLogs()

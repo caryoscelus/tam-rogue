@@ -27,7 +27,7 @@ class MapVisualizer:
         screen.append(tiledMap.genMap(lambda x, y: self.tileToGfx(tiledMap, x, y)))
         return screen
     
-    def toXml(self, tiledMap):
+    def toXml(self, tiledMap, x0 = 0, y0 = 0):
         screen = self.toGfx(tiledMap)
         
         root = ET.Element('scrup')
@@ -37,7 +37,7 @@ class MapVisualizer:
                 ch = screen[1][y][x]
                 # TODO: duck typing?..
                 if isinstance(ch, str):
-                    ET.SubElement(root, 'char', {'x':str(x), 'y':str(y), 'ch':ch})
+                    ET.SubElement(root, 'char', {'x':str(x+x0), 'y':str(y+y0), 'ch':ch})
                 else:
                     logging.warning('unvisualizable display character')
         
