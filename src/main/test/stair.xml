@@ -14,10 +14,11 @@ if direct == None:
 nextMap = currentMap.attr('id')+direct
 
 # make sure map exist
-getMap(nextMap)
+tmap = getMap(nextMap)
 
-x = int(random()*10)
-y = int(random()*10)
+sd = 'stairs-down' if direct &gt; 0 else 'stairs-up'
+x, y = tmap.attr(sd)
+
 info('you climb the stairs')
 _return = action('travel', {'subject':subject, 'mapid':nextMap, 'x':x, 'y':y})
         </code>

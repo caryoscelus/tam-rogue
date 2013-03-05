@@ -49,7 +49,10 @@ def generateWorld():
     # objects
     map0.putOn(12, 4, 'monster', human)
     map0.putOn(15, 4, 'trap', trap)
+    
     map0.putOn(15, 7, 'feature', stairs)
+    map0.setAttr('stairs-up', (15, 7))
+    
     map0.putOn(6, 6, 'monster', fungus)
     
     return human

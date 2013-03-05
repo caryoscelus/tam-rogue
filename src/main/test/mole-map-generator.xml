@@ -19,9 +19,11 @@ def putWall(x, y):
 
 def putStairs(x, y):
     mymap.createEntity({'class':'stairs', 'stair-direction':1}, x, y, 'feature')
+    mymap.setAttr('stairs-up', (x, y))
 
 def putBackStairs(x, y):
     mymap.createEntity({'class':'stairs', 'stair-direction':-1}, x, y, 'feature')
+    mymap.setAttr('stairs-down', (x, y))
 
 def putTrap(x, y):
     mymap.createEntity({'class':'trap', 'hurt':1}, x, y, 'trap')

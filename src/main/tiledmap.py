@@ -30,6 +30,9 @@ class TiledMap:
         # TODO
         return self.attrib[name]
     
+    def setAttr(self, name, value):
+        self.attrib[name] = value
+    
     def fromXml(xmlRoot):
         self = TiledMap()
         self.loadXml(xmlRoot)
