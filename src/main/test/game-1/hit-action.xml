@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="hit">
+        <object name="subject"/>
+        <object name="tool"/>
+        <object name="target"/>
+        
+        <code>
+target.changeNumericAttr('hp', -1)
+try:
+    _return = True
+except BaseEntityDeadError:
+    info('killed')
+        </code>
+    </action>
+</mod>

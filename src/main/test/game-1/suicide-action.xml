@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="suicide">
+        <object name="subject"/>
+        
+        <code>
+_return = action('die', {'subject':subject, 'reason':'user committed suicide'})
+        </code>
+    </action>
+</mod>

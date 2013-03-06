@@ -38,7 +38,7 @@ def generateWorld():
 def testClientServer(server, port):
     myServer = Server()
     
-    worldregistry.loadMod('basic-modpack.xml')
+    worldregistry.loadMod('config.xml')
     human = generateWorld()
     
     myServer.start()

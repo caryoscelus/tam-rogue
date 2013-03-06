@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <require file="travel.xml"/>
+    <action name="climb-stair">
+        <object name="subject"/>
+        <object name="stair"/>
+        
+        <code>
+# This implements simple one-way stair
+currentMap = stair.getMap()
+cmapId = currentMap.attr('id')
+
+direct = stair.attr('stair-direction')
+if direct == None:
+    direct = 1
+nextMap = cmapId+direct
+
+tmap = getMap(nextMap)
+
+# make sure map exist
+try:
+    tmap.getTile(0, 0)
+except TiledMapSizeError:
+    tmap.notifyEmpty()
+
+sd = 'stairs-down' if direct &gt; 0 else 'stairs-up'
+x, y = tmap.attr(sd)
+
+info('you climb the stairs')
+_return = action('travel', {'subject':subject, 'mapid':nextMap, 'x':x, 'y':y})
+        </code>
+    </action>
+    
+    <action name="climb-down">
+        <object name="subject"/>
+        <code>
+tile = subject.getTile()
+stair = tile.get('feature')
+if stair and stair.attr('class') == 'stairs' and stair.attr('stair-direction') &gt; 0:
+    _return = action('climb-stair', {'subject':subject, 'stair':stair})
+else:
+    info('you can\'t climb down here')
+    _return = False
+        </code>
+    </action>
+    
+    <action name="climb-up">
+        <object name="subject"/>
+        <code>
+tile = subject.getTile()
+stair = tile.get('feature')
+if stair and stair.attr('class') == 'stairs' and stair.attr('stair-direction') &lt; 0:
+    _return = action('climb-stair', {'subject':subject, 'stair':stair})
+else:
+    info('you can\'t climb up here')
+    _return = False
+        </code>
+    </action>
+</mod>

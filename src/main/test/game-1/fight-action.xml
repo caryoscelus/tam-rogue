@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="fight">
+        <object name="subject"/>
+        <integer name="target"/>
+        
+        <code>
+d = target
+x, y = d//3-1, d%3-1
+victim = subject.getTile(x, y).get('monster')
+if victim:
+    weapon = subject.get('weapon')
+    probability = 0
+    if not weapon:
+        info('fighting bare-handed')
+        probability = 0.3
+    else:
+        info('fighting with {0}'.format(weapon.attr('class')))
+        probability = 0.6
+    if random() &lt; probability:
+        info('{0} hits {1}'.format(subject.attr('class'), victim.attr('class')))
+        action('hit', {'subject':subject, 'target':victim})
+    else:
+        info('{0} misses {1}'.format(subject.attr('class'), victim.attr('class')))
+    _return = True
+else:
+    info('no victim to fight with')
+    _return = False
+        </code>
+    </action>
+</mod>

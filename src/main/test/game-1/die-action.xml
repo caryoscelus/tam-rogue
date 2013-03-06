@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="die">
+        <object name="subject"/>
+        <string name="reason"/>
+        
+        <code>
+if not reason:
+    reason = 'unknown reason'
+name = subject.attr('class')
+info('{0} died because: {1}'.format(name, reason))
+
+map = subject.getMap()
+x = subject.getX()
+y = subject.getY()
+subjType = subject.attr('class')
+subject.die()
+
+if subjType != 'corpse' and random() &gt; 0.5:
+    map.createEntity({'class':'corpse'}, x, y, 'objects')
+    info('{0} is food now'.format(name))
+_return = True
+        </code>
+    </action>
+</mod>

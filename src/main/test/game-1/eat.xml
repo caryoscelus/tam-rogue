@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="eat">
+        <object name="subject"/>
+        <object name="food"/>
+        
+        <code>
+subName = subject.attr('class')
+foodName = food.attr('class')
+info('{0} tries to eat {1}'.format(subName, foodName))
+if food.attr('class') == 'corpse':
+    subject.changeNumericAttr('hungry', -1)
+    action('die', {'subject':food, 'reason':'was eaten by {0}'.format(subName)})
+    _return = True
+else:
+    info('this doesn\'t look edible')
+    _return = False
+        </code>
+    </action>
+</mod>

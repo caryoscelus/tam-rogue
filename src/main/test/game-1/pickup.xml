@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="pickup">
+        <object name="subject"/>
+        
+        <code>
+tile = subject.getTile()
+stack = tile.get('objects')
+try:
+    object = stack[-1]
+    info('{0} is trying to pickup {1}'.format(subject.attr('class'), object.attr('class')))
+    subject.put('weapon', object)
+    tile.remove(object, 'objects')
+    _return = True
+except IndexError:
+    info('no object to pickup here!')
+    _return = False
+        </code>
+    </action>
+</mod>

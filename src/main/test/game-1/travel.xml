@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="travel">
+        <attr name="descriptor" value=""/>
+        <object name="subject"/>
+        <integer name="mapid"/>
+        <integer name="x"/>
+        <integer name="y"/>
+        <code>
+oldPos = subject.getPosition()
+oldMap = subject.getMap()
+newMap = getMap(mapid)
+oldMap.removeFromMap(subject)
+try:
+    newMap.putOn(x, y, oldPos, subject)
+except TiledMapSizeError:
+    debug('user traveled to non-existant map')
+        </code>
+    </action>
+</mod>

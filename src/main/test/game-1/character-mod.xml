@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <map source="class" target="char">
+        <value in="human" out="@"/>
+        <value in="wall" out="#"/>
+        <value in="floor" out="."/>
+        <value in="trap" out="^"/>
+        <value in="stairs" out=">"/>
+        <value in="fungus" out="F"/>
+        <value in="corpse" out="%"/>
+        <value in="dagger" out=")"/>
+    </map>
+    <map source="stair-direction" source-type="int" target="char">
+        <value in="-1" out="&lt;"/>
+        <value in="1" out=">"/>
+    </map>
+</mod>
