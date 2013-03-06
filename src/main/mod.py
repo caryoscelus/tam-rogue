@@ -6,6 +6,7 @@ import entity
 from action import Action
 import worldregistry
 import baseentity
+import loader
 
 # TODO: use this more generally
 def convert(value, tp):
@@ -48,7 +49,11 @@ class Mod:
     
     def applyMod(self, world):
         for node in self.src:
-            if node.tag == 'require':
+            if node.tag == 'path':
+                path = node.attrib['add']
+                loader.addPath(path)
+            
+            elif node.tag == 'require':
                 fname = node.attrib['file']
                 worldregistry.loadMod(fname)
             

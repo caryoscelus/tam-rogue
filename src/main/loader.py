@@ -2,20 +2,33 @@
 
 import xml.etree.ElementTree as ET
 import logging
+import os.path
 
 from mod import Mod
 
+_modPath = ['']
+
 def modFromFile(modFile):
-    try:
-        f = open(modFile)
-        modXml = f.read()
-        f.close()
-        
-        newMod = Mod(ET.fromstring(modXml))
+    f = None
+    modXml = None
+    for path in _modPath:
+        try:
+            f = open(os.path.join(path, modFile))
+            modXml = f.read()
+            f.close()
+            break
+        except IOError:
+            pass
+    if f:
+        try:
+            newMod = Mod(ET.fromstring(modXml))
+        except ET.ParseError:
+            logging.warning('cannot parse mod file {0}'.format(modFile))
         
         return newMod
-    except IOError:
+    else:
         logging.warning('cannot load mod file {0}'.format(modFile))
-    except ET.ParseError:
-        logging.warning('cannot parse mod file {0}'.format(modFile))
     return None
+
+def addPath(path):
+    _modPath.append(path)
