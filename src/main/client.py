@@ -206,19 +206,24 @@ class Client(Displaying, Inputting):
         try:
             self.processKeyBindings(opcode)
         except UnknownKeyError:
-            ch = chr(opcode)
-            if ch == '!':
-                self.showingLogs = not self.showingLogs
-                self.updateDisplay = True
-            elif ch == 'i':
-                self.showingInv = not self.showingInv
-                self.updateDisplay = True
-            elif ch in self.MOVEMENT:
-                self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
-            elif opcode == ord('r')-ord('a')+1:             # CTRL+R
-                self.updateDisplay = True
+            try:
+                ch = chr(opcode)
+            except KeyError:
+                # TODO: other options should still be checked
+                logging.warning('unhandled key: ({0})'.format(opcode))
             else:
-                logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
+                if ch == '!':
+                    self.showingLogs = not self.showingLogs
+                    self.updateDisplay = True
+                elif ch == 'i':
+                    self.showingInv = not self.showingInv
+                    self.updateDisplay = True
+                elif ch in self.MOVEMENT:
+                    self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
+                elif opcode == ord('r')-ord('a')+1:             # CTRL+R
+                    self.updateDisplay = True
+                else:
+                    logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
     
     def gameOver(self):
         '''Called when game is considered finished'''
