@@ -29,31 +29,14 @@ def generateWorld():
     stairs = Entity({'class':'stairs', 'stair-direction':1})
     human.alive = True
     
-    map0 = TiledMap(20, 20, {'id':0})
+    map0 = worldregistry.world.getMap(0)
+    map0.notifyEmpty()
+    
     map0.alive = True
-    map0.exist = True
     map0.queue.push(human)
+    upstairs = map0.attr('stairs-down')
+    map0.putOn(upstairs[0], upstairs[1], 'monster', human)
     
-    # TODO: use something else
-    worldregistry.world.setMap(0, map0)
-    
-    # floor
-    for y in range(1, 10):
-        for x in range(2, 18):
-            map0.getTile(x, y).put('ground', floor)
-    
-    # wall
-    for x in range(2, 18):
-        map0.getTile(x, 10).put('ground', wall)
-    
-    # objects
-    map0.putOn(12, 4, 'monster', human)
-    map0.putOn(15, 4, 'trap', trap)
-    
-    map0.putOn(15, 7, 'feature', stairs)
-    map0.setAttr('stairs-up', (15, 7))
-    
-    map0.putOn(6, 6, 'monster', fungus)
     
     return human
 
