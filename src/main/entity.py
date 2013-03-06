@@ -198,16 +198,16 @@ class Entity(baseentity.BaseEntity):
         y0 = self.getY()
         for x in range(x0-5, x0+5):
             for y in range(y0-5, y0+5):
-                if (x-x0)**2+(y-y0)**2 <= 5**2:
+                if x >= 0 and y >= 0 and (x-x0)**2+(y-y0)**2 <= 5**2:
                     try:
                         tile = onMap.getTile(x, y)
                     except tiledmap.TiledMapSizeError:
                         pass
-                    
-                    # TODO: copy everything
-                    entity = tile.getUpper()
-                    if entity:
-                        visible.getTile(x, y).put(entity.getPosition(), entity)
+                    else:
+                        # TODO: copy everything, not just top
+                        entity = tile.getUpper()
+                        if entity:
+                            visible.getTile(x, y).put(entity.getPosition(), entity)
         return visible
     
     def placeOn(self, onMap, x, y, position):
