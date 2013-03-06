@@ -3,6 +3,7 @@ import traceback
 import xml.etree.ElementTree as ET
 
 import baseentity
+import tiledmap
 
 class Entity(baseentity.BaseEntity):
     def __init__(self, attrib = {}, alive = False, handler = None):
@@ -185,6 +186,29 @@ class Entity(baseentity.BaseEntity):
     def getMap(self):
         '''Return map containing this entity'''
         return self.onMap
+    
+    def mapVision(self):
+        # TODO: move to modding
+        # TODO: show known map
+        
+        onMap = self.onMap
+        visible = tiledmap.TiledMap(onMap.width, onMap.height)
+        
+        x0 = self.getX()
+        y0 = self.getY()
+        for x in range(x0-5, x0+5):
+            for y in range(y0-5, y0+5):
+                if (x-x0)**2+(y-y0)**2 <= 5**2:
+                    try:
+                        tile = onMap.getTile(x, y)
+                    except tiledmap.TiledMapSizeError:
+                        pass
+                    
+                    # TODO: copy everything
+                    entity = tile.getUpper()
+                    if entity:
+                        visible.getTile(x, y).put(entity.getPosition(), entity)
+        return visible
     
     def placeOn(self, onMap, x, y, position):
         self.onMap = onMap
