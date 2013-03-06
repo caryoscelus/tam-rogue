@@ -98,10 +98,10 @@ class Client(Displaying, Inputting):
         
         if self.inputState == 'normal':
             pass
-        elif self.inputState == 'direction':
-            self.putString(0, 20, 'direction?')
+        elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext] == 'direction':
+            self.putString(0, 0, 'direction?')
         elif self.inputState == 'list':
-            self.putString(0, 20, 'list element?')
+            self.putString(0, 0, 'list element?')
         
         super().redraw()
     
@@ -159,6 +159,8 @@ class Client(Displaying, Inputting):
                 if self.tryLaunchAction():
                     break
             else:
+                # to display "direction?" message
+                self.updateDisplay = True
                 break
     
     def processKeyBindings(self, opcode):
