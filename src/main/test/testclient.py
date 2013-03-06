@@ -17,16 +17,11 @@ from worldregistry import *
 
 # TODO: remove from here; make proper loading/generation
 def generateWorld():
-    floor = Entity({'class':'floor'})
-    wall = Entity({'class':'wall'})
-    human = Entity({'class':'human', 'hp':2, 'hungry':0, 'maxHungry':10})
+    human = Entity({'class':'human', 'hp':2, 'hungry':0, 'maxHungry':5})
     human.order = ['weapon']
     human.content = {'weapon':None}
     dagger = Entity({'class':'dagger', 'hurt':2})
     human.put('weapon', dagger)
-    fungus = Entity({'class':'fungus', 'hp':2})
-    trap = Entity({'class':'trap', 'hurt':1})
-    stairs = Entity({'class':'stairs', 'stair-direction':1})
     human.alive = True
     
     map0 = worldregistry.world.getMap(0)
@@ -36,7 +31,6 @@ def generateWorld():
     map0.queue.push(human)
     upstairs = map0.attr('stairs-down')
     map0.putOn(upstairs[0], upstairs[1], 'monster', human)
-    
     
     return human
 
