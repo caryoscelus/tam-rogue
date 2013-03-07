@@ -8,6 +8,7 @@ sys.path.append(".")
 sys.path.append("..")
 
 from client import *
+from botclient import *
 from server import *
 from world import *
 from tiledmap import *
