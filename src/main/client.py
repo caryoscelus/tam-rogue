@@ -52,25 +52,14 @@ class Client(BaseClient, Displaying, Inputting):
         mod = loader.modFromFile(modFile)
         mod.applyMod(self)
     
-    # TODO: use default serverClient instead of direct server
-    def connectServer(self, server):
-        self.serverClient = server.connect(self)
-    
-    def askForEntity(self, entity = None):
-        try:
-            self.serverClient.requestEntity(entity)
-            self.entity.watchDeath(self)
-        except AttributeError:
-            logging.warning('not connected')
-    
     def doAction(self, action, args):
         try:
             self.serverClient.request(action, args)
         except AttributeError:
             logging.warning('not connected')
     
-    # called from server
     def worldChanged(self):
+        '''Called from server when world is changed'''
         super().worldChanged()
         self.updateDisplay = True
     

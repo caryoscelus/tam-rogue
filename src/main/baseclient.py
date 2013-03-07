@@ -1,9 +1,21 @@
 class BaseClient:
-    # called from server
     def requestAction(self):
+        '''Called from server when action required'''
         logging.debug('server requested action')
         self.myTurn = True
     
-    # called from server
     def worldChanged(self):
+        '''Called from server when world is changed'''
         pass
+    
+    def askForEntity(self, entity = None):
+        '''Get entity to control from server'''
+        try:
+            self.serverClient.requestEntity(entity)
+            self.entity.watchDeath(self)
+        except AttributeError:
+            logging.warning('not connected')
+    
+    # TODO: use default serverClient instead of direct server
+    def connectServer(self, server):
+        self.serverClient = server.connect(self)
