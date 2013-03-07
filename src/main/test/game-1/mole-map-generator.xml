@@ -7,7 +7,7 @@
         <code>
 # TODO: use object system instead of thousands globals
 
-global putFloor, putWall, putStairs, putBackStairs, putFungus, putTrap, floored, randomDirect
+global putScroll, putFloor, putWall, putStairs, putBackStairs, putFungus, putTrap, floored, randomDirect
 global mymap, mapId
 mymap = newmap
 mapId = mymap.attr('id')
@@ -30,6 +30,9 @@ def putTrap(x, y):
 
 def putFungus(x, y):
     mymap.createEntity({'class':'fungus', 'hp':2}, x, y, 'monster')
+
+def putScroll(x, y):
+    mymap.createEntity({'class':'scroll', 'text':'hello'}, x, y, 'objects')
 
 def floored(x, y):
     try:
@@ -122,6 +125,9 @@ def fillWallsAndStuff():
                     putFungus(x, y)
                 else:
                     latestStairsPosition = (x, y)
+                
+                if random()*32 &lt; 1:
+                    putScroll(x, y)
             else:
                 ns = (
                     (floored(dx+x, dy+y) for dx in range(-1, 2)) \

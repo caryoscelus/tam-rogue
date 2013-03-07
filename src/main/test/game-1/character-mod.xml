@@ -10,6 +10,7 @@
         <value in="fungus" out="F"/>
         <value in="corpse" out="%"/>
         <value in="dagger" out=")"/>
+        <value in="scroll" out="?"/>
     </map>
     <map source="stair-direction" source-type="int" target="char">
         <value in="-1" out="&lt;"/>
