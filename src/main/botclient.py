@@ -31,7 +31,7 @@ class BotClient(BaseClient):
         for x in range(-1, 1):
             for y in range(-1, 1):
                 if x or y:
-                    t = self.getTile(x, y)
+                    t = self.entity.getTile(x, y)
                     monster = t.get('monster')
                     if monster:
                         self.attackEnemy(monster)
@@ -39,7 +39,7 @@ class BotClient(BaseClient):
         return False
     
     def moveTo(self, dx, dy):
-        self.doAction('move', {'subject':self, 'dx':dx, 'dy':dy})
+        self.doAction('move', {'subject':self.entity, 'dx':dx, 'dy':dy})
     
     def attackEnemy(self, enemy):
-        self.doAction('fight', {'subject':self, 'target':enemy})
+        self.doAction('fight', {'subject':self.entity, 'target':enemy})
