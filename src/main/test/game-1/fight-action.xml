@@ -9,7 +9,10 @@ d = target
 x, y = d//3-1, d%3-1
 victim = subject.getTile(x, y).get('monster')
 if victim:
-    weapon = subject.get('weapon')
+    try:
+        weapon = subject.get('weapon')
+    except PositionNameError:
+        weapon = False
     probability = 0
     if not weapon:
         info('fighting bare-handed')

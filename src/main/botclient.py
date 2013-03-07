@@ -35,12 +35,13 @@ class BotClient(BaseClient):
                     t = self.entity.getTile(x, y)
                     monster = t.get('monster')
                     if monster:
-                        self.attackEnemy(monster)
+                        self.attackEnemy(x, y)
                         return True
         return False
     
     def moveTo(self, dx, dy):
         self.doAction('move', {'subject':self.entity, 'dx':dx, 'dy':dy})
     
-    def attackEnemy(self, enemy):
-        self.doAction('fight', {'subject':self.entity, 'target':enemy})
+    def attackEnemy(self, dx, dy):
+        d = (dx+1)*3+(dy+1)
+        self.doAction('fight', {'subject':self.entity, 'target':d})

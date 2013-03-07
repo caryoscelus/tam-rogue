@@ -11,7 +11,7 @@ from logging import debug, warning, error
 from random import random
 
 from entity import EntityAttributeError
-from baseentity import PositionTakenError, BaseEntityDeadError
+from baseentity import PositionTakenError, BaseEntityDeadError, PositionNameError
 from tiledmap import TiledMapSizeError
 
 def action(name, args):
