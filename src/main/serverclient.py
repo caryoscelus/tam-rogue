@@ -44,9 +44,6 @@ class ServerClient(Sleeping, EntityController):
         if self.entity != entity:
             raise EntityControllerMismatchError(self.entity, entity)
         
-        while not self.actions:
-            self.sleep()
-        
         if self.actions:
             action, args = self.actions.pop(0)
             try:

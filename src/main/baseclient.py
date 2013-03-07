@@ -1,4 +1,8 @@
-class BaseClient:
+import logging
+
+from starting import Starting
+
+class BaseClient(Starting):
     def __init__(self):
         super().__init__()
         
