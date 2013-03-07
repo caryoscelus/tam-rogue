@@ -200,17 +200,22 @@ class Client(BaseClient, Displaying, Inputting):
                     self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
                 elif opcode == ord('r')-ord('a')+1:             # CTRL+R
                     self.updateDisplay = True
+                elif ch == 'S':
+                    self.doQuit()
                 else:
                     logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
     
     def gameOver(self):
         '''Called when game is considered finished'''
-        # TODO: show some exit info, before actual exiting
-        self.putString(0, 0, 'game over, thou shall exit now')
+        eventlogger.logString('game over, thou shall exit now')
         logging.info('game over')
-        self.quit = True
+        self.serverClient.stop()
+    
+    def doQuit(self):
+        '''Actually quit'''
         self.serverClient.stop()
         self.notifyDisconnection()
+        self.quit = True
     
     def attendFuneral(self, entity):
         if self.entity == entity:
