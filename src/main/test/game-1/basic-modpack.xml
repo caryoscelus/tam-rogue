@@ -18,6 +18,7 @@
     <require file="hit-action.xml"/>
     <require file="move-action.xml"/>
     <require file="die-action.xml"/>
+    <require file="wait.xml"/>
     
     <require file="hp-check-action.xml"/>
     <require file="check-hunger.xml"/>
