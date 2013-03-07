@@ -4,7 +4,7 @@
         <object name="subject"/>
         
         <code>
-subject.changeNumericAttribute('health', 0.1)
+subject.changeNumericAttr('hp', 0.1)
 _return = True
         </code>
     </action>
