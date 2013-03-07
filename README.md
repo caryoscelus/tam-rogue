@@ -50,6 +50,7 @@ Currenly supported actions:
     
     i               toggle displaying inventory (doesn't work much currently)
     !               toggle displaying game log
+    S               exit
 
     <direction> is one of standard hjklyubn keys
 
