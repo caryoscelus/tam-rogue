@@ -48,17 +48,12 @@ class Client(BaseClient, Displaying, Inputting):
         mod = loader.modFromFile(modFile)
         mod.applyMod(self)
     
-    def doAction(self, action, args):
-        try:
-            self.serverClient.request(action, args)
-        except AttributeError:
-            logging.warning('not connected')
-    
     def worldChanged(self):
         '''Called from server when world is changed'''
         super().worldChanged()
         self.updateDisplay = True
     
+    # OUTPUT
     def redraw(self):
         # TODO:
         # - gui
@@ -112,6 +107,7 @@ class Client(BaseClient, Displaying, Inputting):
                 self.putString(30, ln, str(obj))
                 ln += 1
     
+    # INPUT
     def bindKeys(self, keys, actionName, args):
         # TODO: specific class?
         action = (actionName, args)

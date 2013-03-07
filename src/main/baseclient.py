@@ -23,6 +23,12 @@ class BaseClient:
         except AttributeError:
             logging.warning('not connected')
     
+    def doAction(self, action, args):
+        try:
+            self.serverClient.request(action, args)
+        except AttributeError:
+            logging.warning('not connected')
+    
     # TODO: use default serverClient instead of direct server
     def connectServer(self, server):
         self.serverClient = server.connect(self)
