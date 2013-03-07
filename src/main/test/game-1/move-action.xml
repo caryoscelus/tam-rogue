@@ -25,7 +25,10 @@ else:
     _return = True
 
 # waste energy
-subject.changeNumericAttr('hungry', 0.1)
+try:
+    subject.changeNumericAttr('hungry', 0.1)
+except:
+    warning('subject has no hunger')
 
 # process traps
 traps = tile.get('trap')

@@ -5,9 +5,11 @@ from baseclient import BaseClient
 class BotClient(BaseClient):
     def requestAction(self):
         if self.attack():
+            logging.info('bot attacks')
             return
         
         if self.move():
+            logging.info('bot moves!')
             return
         
         self.wait()
@@ -16,11 +18,10 @@ class BotClient(BaseClient):
         for x in range(-1, 1):
             for y in range(-1, 1):
                 if x or y:
-                    try:
+                    t = self.entity.getTile(x, y)
+                    if t.get('ground') and t.get('ground').attr('standable'):
                         self.moveTo(x, y)
                         return True
-                    except RuntimeError:
-                        pass
         return False
     
     def wait(self):
