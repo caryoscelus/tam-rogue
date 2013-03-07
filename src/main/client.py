@@ -70,12 +70,8 @@ class Client(BaseClient, Displaying, Inputting):
             logging.warning('not connected')
     
     # called from server
-    def requestAction(self):
-        logging.debug('server requested action')
-        self.myTurn = True
-    
-    # called from server
     def worldChanged(self):
+        super().worldChanged()
         self.updateDisplay = True
     
     def redraw(self):
