@@ -15,7 +15,7 @@ class ServerClient(Sleeping, EntityController):
     
     def register(self):
         # set handler for entity
-        self.entity.handler.setHandler(self)
+        self.entity.setHandler(self)
         self.client.entity = self.entity
     
     def assignTo(self, entity):
