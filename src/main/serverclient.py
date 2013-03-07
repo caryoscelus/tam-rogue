@@ -15,7 +15,7 @@ class ServerClient(Sleeping, EntityController):
     
     def register(self):
         # set handler for entity
-        self.entity.handler = self
+        self.entity.handler.setHandler(self)
         self.client.entity = self.entity
     
     def assignTo(self, entity):
@@ -23,6 +23,7 @@ class ServerClient(Sleeping, EntityController):
         self.register()
     
     def handle(self):
+        # NOTE: is this dead?..
         self.client.requestAction()
         while not self.actions:
             self.sleep()

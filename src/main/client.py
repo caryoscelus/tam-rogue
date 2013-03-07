@@ -1,6 +1,7 @@
 import logging
 import copy
 
+from baseclient import BaseClient
 from displaying import Displaying
 from inputting import Inputting, UnknownKeyError
 from mapvisualizer import MapVisualizer
@@ -9,7 +10,7 @@ import eventlogger
 import worldregistry
 import loader
 
-class Client(Displaying, Inputting):
+class Client(BaseClient, Displaying, Inputting):
     MOVEMENT = {
         'h' : (-1, 0),
         'j' : (0, 1),
