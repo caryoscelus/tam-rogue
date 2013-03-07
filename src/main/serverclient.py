@@ -22,13 +22,6 @@ class ServerClient(Sleeping, EntityController):
         self.entity = entity
         self.register()
     
-    def handle(self):
-        # NOTE: is this dead?..
-        self.client.requestAction()
-        while not self.actions:
-            self.sleep()
-        action = self.actions.pop(0)
-    
     # to be called on client side
     def request(self, action, args):
         self.actions.append((action, args))
@@ -67,6 +60,12 @@ class ServerClient(Sleeping, EntityController):
                 # TODO: do something with it
                 # maybe just loop over available actions?
                 logging.warning('action didn\'t finished successfully')
+            return result
+        else:
+            self.client.requestAction()
+            while not self.actions:
+                self.sleep()
+            return self.live(entity)
     
     def __str__(self):
         return ''
