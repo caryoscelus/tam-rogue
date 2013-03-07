@@ -18,10 +18,6 @@ class ServerClient(Sleeping, EntityController):
         self.entity.setHandler(self)
         self.client.entity = self.entity
     
-    def assignTo(self, entity):
-        self.entity = entity
-        self.register()
-    
     # to be called on client side
     def request(self, action, args):
         self.actions.append((action, args))
