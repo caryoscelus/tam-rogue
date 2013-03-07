@@ -26,7 +26,7 @@ class BotClient(BaseClient):
     
     def wait(self):
         # TODO: wait
-        pass
+        raise RuntimeError('bot can\'t wait!')
     
     def attack(self):
         for x in range(-1, 1):

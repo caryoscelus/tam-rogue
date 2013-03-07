@@ -15,13 +15,13 @@ if victim:
         weapon = False
     probability = 0
     if not weapon:
-        info('fighting bare-handed')
+        wmsg = 'bare-handed'
         probability = 0.3
     else:
-        info('fighting with {0}'.format(weapon.attr('class')))
+        wmsg = 'with {0}'.format(weapon.attr('class'))
         probability = 0.6
     if random() &lt; probability:
-        info('{0} hits {1}'.format(subject.attr('class'), victim.attr('class')))
+        info('{0} hits {1} {2}'.format(subject.attr('class'), victim.attr('class'), wmsg))
         action('hit', {'subject':subject, 'target':victim})
     else:
         info('{0} misses {1}'.format(subject.attr('class'), victim.attr('class')))
