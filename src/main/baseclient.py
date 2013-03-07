@@ -1,4 +1,11 @@
 class BaseClient:
+    def __init__(self):
+        super().__init__()
+        
+        self.myTurn = False
+        self.serverClient = None
+        self.entity = None
+    
     def requestAction(self):
         '''Called from server when action required'''
         logging.debug('server requested action')

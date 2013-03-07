@@ -25,11 +25,7 @@ class Client(BaseClient, Displaying, Inputting):
     def __init__(self):
         super().__init__()
         
-        self.myTurn = False
-        self.quit = False
-        self.serverClient = None
         self.mapVisualizer = MapVisualizer()
-        self.entity = None
         
         # UI
         self.showingLogs = True
