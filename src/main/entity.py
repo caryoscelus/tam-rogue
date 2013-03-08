@@ -193,23 +193,32 @@ class Entity(baseentity.BaseEntity):
         # TODO: show known map
         
         onMap = self.onMap
-        visible = tiledmap.TiledMap(onMap.width, onMap.height)
+        visionMap = tiledmap.TiledMap(onMap.width, onMap.height)
         
         x0 = self.getX()
         y0 = self.getY()
-        for x in range(x0-5, x0+5):
-            for y in range(y0-5, y0+5):
-                if x >= 0 and y >= 0 and (x-x0)**2+(y-y0)**2 <= 5**2:
-                    try:
-                        tile = onMap.getTile(x, y)
-                    except tiledmap.TiledMapSizeError:
-                        pass
-                    else:
-                        # TODO: copy everything, not just top
-                        entity = tile.getUpper()
-                        if entity:
-                            visible.getTile(x, y).put(entity.getPosition(), entity)
-        return visible
+        
+        def getTileVision(onMap, visionMap, x, y):
+            tile = onMap.getTile(x, y)
+            ground = tile.get('ground')
+            
+            # TODO: copy everything, not just top
+            entity = tile.getUpper()
+            if entity:
+                try:
+                    visionMap.getTile(x, y).put(entity.getPosition(), entity)
+                except baseentity.PositionTakenError:
+                    logging.warning('raytraced one place twice')
+            
+            canSee = not ground.attr('opaque')
+            return canSee
+        
+        def getTileVisionF(onMap, visionMap):
+            return lambda x, y: getTileVision(onMap, visionMap, x, y)
+        
+        onMap.raytrace(x0, y0, getTileVisionF(onMap, visionMap))
+        
+        return visionMap
     
     def placeOn(self, onMap, x, y, position):
         self.onMap = onMap

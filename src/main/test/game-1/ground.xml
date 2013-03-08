@@ -4,4 +4,8 @@
         <value in="wall" out="0"/>
         <value in="floor" out="1"/>
     </map>
+    <map source="class" target="opaque" type="bool">
+        <value in="wall" out="1"/>
+        <value in="floor" out="0"/>
+    </map>
 </mod>
