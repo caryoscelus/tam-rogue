@@ -7,6 +7,8 @@ from receiver import Receiver, ReceiverListeningForbidden, ReceiverTimeoutError
 from starting import Starting
 
 class Inputting(Starting, Receiver):
+    '''Listens to remote keyboard events'''
+    
     def __init__(self):
         super().__init__()
         

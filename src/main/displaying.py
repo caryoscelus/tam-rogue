@@ -24,8 +24,8 @@ class Displaying(Sleeping, Starting, Receiver):
         self.updaterThread.start()
         self.listenerThread.start()
     
-    # thread
     def clientUpdater(self):
+        '''Client updater thread function'''
         while not self.quit:
             try:
                 if self.updateDisplay:
@@ -90,9 +90,9 @@ class Displaying(Sleeping, Starting, Receiver):
         else:
             logging.warning('gfx client wasn\'t notified, exiting anyway')
     
-    # thread
     # TODO: one listener per app
     def clientListener(self):
+        '''Listens for client connection'''
         self.allowListening()
         
         while not self.quit:
