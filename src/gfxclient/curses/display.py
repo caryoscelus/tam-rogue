@@ -6,6 +6,18 @@ import traceback
 from cell import Cell
 
 class Display:
+    CURSES_COLORS = [
+        None,
+        curses.COLOR_BLACK,
+        curses.COLOR_BLUE,
+        curses.COLOR_CYAN,
+        curses.COLOR_GREEN,
+        curses.COLOR_MAGENTA,
+        curses.COLOR_RED,
+        curses.COLOR_WHITE,
+        curses.COLOR_YELLOW,
+    ]
+    
     def __init__(self):
         self.ready = False
         
@@ -32,6 +44,14 @@ class Display:
     def filldata(self):
         self.data = [[Cell(' ') for x in range(self.width)] for y in range(self.height)]
     
+    def initColors(self):
+        curses.start_color()
+        n = 0
+        for color in self.CURSES_COLORS:
+            if color:
+                curses.init_pair(n, color, curses.COLOR_BLACK)
+            n += 1
+    
     def init(self):
         # TODO: move to special curses-wrapping class
         # cause it affects input as well
@@ -42,6 +62,8 @@ class Display:
         curses.cbreak()
         self.cScr.keypad(1)
         self.cScr.nodelay(1)
+        
+        self.initColors()
         
         # TODO: remove constants
         self.resize(80, 25)
@@ -64,7 +86,8 @@ class Display:
                         logging.debug(''.join([str(e) for e in line]))
                         for x in range(self.width):
                             try:
-                                self.cPad.addstr(y, x, line[x].c)
+                                a = line[x].co ^ line[x].a
+                                self.cPad.addstr(y, x, line[x].ch, a)
                             except curses.error:
                                 logging.debug('addstr failed ({0}, {1})'.format(x, y))
                     self.cPad.refresh(0, 0, 0, 0, self.height, self.width)

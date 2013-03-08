@@ -1,10 +1,11 @@
 class Cell:
-    def __init__(self, char = ' ', color = 0):
-        self.c = char
-        self.a = color
+    def __init__(self, char = ' ', color = 0, attr = 0):
+        self.ch = char
+        self.co = color
+        self.a = attr
     
     def __str__(self):
-        return self.c
+        return self.ch
     
     def __repr__(self):
         return str(self)
