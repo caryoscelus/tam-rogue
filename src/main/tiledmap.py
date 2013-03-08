@@ -95,6 +95,9 @@ class TiledMap:
     def raytrace(self, x0, y0, func, target=None, direct=None, sdir=None, applyToSelf=True):
         '''Apply func to raytraced coords'''
         
+        # TODO: remove overlaps
+        # in the worst case, just store array of traced tiles
+        
         try:
             self.getTile(x0, y0)
         except TiledMapSizeError:

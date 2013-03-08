@@ -6,6 +6,9 @@ import baseentity
 import tiledmap
 
 class Entity(baseentity.BaseEntity):
+    
+    SEE_EVERYTHING = False
+    
     def __init__(self, attrib = {}, alive = False, handler = None):
         self.attrib = attrib
         
@@ -191,6 +194,8 @@ class Entity(baseentity.BaseEntity):
     def mapVision(self):
         # TODO: move to modding
         # TODO: show known map
+        if self.SEE_EVERYTHING:
+            return self.onMap
         
         onMap = self.onMap
         visionMap = tiledmap.TiledMap(onMap.width, onMap.height)
