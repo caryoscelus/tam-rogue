@@ -52,7 +52,7 @@ def testClientServer(server, port):
     
     myServer.start()
     myClient = Client()
-    myClient.connectClient((server, port)) #'localhost', 6985))
+    myClient.connectClient((server, port))
     myClient.connectServer(myServer)
     myClient.loadMod('keymap.xml')
     myClient.loadMod('display-attr.xml')
@@ -77,7 +77,7 @@ if __name__ == '__main__':
         from sys import argv
         if len(argv) < 3:
             server = 'localhost'
-            port = 6985+2
+            port = 6985
         else:
             server = argv[1]
             port = int(argv[2])

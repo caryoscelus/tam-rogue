@@ -28,6 +28,7 @@ class BaseClient(Starting):
             logging.warning('not connected')
     
     def doAction(self, action, args):
+        '''Schedule specified action'''
         try:
             self.serverClient.request(action, args)
         except AttributeError:

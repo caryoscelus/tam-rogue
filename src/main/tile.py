@@ -18,6 +18,7 @@ class Tile(BaseEntity):
     
     # TODO: store x/y at tile?..
     def saveXml(self, x, y):
+        '''Return xml element representing this tile'''
         tileXml = ET.Element('tile', {'x':str(x), 'y':str(y)})
         for name in self.content:
             layer = self.content[name]
@@ -37,6 +38,7 @@ class Tile(BaseEntity):
         return tileXml
     
     def loadXml(self, xmlTile):
+        '''Load tile from xml'''
         if xmlTile.tag != 'tile':
             raise XmlLoadError(xmlTile)
         
@@ -75,15 +77,8 @@ class Tile(BaseEntity):
                 self.remove(anEntity, position)
         return None
     
-    # is it useful?..
-    def isValid(self, position):
-        try:
-            self.get(position)
-            return True
-        except PositionNameError:
-            return False
-    
     def notify(self, position, anEntity, notification):
+        '''Notify watchers'''
         for watcher in self.watchers or worldregistry.world.tileWatchers:
             try:
                 watchList = self.watchers[watcher]
@@ -93,6 +88,7 @@ class Tile(BaseEntity):
                 watcher.notify(self, position, notification, anEntity)
     
     def watchPosition(self, target, name):
+        '''Add watcher to this tile'''
         if target in self.watchers:
             self.watchers[target].update({name})
         else:

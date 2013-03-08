@@ -140,9 +140,6 @@ class TiledMap:
     def step(self):
         '''Do one step of map live'''
         if not self.exist:
-            # generate map
-            # TODO: send event of non-existant map
-            # or maybe move the whole generation thing to entity action?..
             self.notifyEmpty()
             return False
         if self.alive:
