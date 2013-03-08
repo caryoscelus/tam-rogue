@@ -208,7 +208,7 @@ class Entity(baseentity.BaseEntity):
                 try:
                     visionMap.getTile(x, y).put(entity.getPosition(), entity)
                 except baseentity.PositionTakenError:
-                    pass
+                    return False
             
             canSee = not ground.attr('opaque')
             return canSee
