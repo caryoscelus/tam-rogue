@@ -92,7 +92,7 @@ class TiledMap:
             raise TiledMapSizeError(self)
         return [[func(x, y) for x in range(self.width)] for y in range(self.height)]
     
-    def raytrace(self, x0, y0, func, target=None, direct=None, applyToSelf=True):
+    def raytrace(self, x0, y0, func, target=None, direct=None, sdir=None, applyToSelf=True):
         '''Apply func to raytraced coords'''
         
         try:
@@ -124,11 +124,19 @@ class TiledMap:
                         raise RuntimeError('(0, 0) direction')
                 
                 for d in directs:
+                    nsdir = sdir
                     dx, dy = d
                     dn = direct or (dx, dy)
-                    self.raytrace(x0+dx, y0+dy, func, direct=dn)
+                    if direct and direct != (dx, dy):
+                        if sdir and sdir != (dx, dy):
+                            continue
+                        nsdir = (dx, dy)
+                        if sdir:
+                            direct = sdir
+                    self.raytrace(x0+dx, y0+dy, func, direct=dn, sdir=nsdir)
         else:
             raise NotImplementedError('No support for targeted raytracing yet')
+        pass
     
     
     def getTile(self, x, y):
