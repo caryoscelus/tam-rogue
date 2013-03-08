@@ -2,6 +2,10 @@ from event import Event
 
 import logging
 
+def info(s):
+    logging.info(s)
+    logString(s)
+
 def logString(s):
     eventLog.append(s)
 

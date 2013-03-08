@@ -15,6 +15,8 @@ from baseentity import PositionTakenError, BaseEntityDeadError, PositionNameErro
 from tiledmap import TiledMapSizeError
 from direct import Direct, UnDirect
 
+from eventlogger import info
+
 def action(name, args):
     # TODO: proper action launching..
     try:
@@ -35,9 +37,3 @@ def getMap(mapId):
 def traceback():
     import traceback
     debug(traceback.format_exc())
-
-def info(s):
-    from eventlogger import logString
-    import logging
-    logging.info(s)
-    logString(s)
