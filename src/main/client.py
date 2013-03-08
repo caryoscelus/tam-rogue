@@ -109,8 +109,13 @@ class Client(BaseClient, Displaying, Inputting):
             self.putString(30, 2, 'inventory:')
             ln = 3
             for obj in inv:
-                self.putString(30, ln, str(obj))
-                ln += 1
+                try:
+                    for o in obj:
+                        self.putString(30, ln, str(o))
+                        ln += 1
+                except TypeError:
+                    self.putString(30, ln, str(obj))
+                    ln += 1
     
     def showAttr(self):
         st = '|'

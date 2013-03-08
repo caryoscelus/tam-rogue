@@ -26,6 +26,10 @@
             <arg name="subject" value="entity"/>
             <bind key="d"/>
         </action>
+        <action name="wield">
+            <arg name="subject" value="entity"/>
+            <bind key="w"/>
+        </action>
         <action name="pickup">
             <arg name="subject" value="entity"/>
             <bind key=","/>

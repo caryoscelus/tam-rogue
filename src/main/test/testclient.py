@@ -19,8 +19,8 @@ from worldregistry import *
 # TODO: remove from here; make proper loading/generation
 def generateWorld():
     human = Entity({'class':'human', 'hp':10, 'hungry':0, 'maxHungry':5})
-    human.order = ['weapon']
-    human.content = {'weapon':None}
+    human.order = ['weapon', 'inv']
+    human.content = {'weapon':None, 'inv':[]}
     dagger = Entity({'class':'dagger', 'hurt':2})
     human.put('weapon', dagger)
     human.alive = True
