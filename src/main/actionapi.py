@@ -13,6 +13,7 @@ from random import random
 from entity import EntityAttributeError
 from baseentity import PositionTakenError, BaseEntityDeadError, PositionNameError
 from tiledmap import TiledMapSizeError
+from direct import Direct, UnDirect
 
 def action(name, args):
     # TODO: proper action launching..

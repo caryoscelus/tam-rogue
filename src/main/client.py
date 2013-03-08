@@ -6,6 +6,7 @@ from displaying import Displaying
 from inputting import Inputting, UnknownKeyError
 from mapvisualizer import MapVisualizer
 from action import Action
+from direct import Direct
 import eventlogger
 import worldregistry
 import loader
@@ -57,7 +58,7 @@ class Client(BaseClient, Displaying, Inputting):
     # OUTPUT
     def redraw(self):
         # TODO:
-        # - gui
+        # - flexible gui
         # - forbid direct access to world
         # - draw vision, not actual map
         mapVision = self.entity.mapVision()
@@ -178,13 +179,7 @@ class Client(BaseClient, Displaying, Inputting):
                 ch = chr(opcode)
                 if ch in self.MOVEMENT:
                     direct = self.MOVEMENT[ch]
-                    # TODO: pass normal direction
-                    # currently passes integer
-                    x = direct[0]
-                    y = direct[1]
-                    # back formula: x, y = d//3-1, d%3-1
-                    d = (x+1)*3+(y+1)
-                    self.actionArgs[argName] = d
+                    self.actionArgs[argName] = Direct(*direct)
                     
                     if not self.tryLaunchAction():
                         self.processAction()
