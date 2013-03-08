@@ -29,18 +29,10 @@ class Server:
     def stop(self):
         self.quit = True
     
-    # called from client
     def connect(self, client):
+        '''Client wants to connect to self'''
         sc = ServerClient(self, client)
         self.clients.append(sc)
-        
-        # NOTE: this will always fail anyway
-        #try:
-            #sc.register()
-        #except Exception as err:
-            #logging.warning('error while registering client')
-            #logging.debug(traceback.format_exc())
-        
         return sc
     
     def disconnect(self, sc):

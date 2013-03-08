@@ -6,6 +6,8 @@ import logging
 
 class ServerClient(Sleeping, EntityController):
     def __init__(self, server, client):
+        super().__init__()
+        
         self.entity = None
         self.actions = []
         self.client = client
