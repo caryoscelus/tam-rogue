@@ -208,7 +208,7 @@ class Entity(baseentity.BaseEntity):
                 try:
                     visionMap.getTile(x, y).put(entity.getPosition(), entity)
                 except baseentity.PositionTakenError:
-                    logging.warning('raytraced one place twice')
+                    pass
             
             canSee = not ground.attr('opaque')
             return canSee
@@ -221,12 +221,14 @@ class Entity(baseentity.BaseEntity):
         return visionMap
     
     def placeOn(self, onMap, x, y, position):
+        '''Set this entity to think it's on certain position'''
         self.onMap = onMap
         self.x = x
         self.y = y
         self.position = position
     
     def removeFrom(self, onMap, x, y, position):
+        '''Remove from map'''
         if self.onMap != onMap:
             raise EntityPositionError(self, onMap)
         if self.x != x or self.y != y:
