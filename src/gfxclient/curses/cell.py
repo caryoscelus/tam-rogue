@@ -9,6 +9,8 @@ class Cell:
         self.a = self.convert(attr)
     
     def convert(self, s):
+        '''Convert attribute/color string to code'''
+        # TODO: implement multi-attribute
         if isinstance(s, str):
             try:
                 c = NAMED_COLORS[s]
