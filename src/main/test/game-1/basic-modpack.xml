@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod>
+    <!-- gfx -->
     <require file="character-mod.xml"/>
     
     <require file="layers.xml"/>
@@ -26,4 +27,7 @@
     
     <require file="map-generator.xml"/>
     <require file="mole-map-generator.xml"/>
+    
+    <!-- startup -->
+    <require file="startup.xml"/>
 </mod>

@@ -9,7 +9,7 @@ class Entity(baseentity.BaseEntity):
     
     SEE_EVERYTHING = False
     
-    def __init__(self, attrib = {}, alive = False, handler = None):
+    def __init__(self, attrib = {}, content = {}, order = [], alive = False, handler = None):
         self.attrib = attrib
         
         self.alive = alive
@@ -24,7 +24,7 @@ class Entity(baseentity.BaseEntity):
         self.watchers = {}
         self.deathWatchers = set()
         
-        super().__init__()
+        super().__init__(content, order)
     
     def __str__(self):
         # TODO: use plugin instead?..

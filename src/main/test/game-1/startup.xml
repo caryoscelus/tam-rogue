@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="startup">
+        <code>
+human = Entity({'class':'human', 'hp':10, 'hungry':0, 'maxHungry':5},
+               {'weapon':None, 'inv':[]},
+               ['weapon', 'inv'])
+
+dagger = Entity({'class':'dagger', 'hurt':2})
+human.put('weapon', dagger)
+human.alive = True
+
+map0 = getMap(0)
+map0.notifyEmpty()
+upstairs = map0.attr('stairs-down')
+map0.putOn(upstairs[0], upstairs[1], 'monster', human)
+
+_return = human
+        </code>
+    </action>
+</mod>

@@ -10,7 +10,7 @@ from logging import debug, warning, error
 # TODO: more random functions; control seeds
 from random import random
 
-from entity import EntityAttributeError
+from entity import Entity, EntityAttributeError
 from baseentity import PositionTakenError, BaseEntityDeadError, PositionNameError
 from tiledmap import TiledMapSizeError
 from direct import Direct, UnDirect
