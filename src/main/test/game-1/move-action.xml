@@ -14,32 +14,33 @@ tile = subject.getTile(dx, dy)
 if not tile.get('ground'):
     warning('entity tries to step on no ground')
     _return = False
-if not tile.get('ground').attr('standable'):
+elif not tile.get('ground').attr('standable'):
     warning('entity tries to step on non-standable')
     _return = False
-
-try:
-    subject.move(dx, dy)
-except PositionTakenError:
-    warning('trying to step on taken tile')
-    _return = False
 else:
-    _return = True
 
-# waste energy
-try:
-    subject.changeNumericAttr('hungry', 0.1)
-except:
-    warning('subject has no hunger')
+    try:
+        subject.move(dx, dy)
+    except PositionTakenError:
+        warning('trying to step on taken tile')
+        _return = False
+    else:
+        _return = True
 
-# process traps
-traps = tile.get('trap')
-if traps:
-    if not traps.iterable():
-        traps = [traps]
-    for trap in traps:
-        # TODO: random
-        action('apply', {'subject' : trap, 'target' : subject})
+    # waste energy
+    try:
+        subject.changeNumericAttr('hungry', 0.1)
+    except:
+        warning('subject has no hunger')
+
+    # process traps
+    traps = tile.get('trap')
+    if traps:
+        if not traps.iterable():
+            traps = [traps]
+        for trap in traps:
+            # TODO: random
+            action('apply', {'subject' : trap, 'target' : subject})
         </code>
     </action>
 </mod>
