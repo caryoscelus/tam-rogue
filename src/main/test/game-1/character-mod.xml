@@ -17,11 +17,23 @@
         <value in="1" out=">"/>
     </map>
     
+    <map source="class" target="color">
+        <value in="dwarf" out="red"/>
+        <value in="fungus" out="green"/>
+        <value in="wall" out="black"/>
+        <value in="stair" out="white"/>
+    </map>
+    <map source="class" target="visual-effect">
+        <value in="wall" out="bold"/>
+        <value in="stairs" out="bold"/>
+    </map>
+    
+    
     <map source="control" target="visual-effect">
         <value in="player" out="reverse"/>
     </map>
     
     <map source="control" target="color">
-        <value in="player" out="red"/>
+        <value in="player" out="white"/>
     </map>
 </mod>
