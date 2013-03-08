@@ -91,14 +91,12 @@ class TiledMap:
             raise TiledMapSizeError(self)
         return [[func(x, y) for x in range(self.width)] for y in range(self.height)]
     
-    def raytrace(self, x0, y0, func, target=None, direct=None, applyToSelf=True, rotate=False):
+    def raytrace(self, x0, y0, func, target=None, direct=None, applyToSelf=True):
         '''Apply func to raytraced coords'''
         try:
             self.getTile(x0, y0)
         except TiledMapSizeError:
             return False
-        
-        logging.debug('trace {0} to {1}'.format((x0, y0, rotate), direct))
         
         if not target:
             if not applyToSelf or func(x0, y0):
@@ -107,27 +105,26 @@ class TiledMap:
                     for dx in range(-1, 2):
                         for dy in range(-1, 2):
                             if dx or dy:
-                                directs.append((dx, dy, rotate))
+                                directs.append((dx, dy))
                 else:
                     dx, dy = direct
-                    directs.append((dx, dy, rotate))
+                    directs.append((dx, dy))
                     if dx and dy:               # corner
-                        if bool(dx+dy) ^ (rotate):
-                            directs.append((0, dy, not rotate))
-                        else:
-                            directs.append((dx, 0, not rotate))
+                        directs.append((0, dy))
+                        directs.append((dx, 0))
                     elif not dx:
-                        s = rotate and 1 or -1
-                        directs.append((s*dy, dy, not rotate))
+                        directs.append((dy, dy))
+                        directs.append((-dy, dy))
                     elif not dy:
-                        s = rotate and -1 or 1
-                        directs.append((dx, s*dx, not rotate))
+                        directs.append((dx, dx))
+                        directs.append((dx, -dx))
                     else:
                         raise RuntimeError('(0, 0) direction')
                 
                 for d in directs:
-                    dx, dy, r = d
-                    self.raytrace(x0+dx, y0+dy, func, direct=(dx, dy), rotate=r)
+                    dx, dy = d
+                    dn = direct or (dx, dy)
+                    self.raytrace(x0+dx, y0+dy, func, direct=dn)
         else:
             raise NotImplementedError('No support for targeted raytracing yet')
     
