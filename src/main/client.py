@@ -7,6 +7,7 @@ from inputting import Inputting, UnknownKeyError
 from mapvisualizer import MapVisualizer
 from action import Action
 from direct import Direct
+from baseentity import BaseEntityDeadError
 import eventlogger
 import worldregistry
 import loader
@@ -114,7 +115,11 @@ class Client(BaseClient, Displaying, Inputting):
     def showAttr(self):
         st = '|'
         for name in self.displayAttrs:
-            value = self.entity.attr(name)
+            try:
+                value = self.entity.attr(name)
+            except BaseEntityDeadError:
+                logging.warning('entity died')
+                return
             s = ' {0}: {1} |'.format(name, value)
             st += s
         self.putString(0, 5, st)
