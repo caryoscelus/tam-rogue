@@ -3,6 +3,7 @@ from entitycontroller import EntityController, EntityControllerMismatchError
 import worldregistry
 
 import logging
+import traceback
 
 class ServerClient(Sleeping, EntityController):
     def __init__(self, server, client):
@@ -39,28 +40,38 @@ class ServerClient(Sleeping, EntityController):
         self.server.stop()
     
     def live(self, entity):
-        if self.entity != entity:
-            raise EntityControllerMismatchError(self.entity, entity)
-        
-        if self.actions:
-            action, args = self.actions.pop(0)
-            try:
-                # in case action is action name
-                action = worldregistry.world.actions[action]
-            except KeyError:
-                pass
-            result = action.applyAction(args)
-            self.client.worldChanged()
-            if not result:
-                # TODO: do something with it
-                # maybe just loop over available actions?
-                logging.warning('action didn\'t finished successfully')
-            return result
-        else:
-            self.client.requestAction()
-            while not self.actions:
-                self.sleep()
-            return self.live(entity)
+        try:
+            if self.entity != entity:
+                raise EntityControllerMismatchError(self.entity, entity)
+            
+            if self.actions:
+                action, args = self.actions.pop(0)
+                try:
+                    # in case action is action name
+                    action = worldregistry.world.actions[action]
+                except KeyError:
+                    pass
+                
+                try:
+                    result = action.applyAction(args)
+                except AttributeError:
+                    logging.warning('action is probably not action at all')
+                    return False
+                
+                self.client.worldChanged()
+                if not result:
+                    # TODO: do something with it
+                    # maybe just loop over available actions?
+                    logging.warning('action didn\'t finished successfully')
+                return result
+            else:
+                self.client.requestAction()
+                while not self.actions:
+                    self.sleep()
+                return self.live(entity)
+        except Exception as err:
+            logging.warning('exception in ServerClient live')
+            logging.debug(traceback.format_exc())
     
     def __str__(self):
         return '<ServerClient>'
