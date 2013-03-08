@@ -12,9 +12,11 @@
 # check if he can land there
 tile = subject.getTile(dx, dy)
 if not tile.get('ground'):
-    raise RuntimeError('entity tries to step on no ground')
+    warning('entity tries to step on no ground')
+    _return = False
 if not tile.get('ground').attr('standable'):
-    raise RuntimeError('entity tries to step on non-standable')
+    warning('entity tries to step on non-standable')
+    _return = False
 
 try:
     subject.move(dx, dy)
