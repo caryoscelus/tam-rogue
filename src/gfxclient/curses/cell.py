@@ -1,3 +1,5 @@
+import logging
+
 from colors import NAMED_COLORS
 
 class Cell:
@@ -8,7 +10,11 @@ class Cell:
     
     def convert(self, s):
         if isinstance(s, str):
-            c = NAMED_COLORS[s]
+            try:
+                c = NAMED_COLORS[s]
+            except KeyError:
+                logging.warning('unknown color/attribute: {0}'.format(s))
+                return 0
             return c
         elif not s:
             return 0
