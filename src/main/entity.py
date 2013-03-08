@@ -39,17 +39,19 @@ class Entity(baseentity.BaseEntity):
         '''Set handler object which will be requested to action when it's entity's turn'''
         self.handler = handler
     
-    # static
     def fromXml(xmlEntity):
+        '''Create entity from xml'''
         self = Entity()
         self.loadXml(xmlEntity)
         return self
     
     def loadXml(self, xmlEntity):
+        '''Load xml into this entity'''
         # TODO: load children
         self.attrib = xmlEntity.attrib
     
     def saveXml(self):
+        '''Save entity to xml'''
         # TODO: save children!!
         return ET.Element('entity', self.attrib)
     

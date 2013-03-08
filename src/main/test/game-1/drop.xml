@@ -8,6 +8,8 @@ object = subject.get('weapon')
 debug('{0} dropping {1}'.format(subject.attr('class'), object.attr('class')))
 subject.remove(object, 'weapon')
 subject.getTile().put('objects', object)
+x, y = subject.getCoord()
+object.placeOn(subject.getMap(), x, y, 'objects')
 info('{0} dropped {1}'.format(subject.attr('class'), object.attr('class')))
 _return = True
         </code>

@@ -31,7 +31,7 @@ class Wrapper:
         'getMap', 'getPosition',
         'getCoord', 'getX', 'getY',
         '__getitem__', '__str__',
-        'removeFromMap', 'putOn',
+        'removeFromMap', 'putOn', 'placeOn',
         'alive',
         'clear', 'resize',
         'setExist', 'getContent',
