@@ -30,6 +30,7 @@ class Client(BaseClient, Displaying, Inputting):
         # UI
         self.showingLogs = True
         self.showingInv = False
+        self.displayAttrs = []
         
         self.cleanActionState()
         
@@ -80,6 +81,8 @@ class Client(BaseClient, Displaying, Inputting):
         elif self.inputState == 'list':
             self.putString(0, 0, 'list element?')
         
+        self.showAttr()
+        
         super().redraw()
     
     def showLogs(self):
@@ -106,6 +109,17 @@ class Client(BaseClient, Displaying, Inputting):
             for obj in inv:
                 self.putString(30, ln, str(obj))
                 ln += 1
+    
+    def showAttr(self):
+        st = '|'
+        for name in self.displayAttrs:
+            value = self.entity.attr(name)
+            s = ' {0}: {1} |'.format(name, value)
+            st += s
+        self.putString(0, 5, st)
+    
+    def addDisplayAttribute(self, name):
+        self.displayAttrs.append(name)
     
     # INPUT
     def bindKeys(self, keys, actionName, args):

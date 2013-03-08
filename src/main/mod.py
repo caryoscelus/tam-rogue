@@ -105,6 +105,15 @@ class Mod:
                     else:
                         logging.warning('unknown keymap mod xml node tagged "{0}"'.format(snode.tag))
             
+            elif node.tag == 'display':
+                client = world
+                for snode in node:
+                    if snode.tag == 'attr':
+                        name = snode.attrib['name']
+                        client.addDisplayAttribute(name)
+                    else:
+                        logging.warning('unknown display mod xml node tagged "{0}"'.format(snode.tag))
+            
             else:
                 logging.warning('unknown mod xml node tagged "{0}"'.format(node.tag))
     
