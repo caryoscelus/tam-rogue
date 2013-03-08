@@ -2,10 +2,11 @@ import threading
 import traceback
 import logging
 
+from sleeping import Sleeping
 from serverclient import ServerClient
 import worldregistry
 
-class Server:
+class Server(Sleeping):
     def __init__(self):
         self.clients = []
         self.thread = None
@@ -16,6 +17,7 @@ class Server:
         while not self.quit:
             try:
                 worldregistry.world.step()
+                self.sleep()
             except Exception as err:
                 logging.error('unhandled exception in world server thread:')
                 logging.error(str(err))
