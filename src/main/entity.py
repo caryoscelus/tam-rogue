@@ -163,7 +163,6 @@ class Entity(baseentity.BaseEntity):
     def getPosition(self):
         return self.position
     
-    # TODO: make possible to access this from api
     def getCoord(self):
         return self.getX(), self.getY()
     

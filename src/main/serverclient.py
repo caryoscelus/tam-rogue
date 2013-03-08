@@ -14,16 +14,16 @@ class ServerClient(Sleeping, EntityController):
         self.server = server
     
     def register(self):
-        # set handler for entity
+        '''Set self as handler for entity'''
         self.entity.setHandler(self)
         self.client.entity = self.entity
     
-    # to be called on client side
     def request(self, action, args):
+        '''Client wants to perfom action'''
         self.actions.append((action, args))
     
-    # to be called on client side
     def requestEntity(self, entity = None):
+        '''Client requests entity to control'''
         if entity:
             # TODO: checking
             self.entity = entity
@@ -31,8 +31,8 @@ class ServerClient(Sleeping, EntityController):
         else:
             raise NotImplementedError('requesting entity to be choosed from server is not supported yet')
     
-    # to be called on client side
     def stop(self):
+        '''Client wishes to stop server'''
         # TODO: permissions!
         self.server.stop()
     
@@ -61,4 +61,4 @@ class ServerClient(Sleeping, EntityController):
             return self.live(entity)
     
     def __str__(self):
-        return ''
+        return '<ServerClient>'
