@@ -2,22 +2,17 @@
 <mod>
     <action name="wield">
         <object name="subject"/>
+        <object name="weapon"/>
         
         <code>
-tile = subject.getTile()
-stack = tile.get('objects')
-try:
-    object = stack[-1]
-    info('{0} is trying to pickup {1}'.format(subject.attr('class'), object.attr('class')))
-    oldWeapon = subject.get('weapon')
+info('wielding..')
+oldWeapon = subject.get('weapon')
+if oldWeapon:
     subject.remove(oldWeapon, 'weapon')
-    subject.put('inv', oldWeapon)
-    subject.put('weapon', object)
-    tile.remove(object, 'objects')
-    _return = True
-except IndexError:
-    info('no object to pickup here!')
-    _return = False
+if weapon:
+    subject.put('weapon', weapon)
+info('{0} wielded {1}'.format(subject, weapon))
+_return = True
         </code>
     </action>
 </mod>
