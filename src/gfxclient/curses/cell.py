@@ -1,6 +1,6 @@
 import logging
 
-from colors import NAMED_COLORS
+from colors import NAMED_COLORS, ATTRIBUTES
 
 class Cell:
     def __init__(self, char = ' ', color = 0, attr = 0):
@@ -13,8 +13,11 @@ class Cell:
             try:
                 c = NAMED_COLORS[s]
             except KeyError:
-                logging.warning('unknown color/attribute: {0}'.format(s))
-                return 0
+                try:
+                    c = ATTRIBUTES[s]
+                except KeyError:
+                    logging.warning('unknown color/attribute: {0}'.format(s))
+                    return 0
             return c
         elif not s:
             return 0

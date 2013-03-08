@@ -16,3 +16,14 @@ NAMED_COLORS = {
     COLORS[i][0] : i
         for i in range(len(COLORS))
 }
+
+ATTRIBUTES = {
+    #'' : curses.A_ALTCHARSET,
+    'blink' : curses.A_BLINK,
+    'bold' : curses.A_BOLD,
+    'dim' : curses.A_DIM,
+    'normal' : curses.A_NORMAL,
+    'reverse' : curses.A_REVERSE,
+    #'' : curses.A_STANDOUT,
+    'underline' : curses.A_UNDERLINE,
+}
