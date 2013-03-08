@@ -16,4 +16,12 @@
         <value in="-1" out="&lt;"/>
         <value in="1" out=">"/>
     </map>
+    
+    <map source="control" target="visual-effect">
+        <value in="player" out="reverse"/>
+    </map>
+    
+    <map source="control" target="color">
+        <value in="player" out="red"/>
+    </map>
 </mod>

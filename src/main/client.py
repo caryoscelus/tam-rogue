@@ -56,6 +56,11 @@ class Client(BaseClient, Displaying, Inputting):
         super().worldChanged()
         self.updateDisplay = True
     
+    def askForEntity(self, entity = None):
+        super().askForEntity(entity)
+        if entity:
+            entity.setAttr('control', 'player')
+    
     # OUTPUT
     def redraw(self):
         # TODO:
