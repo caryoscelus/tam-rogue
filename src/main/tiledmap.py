@@ -26,6 +26,9 @@ class TiledMap:
         '''Compatibility with entity.Entity'''
         pass
     
+    def setAlive(self, val=True):
+        self.alive = val
+    
     def attr(self, name):
         # TODO
         return self.attrib[name]

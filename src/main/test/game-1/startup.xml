@@ -12,6 +12,7 @@ human.alive = True
 
 map0 = getMap(0)
 map0.notifyEmpty()
+map0.setAlive()
 upstairs = map0.attr('stairs-down')
 map0.putOn(upstairs[0], upstairs[1], 'monster', human)
 
