@@ -14,6 +14,7 @@ from entity import Entity, EntityAttributeError
 from baseentity import PositionTakenError, BaseEntityDeadError, PositionNameError
 from tiledmap import TiledMapSizeError
 from direct import Direct, UnDirect
+from botcontroller import BotController
 
 from eventlogger import info
 

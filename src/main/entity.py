@@ -74,6 +74,7 @@ class Entity(baseentity.BaseEntity):
                 logging.debug(traceback.format_exc())
             except AttributeError:
                 logging.warning('no handler')
+                logging.debug(traceback.format_exc())
             return True
         
         return False

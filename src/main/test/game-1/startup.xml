@@ -16,6 +16,10 @@ map0.setAlive()
 upstairs = map0.attr('stairs-down')
 map0.putOn(upstairs[0], upstairs[1], 'monster', human)
 
+dwarf = Entity({'class':'dwarf', 'hp':6}, alive=True, handler=BotController())
+downstairs = map0.attr('stairs-up')
+map0.putOn(downstairs[0], downstairs[1], 'monster', dwarf)
+
 _return = human
         </code>
     </action>
