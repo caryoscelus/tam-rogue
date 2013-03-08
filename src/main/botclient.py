@@ -25,8 +25,7 @@ class BotClient(BaseClient):
         return False
     
     def wait(self):
-        # TODO: wait
-        raise RuntimeError('bot can\'t wait!')
+        self.doAction('wait', {'subject':self.entity})
     
     def attack(self):
         for x in range(-1, 1):
