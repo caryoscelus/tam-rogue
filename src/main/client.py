@@ -78,15 +78,16 @@ class Client(BaseClient, Displaying, Inputting):
         if self.showingLogs:
             self.showLogs()
         
-        if self.showingInv:
-            self.showInv()
-        
         if self.inputState == 'normal':
             pass
         elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext] == 'direction':
-            self.putString(0, 0, 'direction?')
-        elif self.inputState == 'list':
-            self.putString(0, 0, 'list element?')
+            self.putString(0, 0, 'direction?  ')
+        elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext] == 'inventory':
+            self.showingLogs = True
+            self.putString(0, 0, 'list element?  ')
+        
+        if self.showingInv:
+            self.showInv()
         
         self.showAttr()
         
@@ -200,6 +201,22 @@ class Client(BaseClient, Displaying, Inputting):
                         self.processAction()
                 else:
                     raise UnknownKeyError
+            elif argType == 'inventory':
+                # TODO: proper list support
+                ch = chr(opcode)
+                if ch == '-':
+                    arg = None
+                else:
+                    try:
+                        num = int(ch)
+                        arg = self.entity.get('inv')[num]
+                    except ValueError:
+                        raise UnknownKeyError
+                    except IndexError:
+                        raise UnknownKeyError
+                self.actionArgs[argName] = arg
+                if not self.tryLaunchAction():
+                    self.processAction()
             else:
                 raise RuntimeError('unknown input type requested: {0}'.format(argType))
     
@@ -214,18 +231,21 @@ class Client(BaseClient, Displaying, Inputting):
                 # TODO: other options should still be checked
                 logging.warning('unhandled key: ({0})'.format(opcode))
             else:
-                if ch == '!':
-                    self.showingLogs = not self.showingLogs
-                    self.updateDisplay = True
-                elif ch == 'i':
-                    self.showingInv = not self.showingInv
-                    self.updateDisplay = True
-                elif ch in self.MOVEMENT:
-                    self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
-                elif opcode == ord('r')-ord('a')+1:             # CTRL+R
-                    self.updateDisplay = True
-                elif ch == 'S':
-                    self.doQuit()
+                if self.inputState == 'normal':
+                    if ch == '!':
+                        self.showingLogs = not self.showingLogs
+                        self.updateDisplay = True
+                    elif ch == 'i':
+                        self.showingInv = not self.showingInv
+                        self.updateDisplay = True
+                    elif ch in self.MOVEMENT:
+                        self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
+                    elif opcode == ord('r')-ord('a')+1:             # CTRL+R
+                        self.updateDisplay = True
+                    elif ch == 'S':
+                        self.doQuit()
+                    else:
+                        logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
                 else:
                     logging.warning('unhandled key: {0} ({1})'.format(ch, opcode))
     
