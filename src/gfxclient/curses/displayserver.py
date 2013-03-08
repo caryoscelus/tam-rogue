@@ -40,8 +40,10 @@ class DisplayServer:
                             x = int(cell.attrib['x'])
                             y = int(cell.attrib['y'])
                             ch = cell.attrib['ch']
+                            co = cell.get('co')
+                            a = cell.get('a')
                             try:
-                                self.display.data[y][x].ch = ch
+                                self.display.data[y][x] = Cell(ch, co, a)
                             except IndexError:
                                 logging.warning('out of screen')
                         self.display.update = True

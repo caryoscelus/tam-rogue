@@ -4,20 +4,9 @@ import logging
 import traceback
 
 from cell import Cell
+from colors import COLORS
 
 class Display:
-    CURSES_COLORS = [
-        None,
-        curses.COLOR_BLACK,
-        curses.COLOR_BLUE,
-        curses.COLOR_CYAN,
-        curses.COLOR_GREEN,
-        curses.COLOR_MAGENTA,
-        curses.COLOR_RED,
-        curses.COLOR_WHITE,
-        curses.COLOR_YELLOW,
-    ]
-    
     def __init__(self):
         self.ready = False
         
@@ -47,9 +36,10 @@ class Display:
     def initColors(self):
         curses.start_color()
         n = 0
-        for color in self.CURSES_COLORS:
-            if color:
-                curses.init_pair(n, color, curses.COLOR_BLACK)
+        for color in COLORS:
+            c = color[1]
+            if c:
+                curses.init_pair(n, c, curses.COLOR_BLACK)
             n += 1
     
     def init(self):
