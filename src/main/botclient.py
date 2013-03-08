@@ -15,8 +15,8 @@ class BotClient(BaseClient):
         self.wait()
     
     def move(self):
-        for x in range(-1, 1):
-            for y in range(-1, 1):
+        for x in range(-1, 2):
+            for y in range(-1, 2):
                 if x or y:
                     t = self.entity.getTile(x, y)
                     if t.get('ground') and t.get('ground').attr('standable'):
@@ -28,8 +28,8 @@ class BotClient(BaseClient):
         self.doAction('wait', {'subject':self.entity})
     
     def attack(self):
-        for x in range(-1, 1):
-            for y in range(-1, 1):
+        for x in range(-1, 2):
+            for y in range(-1, 2):
                 if x or y:
                     t = self.entity.getTile(x, y)
                     monster = t.get('monster')
