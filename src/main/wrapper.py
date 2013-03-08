@@ -39,6 +39,8 @@ class Wrapper:
     ]
     ignoreTypes = [int, str, float, bool]
     
+    closure = None
+    
     def __new__(cls, src):
         # TODO: proper type handling
         if type(src) == Wrapper:
@@ -92,6 +94,15 @@ class Wrapper:
     
     def __getattr__(self, attrib):
         return self.closure(attrib)
+    
+    def __setattr__(self, attrib, value):
+        try:
+            self.__getattribute__(attrib)
+        except AttributeError as err:
+            logging.warning('wrapper doesn\'t support assigning'.format(attrib))
+            raise err
+        else:
+            super().__setattr__(attrib, value)
     
     def __getitem__(self, *args):
         return self.closure('__getitem__')(*args)
