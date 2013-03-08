@@ -9,6 +9,8 @@ from mod import Mod
 _modPath = ['']
 
 def modFromFile(modFile):
+    '''Load mod from file (respecting _modPath)'''
+    
     f = None
     modXml = None
     for path in _modPath:
@@ -31,4 +33,5 @@ def modFromFile(modFile):
     return None
 
 def addPath(path):
+    '''Add mod search path'''
     _modPath.append(path)

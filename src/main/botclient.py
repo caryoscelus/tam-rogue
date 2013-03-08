@@ -3,6 +3,8 @@ import logging
 from baseclient import BaseClient
 
 class BotClient(BaseClient):
+    '''Implementation of client to be used for bots'''
+    
     def requestAction(self):
         if self.attack():
             logging.info('bot attacks')
@@ -12,9 +14,11 @@ class BotClient(BaseClient):
             logging.info('bot moves!')
             return
         
+        logging.info('bot waits..')
         self.wait()
     
     def move(self):
+        '''Try moving'''
         for x in range(-1, 2):
             for y in range(-1, 2):
                 if x or y:
@@ -25,9 +29,11 @@ class BotClient(BaseClient):
         return False
     
     def wait(self):
+        '''Just wait'''
         self.doAction('wait', {'subject':self.entity})
     
     def attack(self):
+        '''Try to attack'''
         for x in range(-1, 2):
             for y in range(-1, 2):
                 if x or y:

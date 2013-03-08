@@ -3,6 +3,8 @@ import logging
 from starting import Starting
 
 class BaseClient(Starting):
+    '''Generic interface for entity-controlling clients'''
+    
     def __init__(self):
         super().__init__()
         

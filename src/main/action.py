@@ -16,6 +16,8 @@ import eventlogger
 # action system:
 #   * entity handler asks to 
 class Action:
+    '''Action is action'''
+    
     TYPES = {'object', 'integer', 'string', 'arguments'}
     
     def __init__(self):
@@ -55,14 +57,16 @@ class Action:
         
         self.func = self.compileCode(code, args)
     
-    # TODO
     def attr(self, name):
+        '''Return attribute'''
         try:
             return self.attrs[name]
         except KeyError:
             return None
     
     def compileCode(self, code, formalArgs):
+        '''Comile code (loaded from file) and make laucnhing function'''
+        
         import actionapi
         ns = {'__builtins__':actionapi}
         compiled = compile(code, '<action mod>', 'exec')
@@ -115,6 +119,7 @@ class Action:
         return launchCode
     
     def applyAction(self, args):
+        '''Apply this action'''
         eventlogger.processAction(self, args)
         return self.func(args)
 

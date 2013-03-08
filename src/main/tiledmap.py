@@ -77,6 +77,7 @@ class TiledMap:
         self.clear()
     
     def clear(self):
+        '''Fill map with empty tiles'''
         def t(x, y):
             return tile.Tile(worldregistry.world.layers, worldregistry.world.layerOrder)
         self.content = self.genMap(t)
@@ -93,6 +94,7 @@ class TiledMap:
     
     def raytrace(self, x0, y0, func, target=None, direct=None, applyToSelf=True):
         '''Apply func to raytraced coords'''
+        
         try:
             self.getTile(x0, y0)
         except TiledMapSizeError:
