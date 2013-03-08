@@ -76,7 +76,7 @@ class Display:
                         logging.debug(''.join([str(e) for e in line]))
                         for x in range(self.width):
                             try:
-                                a = line[x].co ^ line[x].a
+                                a = curses.color_pair(line[x].co) ^ line[x].a
                                 self.cPad.addstr(y, x, line[x].ch, a)
                             except curses.error:
                                 logging.debug('addstr failed ({0}, {1})'.format(x, y))
