@@ -28,6 +28,7 @@ class MapVisualizer:
                 return '?', 'red', 'reverse'
             except BaseEntityDeadError:
                 logging.debug('entity dead while trying to visualize')
+                return '?', 'red', 'reverse'
     
     def toGfx(self, tiledMap):
         # TODO: remove stupid screen format
