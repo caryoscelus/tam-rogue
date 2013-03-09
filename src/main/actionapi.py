@@ -8,7 +8,7 @@ from functools import reduce
 from logging import debug, warning, error
 
 # TODO: more random functions; control seeds
-from random import random
+from random import random, choice
 
 from entity import Entity, EntityAttributeError
 from baseentity import PositionTakenError, BaseEntityDeadError, PositionNameError
