@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod>
     <path add="game-1"/>
-    <require file="basic-modpack.xml"/>
+    <require file="main.xml"/>
 </mod>
