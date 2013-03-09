@@ -18,6 +18,8 @@ from botcontroller import BotController
 
 from eventlogger import info
 
+import math
+
 def action(name, args):
     # TODO: proper action launching..
     try:
