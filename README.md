@@ -31,7 +31,8 @@ from ncurses one to opengl
 LAUNCHING
 ---------
 Simply change directory to test/ and launch ./start.sh; this will start both
-"graphical" client and client/server (which is combined now).
+"graphical" client and client/server (which is combined now); or ./pretty.sh,
+which launches xterm with square fonts and ./start.sh in it.
 Alternativly, you could launch them by yourself: src/main/test/testclient.py
 and src/gfxclient/curses/main.py; they could not work if not launched from
 thier directory.
@@ -74,3 +75,10 @@ LICENSE
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+FONTS
+-----
+I've included some square fonts (from http://www.beej.us/c64bdf/) in test/fonts
+so you can use them out of the box. It's not necessary, but i strongly recommend
+using some sqare font. Probably some more pretty fonts will be included later.
+I know i should've just converted some png/bmp fonts, but i'm too lazy to do that.
