@@ -38,3 +38,9 @@ def getMap(mapId):
 def traceback():
     import traceback
     debug(traceback.format_exc())
+
+
+_GLOBALS = {}
+
+def export(name, var):
+    _GLOBALS[name] = var
