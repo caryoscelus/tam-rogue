@@ -49,7 +49,10 @@ class Client(BaseClient, Displaying, Inputting):
     
     def loadMod(self, modFile):
         mod = loader.modFromFile(modFile)
-        mod.applyMod(self)
+        try:
+            mod.applyMod(self)
+        except AttributeError:
+            logging.warning('client can\'t load mod')
     
     def worldChanged(self):
         '''Called from server when world is changed'''
