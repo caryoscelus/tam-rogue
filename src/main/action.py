@@ -88,7 +88,7 @@ class Action:
                     elif formalArgs[key] == 'string' and type(obj) == str:
                         return obj
                     else:
-                        raise TypeError('type mismatch')
+                        raise TypeError('type mismatch: requested {0}, found {1}'.format(formalArgs[key], type(obj)))
             
             def defaultValue(argType):
                 if argType == 'integer':
