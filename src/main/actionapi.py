@@ -35,6 +35,10 @@ def getMap(mapId):
     from wrapper import Wrapper
     return Wrapper(worldregistry.world.getMap(mapId))
 
+def getEmptyMapId(sstart = ''):
+    import worldregistry
+    return worldregistry.world.getEmptyMapId(sstart)
+
 def traceback():
     import traceback
     debug(traceback.format_exc())

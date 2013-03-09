@@ -1,5 +1,6 @@
 import logging
 import traceback
+import uuid
 
 from sleeping import Sleeping
 from entitywatcher import EntityWatcher
@@ -41,6 +42,19 @@ class World(Sleeping):
             newMap = TiledMap(attrib={'id':mapId})
             self.setMap(mapId, newMap)
             return newMap
+    
+    def getEmptyMapId(self, sstart = ''):
+        '''Get empty id defined by arguments; currently @sstart = begining of id'''
+        if isinstance(sstart, str):
+            uid = uuid.uuid4().hex
+            newId = '{0}{1}'.format(sstart, uid)
+            while self.maps.hasKey(newId):
+                logging.warning('uuid repeated!')
+                uid = uuid.uuid4().hex
+                newId = '{0}{1}'.format(sstart, uid)
+            return newId
+        else:
+            raise NotImplementedError('getEmptyId only implemented for strings now')
     
     def step(self):
         return next(self.life)
