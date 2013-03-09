@@ -45,7 +45,11 @@ class Mod:
             raise entity.EntityAttributeError(anEntity, source)
     
     def makeAttrFunc(self, target, source, values):
-        return lambda entity: self.attrFunc(entity, target, source, values)
+        if isinstance(values, dict):
+            return lambda entity: self.attrFunc(entity, target, source, values)
+        else:
+            # function
+            return lambda entity: values(entity.attr(source))
     
     def applyMod(self, world):
         for node in self.src:
@@ -64,7 +68,15 @@ class Mod:
                 tType = node.get('type')
                 values = {}
                 for record in node:
-                    values[convert(record.get('in'), sType)] = convert(record.get('out'), tType)
+                    if record.tag == 'value':
+                        values[convert(record.get('in'), sType)] = convert(record.get('out'), tType)
+                    elif record.tag == 'copy':
+                        expr = record.get('value')
+                        if not expr or expr == 'value':
+                            values = lambda value: value
+                            break
+                        else:
+                            raise NotImplementedError('copying complex values is not supported yet')
                 
                 if not (target in world.attrList):
                     world.attrList[target] = []
