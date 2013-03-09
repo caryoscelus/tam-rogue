@@ -48,7 +48,7 @@ class World(Sleeping):
         if isinstance(sstart, str):
             uid = uuid.uuid4().hex
             newId = '{0}{1}'.format(sstart, uid)
-            while self.maps.hasKey(newId):
+            while newId in self.maps:
                 logging.warning('uuid repeated!')
                 uid = uuid.uuid4().hex
                 newId = '{0}{1}'.format(sstart, uid)
