@@ -26,6 +26,7 @@ def modFromFile(modFile):
             newMod = Mod(ET.fromstring(modXml))
         except ET.ParseError:
             logging.warning('cannot parse mod file {0}'.format(modFile))
+            return None
         
         return newMod
     else:

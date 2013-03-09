@@ -21,7 +21,13 @@ def testClientServer(server, port):
     myServer = Server()
     
     worldregistry.loadMod('config.xml')
-    player = worldregistry.world.actions['startup'].applyAction({})
+    try:
+        startup = worldregistry.world.actions['startup']
+    except KeyError:
+        logging.error('No startup action found; check your setup')
+        return None
+    
+    player = startup.applyAction({})
     
     myServer.start()
     myClient = Client()
