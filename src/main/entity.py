@@ -216,7 +216,7 @@ class Entity(baseentity.BaseEntity):
                 except baseentity.PositionTakenError:
                     return False
             
-            canSee = not ground.attr('opaque')
+            canSee = ground and not ground.attr('opaque')
             return canSee
         
         def getTileVisionF(onMap, visionMap):
