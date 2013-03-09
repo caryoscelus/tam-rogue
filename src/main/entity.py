@@ -7,7 +7,7 @@ import tiledmap
 
 class Entity(baseentity.BaseEntity):
     
-    SEE_EVERYTHING = False
+    SEE_EVERYTHING = True
     
     def __init__(self, attrib = {}, content = {}, order = [], alive = False, handler = None):
         self.attrib = attrib
@@ -216,7 +216,7 @@ class Entity(baseentity.BaseEntity):
                 except baseentity.PositionTakenError:
                     return False
             
-            canSee = ground and not ground.attr('opaque')
+            canSee = (not ground) or (not ground.attr('opaque'))
             return canSee
         
         def getTileVisionF(onMap, visionMap):
