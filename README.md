@@ -37,9 +37,16 @@ Alternativly, you could launch them by yourself: src/main/test/testclient.py
 and src/gfxclient/curses/main.py; they could not work if not launched from
 thier directory.
 
+GAMES
+-----
+To launch game, you need to edit config.xml and replace line <path add=".."/>
+with <path add="path-to-game-directory"/>
+
+* https://github.com/caryoscelus/funedaphi - my 7drl 2013 project (not finished yet)
+
 PLAYING
 -------
-Currenly supported actions:
+Currenly supported actions in test game bundled with tam-rogoue:
 
     KEY             ACTION
     <direction>     moving
