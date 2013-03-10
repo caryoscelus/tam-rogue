@@ -108,22 +108,18 @@ class Client(BaseClient, Displaying, Inputting):
                 y += 1
     
     def showInv(self):
-        cnt = self.entity.content
-        inv = [v for k, v in cnt.items() if v != None]
+        inv = self.entity.get('inv')
         if not inv:
             # TODO: no constants!
-            self.putString(30, 2, 'inventory is empty')
+            self.putString(30, 0, 'inventory is empty')
         else:
-            self.putString(30, 2, 'inventory:')
-            ln = 3
-            for obj in inv:
-                try:
-                    for o in obj:
-                        self.putString(30, ln, str(o))
-                        ln += 1
-                except TypeError:
-                    self.putString(30, ln, str(obj))
-                    ln += 1
+            self.putString(30, 0, 'inventory:')
+            self.showList(inv)
+    
+    def showList(self, entityList):
+        ln = 1
+        for i in range(len(entityList)):
+            self.putString(30, ln+i, '{0}: {1}'.format(i, entityList[i]))
     
     def showAttr(self):
         st = '|'
