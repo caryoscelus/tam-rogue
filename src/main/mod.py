@@ -7,6 +7,7 @@ from action import Action
 import worldregistry
 import baseentity
 import loader
+from direct import UnDirect
 
 # TODO: use this more generally
 def convert(value, tp):
@@ -59,7 +60,7 @@ class Mod:
             
             elif node.tag == 'require':
                 fname = node.attrib['file']
-                worldregistry.loadMod(fname)
+                worldregistry.loadMod(fname, world)
             
             elif node.tag == 'map':
                 source = node.attrib['source']
@@ -107,13 +108,25 @@ class Mod:
                     if snode.tag == 'action':
                         actionName = snode.attrib['name']
                         args = {
-                            e.attrib['name']:e.attrib['value'] \
+                            e.attrib['name'] : e.attrib['value'] \
                                 for e in snode if e.tag == 'arg'
                         }
                         bindings = [
                             e.attrib['key'] for e in snode if e.tag == 'bind'
                         ]
                         client.bindKeys(bindings, actionName, args)
+                    elif snode.tag == 'movement':
+                        try:
+                            movement = {
+                                snode[i].attrib['key'] : UnDirect(i) \
+                                    for i in range(9)
+                            }
+                        except IndexError:
+                            logging.warning('not enough movement keys specified')
+                        else:
+                            logging.debug(client)
+                            logging.debug(movement)
+                            client.movementKeys = movement
                     else:
                         logging.warning('unknown keymap mod xml node tagged "{0}"'.format(snode.tag))
             

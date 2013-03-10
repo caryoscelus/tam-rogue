@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <keymap>
+        <!-- standard hjkl -->
+        <!-- NOTE: order is important! -->
+        <!-- tags are just comments -->
+        <movement>
+            <left-up key="y"/>
+            <left key="h"/>
+            <left-down key="b"/>
+            <up key="k"/>
+            <here key="."/>
+            <down key="j"/>
+            <right-up key="u"/>
+            <right key="l"/>
+            <right-down key="n"/>
+        </movement>
+        
+        <!-- for use with numpad; don't use this -->
+        <!-- NOTE: order is important! -->
+        <!-- tags are just comments -->
+        <!--<movement>
+            <left-up key="7"/>
+            <left key="4"/>
+            <left-down key="1"/>
+            <up key="8"/>
+            <here key="5"/>
+            <down key="2"/>
+            <right-up key="9"/>
+            <right key="6"/>
+            <right-down key="3"/>
+        </movement>-->
+    </keymap>
+</mod>

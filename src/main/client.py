@@ -13,17 +13,6 @@ import worldregistry
 import loader
 
 class Client(BaseClient, Displaying, Inputting):
-    MOVEMENT = {
-        'h' : (-1, 0),
-        'j' : (0, 1),
-        'k' : (0, -1),
-        'l' : (1, 0),
-        'y' : (-1, -1),
-        'u' : (1, -1),
-        'b' : (-1, 1),
-        'n' : (1, 1),
-    }
-    
     def __init__(self):
         super().__init__()
         
@@ -37,6 +26,16 @@ class Client(BaseClient, Displaying, Inputting):
         self.cleanActionState()
         
         # keymaps
+        self.movementKeys = {
+            'h' : (-1, 0),
+            'j' : (0, 1),
+            'k' : (0, -1),
+            'l' : (1, 0),
+            'y' : (-1, -1),
+            'u' : (1, -1),
+            'b' : (-1, 1),
+            'n' : (1, 1),
+            }
         self.bindings = {}
     
     def cleanActionState(self):
@@ -196,8 +195,8 @@ class Client(BaseClient, Displaying, Inputting):
             argType = self.actionArgs[argName]
             if argType == 'direction':
                 ch = chr(opcode)
-                if ch in self.MOVEMENT:
-                    direct = self.MOVEMENT[ch]
+                if ch in self.movementKeys:
+                    direct = self.movementKeys[ch]
                     self.actionArgs[argName] = Direct(*direct)
                     
                     if not self.tryLaunchAction():
@@ -241,8 +240,8 @@ class Client(BaseClient, Displaying, Inputting):
                     elif ch == 'i':
                         self.showingInv = not self.showingInv
                         self.updateDisplay = True
-                    elif ch in self.MOVEMENT:
-                        self.doAction('move', {'subject':self.entity, 'dx':self.MOVEMENT[ch][0], 'dy':self.MOVEMENT[ch][1]})
+                    elif ch in self.movementKeys:
+                        self.doAction('move', {'subject':self.entity, 'dx':self.movementKeys[ch][0], 'dy':self.movementKeys[ch][1]})
                     elif opcode == ord('r')-ord('a')+1:             # CTRL+R
                         self.updateDisplay = True
                     elif ch == 'S':
