@@ -99,19 +99,25 @@ class TiledMap:
         '''Apply func to floodfill area'''
         if not worked:
             worked = self.genMap(lambda x, y: False)
-        try:
-            worked[y0][x0]
-        except IndexError:
-            return worked
         
-        if not worked[y0][x0]:
-            worked[y0][x0] = True
-            if func(x0, y0):
-                # TODO: optimize
-                for dx in range(-1, 2):
-                    for dy in range(-1, 2):
-                        if dx or dy:
-                            worked = self.floodfill(x0+dx, y0+dy, func, worked)
+        todo = [(x0, y0)]
+        while todo:
+            x, y = todo.pop(0)
+            if x < 0 or y < 0:
+                continue
+            try:
+                worked[y][x]
+            except IndexError:
+                continue
+            
+            if not worked[y][x]:
+                worked[y][x] = True
+                if func(x, y):
+                    # TODO: optimize
+                    for dx in range(-1, 2):
+                        for dy in range(-1, 2):
+                            if dx or dy:
+                                todo.append((x+dx, y+dy))
         return worked
     
     def raytrace(self, x0, y0, func, target=None, direct=None, sdir=None, applyToSelf=True):
