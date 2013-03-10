@@ -1,5 +1,6 @@
 import logging
 import traceback
+import numbers
 
 from miscerrors import XmlLoadError
 from wrapper import Wrapper
@@ -18,7 +19,7 @@ import eventlogger
 class Action:
     '''Action is action'''
     
-    TYPES = {'object', 'integer', 'string', 'arguments'}
+    TYPES = {'object', 'integer', 'number', 'string', 'arguments'}
     
     def __init__(self):
         self.name = None
@@ -85,13 +86,15 @@ class Action:
                         return Wrapper(obj)
                     elif formalArgs[key] == 'integer' and type(obj) == int:
                         return obj
+                    elif formalArgs[key] == 'number' and isinstance(obj, numbers.Number):
+                        return obj
                     elif formalArgs[key] == 'string' and type(obj) == str:
                         return obj
                     else:
                         raise TypeError('type mismatch: requested {0}, found {1}'.format(formalArgs[key], type(obj)))
             
             def defaultValue(argType):
-                if argType == 'integer':
+                if argType == 'integer' or argType == 'number':
                     return 0
                 elif argType == 'string':
                     return ''
