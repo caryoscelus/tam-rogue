@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mod>
+    <require file="movement.xml"/>
+    
     <keymap>
         <action name="suicide">
             <arg name="subject" value="entity"/>
