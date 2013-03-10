@@ -35,7 +35,8 @@ class Wrapper:
         'alive',
         'clear', 'resize',
         'setExist', 'getContent',
-        'notifyEmpty', 'setAlive'
+        'notifyEmpty', 'setAlive',
+        'raytrace', 'floodfill'
     ]
     ignoreTypes = [int, str, float, bool]
     
