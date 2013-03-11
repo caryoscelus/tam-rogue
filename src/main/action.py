@@ -3,7 +3,7 @@ import traceback
 import numbers
 
 from miscerrors import XmlLoadError
-from wrapper import Wrapper
+from wrapper import Wrapper, orig
 from entitywatcher import EntityWatcher
 from tilewatcher import TileWatcher
 import worldregistry
@@ -75,7 +75,7 @@ class Action:
         def launchCode(args):
             '''launch action code, return True if successful'''
             # TODO: make integer->int, string->str conversion more proper
-            def wrapper(args, key):
+            def wrapperF(args, key):
                 try:
                     obj = args[key]
                 except KeyError:
@@ -105,7 +105,7 @@ class Action:
             
             wrappers = {}
             wrappers.update({
-                key : (defaultValue(formalArgs[key]) or wrapper(args, key)) \
+                key : (defaultValue(formalArgs[key]) or wrapperF(args, key)) \
                     for key in formalArgs
             })
             wrappers.update({
@@ -113,7 +113,7 @@ class Action:
             })
             try:
                 exec(compiled, ns, wrappers)
-                return wrappers['_return']
+                return orig(wrappers['_return'])
             except:
                 logging.error('action launching failed')
                 logging.debug(traceback.format_exc())

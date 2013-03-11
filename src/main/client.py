@@ -11,6 +11,7 @@ from baseentity import BaseEntityDeadError
 import eventlogger
 import worldregistry
 import loader
+import actionapi
 
 class Client(BaseClient, Displaying, Inputting):
     def __init__(self):
@@ -170,6 +171,20 @@ class Client(BaseClient, Displaying, Inputting):
                 self.updateDisplay = True
                 break
     
+    def processListArgument(self, elist, opcode):
+        ch = chr(opcode)
+        if ch == '-':
+            arg = None
+        else:
+            try:
+                num = int(ch)
+                arg = elist[num]
+            except ValueError:
+                raise UnknownKeyError
+            except IndexError:
+                raise UnknownKeyError
+        return arg
+    
     def processKeyBindings(self, opcode):
         '''Process pressed key according to key bindings'''
         if self.inputState == 'normal':
@@ -194,32 +209,20 @@ class Client(BaseClient, Displaying, Inputting):
                 ch = chr(opcode)
                 if ch in self.movementKeys:
                     direct = self.movementKeys[ch]
-                    self.actionArgs[argName] = Direct(*direct)
-                    
-                    if not self.tryLaunchAction():
-                        self.processAction()
+                    result = Direct(*direct)
                 else:
                     raise UnknownKeyError
             elif argType == 'inventory':
-                # TODO: proper list support
-                ch = chr(opcode)
-                if ch == '-':
-                    arg = None
-                else:
-                    try:
-                        num = int(ch)
-                        arg = self.entity.get('inv')[num]
-                    except ValueError:
-                        raise UnknownKeyError
-                    except IndexError:
-                        raise UnknownKeyError
-                self.actionArgs[argName] = arg
-                if not self.tryLaunchAction():
-                    self.processAction()
+                result = self.processListArgument(self.entity.get('inv'), opcode)
             elif argType == 'list':
-                pass
+                elist = actionapi.action(arg[1], {'subject':self.entity})
+                result = self.processListArgument(elist, opcode)
             else:
                 raise RuntimeError('unknown input type requested: {0}'.format(argType))
+            
+            self.actionArgs[argName] = result
+            if not self.tryLaunchAction():
+                self.processAction()
     
     def processKey(self, opcode):
         # TODO: port everything to moddable bindings
