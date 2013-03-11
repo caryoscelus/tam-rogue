@@ -17,12 +17,17 @@ class Server(Sleeping):
         while not self.quit:
             try:
                 worldregistry.world.step()
-                self.sleep()
+                self.worldChanged()
             except Exception as err:
                 logging.error('unhandled exception in world server thread:')
                 logging.error(str(err))
                 logging.debug(traceback.format_exc())
         logging.info('server main() quit')
+    
+    def worldChanged(self):
+        '''Inform clients about world change'''
+        for client in self.clients:
+            client.worldChanged()
     
     def start(self):
         self.thread = threading.Thread(None, self.main, 'world-server', ())

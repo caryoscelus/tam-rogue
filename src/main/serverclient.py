@@ -39,6 +39,9 @@ class ServerClient(Sleeping, EntityController):
         # TODO: permissions!
         self.server.stop()
     
+    def worldChanged(self):
+        self.client.worldChanged()
+    
     def live(self, entity):
         try:
             if self.entity != entity:
