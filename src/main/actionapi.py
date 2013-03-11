@@ -3,7 +3,7 @@
 from builtins import Exception, TypeError, RuntimeError, IndexError, KeyError, AttributeError, \
                      int, float, bool, str, dict, set, list, tuple, iter, range, \
                      max, min, \
-                     __build_class__, super
+                     __build_class__, super, type
 
 from functools import reduce
 
