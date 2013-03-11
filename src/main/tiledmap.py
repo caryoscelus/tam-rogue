@@ -171,15 +171,20 @@ class TiledMap:
     
     
     def getTile(self, x, y):
+        '''Get tile from position; raise TiledMapSizeError if not on map'''
+        if x < 0 or y < 0:
+            raise TiledMapSizeError(self)
         try:
             return self.content[y][x]
         except IndexError:
             raise TiledMapSizeError(self)
     
     def getContent(self, x, y, position):
+        '''Get content from (x,y)->position'''
         return self.getTile(x, y).get(position)
     
     def putOn(self, x, y, position, anEntity, queueChange = True):
+        '''Put anEntity on specified position, including setting this position for entity'''
         if queueChange and anEntity.alive:
             self.queue.push(anEntity)
         
@@ -188,6 +193,7 @@ class TiledMap:
         aTile.put(position, anEntity)
     
     def removeFromMap(self, anEntity, queueChange = True):
+        '''Remove entity from map if it's on it'''
         if queueChange and anEntity.alive:
             self.queue.remove(anEntity)
         
