@@ -123,6 +123,9 @@ class TiledMap:
     def raytrace(self, x0, y0, func, target=None, direct=None, sdir=None, applyToSelf=True, worked=None):
         '''Apply func to raytraced coords'''
         
+        # TODO: optimize, it's very slow now
+        # probably get rid of recursion
+        
         if not worked:
             worked = self.genMap(lambda x, y: False)
         

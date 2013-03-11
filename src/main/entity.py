@@ -134,7 +134,10 @@ class Entity(baseentity.BaseEntity):
         '''Add delta to some attribute; use this instead of direct attribute set if possible'''
         self.check()
         
-        value = float(self.attr(name))
+        try:
+            value = float(self.attr(name))
+        except TypeError:
+            value = 0
         value += delta
         
         self.attrib[name] = value

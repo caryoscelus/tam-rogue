@@ -32,7 +32,7 @@ class Wrapper:
         'getCoord', 'getX', 'getY',
         '__getitem__', '__str__', '__len__',
         'removeFromMap', 'putOn', 'placeOn',
-        'alive',
+        'alive', 'check',
         'clear', 'resize',
         'setExist', 'getContent',
         'notifyEmpty', 'setAlive',
