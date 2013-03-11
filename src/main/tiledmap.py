@@ -124,7 +124,6 @@ class TiledMap:
         '''Apply func to raytraced coords'''
         
         # TODO: optimize, it's very slow now
-        # probably get rid of recursion
         
         if not worked:
             worked = self.genMap(lambda x, y: False)
@@ -137,52 +136,41 @@ class TiledMap:
         if worked[y0][x0]:
             return worked
         
-        todo = [(x0, y0, direct, sdir)]
+        worked[y0][x0] = True
         
-        while todo:
-            x, y, direct, sdir = todo.pop(0)
-            try:
-                self.getTile(x, y)
-            except TiledMapSizeError:
-                continue
-            
-            if worked[y][x]:
-                continue
-            
-            worked[y][x] = True
-            if not applyToSelf or func(x, y):
-                directs = []
-                if not direct:
-                    for dx in range(-1, 2):
-                        for dy in range(-1, 2):
-                            if dx or dy:
-                                directs.append((dx, dy))
+        if not applyToSelf or func(x0, y0):
+            directs = []
+            if not direct:
+                for dx in range(-1, 2):
+                    for dy in range(-1, 2):
+                        if dx or dy:
+                            directs.append((dx, dy))
+            else:
+                dx, dy = direct
+                directs.append((dx, dy))
+                if dx and dy:               # corner
+                    directs.append((0, dy))
+                    directs.append((dx, 0))
+                elif not dx:
+                    directs.append((dy, dy))
+                    directs.append((-dy, dy))
+                elif not dy:
+                    directs.append((dx, dx))
+                    directs.append((dx, -dx))
                 else:
-                    dx, dy = direct
-                    directs.append((dx, dy))
-                    if dx and dy:               # corner
-                        directs.append((0, dy))
-                        directs.append((dx, 0))
-                    elif not dx:
-                        directs.append((dy, dy))
-                        directs.append((-dy, dy))
-                    elif not dy:
-                        directs.append((dx, dx))
-                        directs.append((dx, -dx))
-                    else:
-                        raise RuntimeError('(0, 0) direction')
-                
-                for d in directs:
-                    nsdir = sdir
-                    dx, dy = d
-                    dn = direct or (dx, dy)
-                    if direct and direct != (dx, dy):
-                        if sdir and sdir != (dx, dy):
-                            continue
-                        nsdir = (dx, dy)
-                        if sdir:
-                            direct = sdir
-                    todo.append((x+dx, y+dy, direct, sdir))
+                    raise RuntimeError('(0, 0) direction')
+            
+            for d in directs:
+                nsdir = sdir
+                dx, dy = d
+                dn = direct or (dx, dy)
+                if direct and direct != (dx, dy):
+                    if sdir and sdir != (dx, dy):
+                        continue
+                    nsdir = (dx, dy)
+                    if sdir:
+                        direct = sdir
+                worked = self.raytrace(x0+dx, y0+dy, func, direct=dn, sdir=nsdir, worked=worked)
         return worked
     
     
