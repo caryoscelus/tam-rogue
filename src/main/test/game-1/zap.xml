@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mod>
+    <action name="zap-list">
+        <object name="subject"/>
+        <code>
+_return = range(len(subject.attr('spells')))
+        </code>
+    </action>
+    
+    <action name="zap">
+        <object name="subject"/>
+        <integer name="spellNumber"/>
+        
+        <code>
+def zap(subject, spellNumber):
+    name = subject.attr('class')
+    spell = subject.attr('spells')[spellNumber]
+    info('{0} zapped {1}'.format(name, spell))
+
+_return = zap(subject, spellNumber)
+        </code>
+    </action>
+</mod>

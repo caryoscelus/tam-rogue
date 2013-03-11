@@ -41,5 +41,10 @@
             <arg name="subject" value="entity"/>
             <bind key="."/>
         </action>
+        <action name="zap">
+            <arg name="subject" value="entity"/>
+            <arg name="spellNumber" value="list" action="zap-list"/>
+            <bind key="z"/>
+        </action>
     </keymap>
 </mod>
