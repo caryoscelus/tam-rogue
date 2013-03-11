@@ -22,6 +22,10 @@ from eventlogger import info
 
 import math
 
+def len(self):
+    '''Standard len implementation makes much problems when used with wrappers'''
+    return self.__len__()
+
 def action(name, args):
     # TODO: proper action launching..
     try:
