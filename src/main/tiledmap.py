@@ -120,7 +120,7 @@ class TiledMap:
                                 todo.append((x+dx, y+dy))
         return worked
     
-    def raytrace(self, x0, y0, func, target=None, direct=None, sdir=None, applyToSelf=True, worked=None):
+    def raytrace(self, x0, y0, func, direct=None, sdir=None, applyToSelf=True, worked=None):
         '''Apply func to raytraced coords'''
         
         # TODO: optimize, it's very slow now
@@ -137,10 +137,20 @@ class TiledMap:
         if worked[y0][x0]:
             return worked
         
-        worked[y0][x0] = True
+        todo = [(x0, y0, direct, sdir)]
         
-        if not target:
-            if not applyToSelf or func(x0, y0):
+        while todo:
+            x, y, direct, sdir = todo.pop(0)
+            try:
+                self.getTile(x, y)
+            except TiledMapSizeError:
+                continue
+            
+            if worked[y][x]:
+                continue
+            
+            worked[y][x] = True
+            if not applyToSelf or func(x, y):
                 directs = []
                 if not direct:
                     for dx in range(-1, 2):
@@ -172,10 +182,8 @@ class TiledMap:
                         nsdir = (dx, dy)
                         if sdir:
                             direct = sdir
-                    worked = self.raytrace(x0+dx, y0+dy, func, direct=dn, sdir=nsdir, worked=worked)
-            return worked
-        else:
-            raise NotImplementedError('No support for targeted raytracing yet')
+                    todo.append((x+dx, y+dy, direct, sdir))
+        return worked
     
     
     def getTile(self, x, y):
