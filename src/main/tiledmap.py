@@ -183,6 +183,8 @@ class TiledMap:
             return self.content[y][x]
         except IndexError:
             raise TiledMapSizeError(self)
+        except TypeError:
+            raise TypeError('getTile() arguments should be integers, got {0}'.format((x, y)))
     
     def getContent(self, x, y, position):
         '''Get content from (x,y)->position'''
