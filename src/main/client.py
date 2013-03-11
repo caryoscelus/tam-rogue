@@ -85,7 +85,7 @@ class Client(BaseClient, Displaying, Inputting):
         elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext][0] == 'direction':
             self.putString(0, 0, 'direction?  ')
         elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext][0] == 'inventory':
-            self.showingLogs = True
+            self.showingInv = True
             self.putString(0, 0, 'list element?  ')
         
         if self.showingInv:
