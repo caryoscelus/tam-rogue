@@ -22,6 +22,8 @@ class Client(BaseClient, Displaying, Inputting):
         # UI
         self.showingLogs = True
         self.showingInv = False
+        self.showingList = False
+        self.currentList = None
         self.displayAttrs = []
         
         self.cleanActionState()
@@ -83,14 +85,21 @@ class Client(BaseClient, Displaying, Inputting):
         
         if self.inputState == 'normal':
             pass
-        elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext][0] == 'direction':
+        elif self.inputState == 'action' and self.nextArgumentType() == 'direction':
             self.putString(0, 0, 'direction?  ')
-        elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext][0] == 'inventory':
+        elif self.inputState == 'action' and self.nextArgumentType() == 'inventory':
             self.showingInv = True
+            self.putString(0, 0, 'list element?  ')
+        elif self.inputState == 'action' and self.nextArgumentType() == 'list':
+            self.showingList = True
+            self.currentList = actionapi.action(self.nextArgument()[1], {'subject':self.entity})
             self.putString(0, 0, 'list element?  ')
         
         if self.showingInv:
             self.showInv()
+        
+        if self.showingList and self.currentList:
+            self.showList(self.currentList)
         
         self.showAttr()
         
@@ -139,10 +148,18 @@ class Client(BaseClient, Displaying, Inputting):
     
     # INPUT
     def bindKeys(self, keys, actionName, args):
-        # TODO: specific class?
+        '''Bind list of key to do action'''
         action = (actionName, args)
         for key in keys:
             self.bindings[key] = action
+    
+    def nextArgument(self):
+        '''Return representation of next argument'''
+        return self.actionArgs[self.actionArgsNext]
+    
+    def nextArgumentType(self):
+        '''Return type of next argument'''
+        return self.nextArgument()[0]
     
     def tryLaunchAction(self):
         '''Get next argument or if it's empty, launch action'''
@@ -172,6 +189,7 @@ class Client(BaseClient, Displaying, Inputting):
                 break
     
     def processListArgument(self, elist, opcode):
+        '''Fill in list argument, returning it'''
         ch = chr(opcode)
         if ch == '-':
             arg = None
