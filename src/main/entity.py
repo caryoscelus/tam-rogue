@@ -7,7 +7,7 @@ import tiledmap
 
 class Entity(baseentity.BaseEntity):
     
-    SEE_EVERYTHING = True
+    SEE_EVERYTHING = False
     
     def __init__(self, attrib = {}, content = {}, order = [], alive = False, handler = None):
         self.attrib = attrib
@@ -214,6 +214,7 @@ class Entity(baseentity.BaseEntity):
                 try:
                     visionMap.getTile(x, y).put(entity.getPosition(), entity)
                 except baseentity.PositionTakenError:
+                    logging.warning('raytraced one tile twice; this should not happen anymore')
                     return False
             
             canSee = (not ground) or (not ground.attr('opaque'))

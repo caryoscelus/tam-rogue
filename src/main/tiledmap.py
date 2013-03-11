@@ -120,16 +120,21 @@ class TiledMap:
                                 todo.append((x+dx, y+dy))
         return worked
     
-    def raytrace(self, x0, y0, func, target=None, direct=None, sdir=None, applyToSelf=True):
+    def raytrace(self, x0, y0, func, target=None, direct=None, sdir=None, applyToSelf=True, worked=None):
         '''Apply func to raytraced coords'''
         
-        # TODO: remove overlaps
-        # in the worst case, just store array of traced tiles
+        if not worked:
+            worked = self.genMap(lambda x, y: False)
         
         try:
             self.getTile(x0, y0)
         except TiledMapSizeError:
-            return False
+            return worked
+        
+        if worked[y0][x0]:
+            return worked
+        
+        worked[y0][x0] = True
         
         if not target:
             if not applyToSelf or func(x0, y0):
@@ -164,10 +169,10 @@ class TiledMap:
                         nsdir = (dx, dy)
                         if sdir:
                             direct = sdir
-                    self.raytrace(x0+dx, y0+dy, func, direct=dn, sdir=nsdir)
+                    worked = self.raytrace(x0+dx, y0+dy, func, direct=dn, sdir=nsdir, worked=worked)
+            return worked
         else:
             raise NotImplementedError('No support for targeted raytracing yet')
-        pass
     
     
     def getTile(self, x, y):
