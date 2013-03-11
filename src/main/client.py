@@ -82,9 +82,9 @@ class Client(BaseClient, Displaying, Inputting):
         
         if self.inputState == 'normal':
             pass
-        elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext] == 'direction':
+        elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext][0] == 'direction':
             self.putString(0, 0, 'direction?  ')
-        elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext] == 'inventory':
+        elif self.inputState == 'action' and self.actionArgs[self.actionArgsNext][0] == 'inventory':
             self.showingLogs = True
             self.putString(0, 0, 'list element?  ')
         
@@ -159,7 +159,7 @@ class Client(BaseClient, Displaying, Inputting):
         '''Try to process current action by replacing obvious arguments'''
         while True:
             argName = self.actionArgsNext
-            argType = self.actionArgs[argName]
+            argType = self.actionArgs[argName][0]
             if argType == 'entity':
                 self.actionArgs[argName] = self.entity
                 
@@ -188,7 +188,8 @@ class Client(BaseClient, Displaying, Inputting):
                 self.processAction()
         else:
             argName = self.actionArgsNext
-            argType = self.actionArgs[argName]
+            arg = self.actionArgs[argName]
+            argType = arg[0]
             if argType == 'direction':
                 ch = chr(opcode)
                 if ch in self.movementKeys:
@@ -215,6 +216,8 @@ class Client(BaseClient, Displaying, Inputting):
                 self.actionArgs[argName] = arg
                 if not self.tryLaunchAction():
                     self.processAction()
+            elif argType == 'list':
+                pass
             else:
                 raise RuntimeError('unknown input type requested: {0}'.format(argType))
     

@@ -107,10 +107,12 @@ class Mod:
                 for snode in node:
                     if snode.tag == 'action':
                         actionName = snode.attrib['name']
-                        args = {
-                            e.attrib['name'] : e.attrib['value'] \
-                                for e in snode if e.tag == 'arg'
-                        }
+                        args = {}
+                        for e in snode:
+                            if e.tag == 'arg':
+                                value = e.attrib['value']
+                                action = e.get('action')                # for list
+                                args[e.attrib['name']] = (value, action)
                         bindings = [
                             e.attrib['key'] for e in snode if e.tag == 'bind'
                         ]
@@ -124,8 +126,6 @@ class Mod:
                         except IndexError:
                             logging.warning('not enough movement keys specified')
                         else:
-                            logging.debug(client)
-                            logging.debug(movement)
                             client.movementKeys = movement
                     else:
                         logging.warning('unknown keymap mod xml node tagged "{0}"'.format(snode.tag))
