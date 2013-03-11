@@ -54,5 +54,12 @@ def traceback():
 
 _GLOBALS = {}
 
-def export(name, var):
+def vexport(name, var):
     _GLOBALS[name] = var
+
+def vimport(name):
+    try:
+        return _GLOBALS[name]
+    except KeyError:
+        logging.warning('trying to vimport unexported var')
+        return None
