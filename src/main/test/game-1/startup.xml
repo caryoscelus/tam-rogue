@@ -2,7 +2,7 @@
 <mod>
     <action name="startup">
         <code>
-human = Entity({'class':'human', 'hp':10, 'hungry':0, 'maxHungry':5, 'spells':('spell1')},
+human = Entity({'class':'human', 'hp':10, 'hungry':0, 'maxHungry':5, 'spells':('spell1',)},
                {'weapon':None, 'inv':[]},
                ['weapon', 'inv'])
 
