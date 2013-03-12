@@ -198,6 +198,11 @@ class TiledMap:
         aTile = self.getTile(x, y)
         aTile.put(position, anEntity)
     
+    def setContent(self, x, y, position, content):
+        '''Force content into position; for use in map generators'''
+        anEntity.placeOn(self, x, y, position)
+        self.getTile(x, y).set(position, content)
+    
     def removeFromMap(self, anEntity, queueChange = True):
         '''Remove entity from map if it's on it'''
         if queueChange and anEntity.alive:

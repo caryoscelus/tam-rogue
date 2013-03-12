@@ -34,7 +34,7 @@ class Wrapper:
         'removeFromMap', 'putOn', 'placeOn',
         'alive', 'check',
         'clear', 'resize',
-        'setExist', 'getContent',
+        'setExist', 'getContent', 'setContent',
         'notifyEmpty', 'setAlive',
         'raytrace', 'floodfill',
         'mapVision'

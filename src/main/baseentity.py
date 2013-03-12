@@ -57,6 +57,15 @@ class BaseEntity:
         
         self.notify(position, anEntity, 'add')
     
+    def set(self, position, anEntity):
+        '''Force setting anEntity onto position; previous entity is removed; don't use this unless you really need'''
+        try:
+            self.put(position, anEntity)
+        except PositionTakenError:
+            current = self.get(position)
+            self.remove(current, position)
+            self.put(position, anEntity)
+    
     def remove(self, anEntity, position = None):
         '''Remove anEntity from this tile; raise error if it's not present here'''
         if not position:
