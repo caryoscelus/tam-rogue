@@ -19,11 +19,11 @@ def convert(value, tp):
             return bool(int(value))
         except ValueError:
             return bool(value)
-    elif tp == 'int':
+    elif tp == 'int' or tp == 'integer':
         return int(value)
-    elif tp == 'float':
+    elif tp == 'float' or tp == 'number':
         return float(value)
-    elif tp == 'str':
+    elif tp == 'str' or tp == 'string':
         return str(value)
     else:
         logging.warning('convert: unknown type {0}'.format(tp))
