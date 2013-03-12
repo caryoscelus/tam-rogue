@@ -10,24 +10,29 @@ import loader
 from direct import UnDirect
 
 # TODO: use this more generally
-def convert(value, tp):
-    '''Convert value to given type'''
+def getType(tp):
     if not tp:
-        return value
+        return lambda x: x
     elif tp == 'bool':
-        try:
-            return bool(int(value))
-        except ValueError:
-            return bool(value)
+        def bb(value):
+            try:
+                return bool(int(value))
+            except ValueError:
+                return bool(value)
+        return bb
     elif tp == 'int' or tp == 'integer':
-        return int(value)
+        return int
     elif tp == 'float' or tp == 'number':
-        return float(value)
+        return float
     elif tp == 'str' or tp == 'string':
-        return str(value)
+        return str
     else:
         logging.warning('convert: unknown type {0}'.format(tp))
-        return value
+        return lambda x: x
+
+def convert(value, tp):
+    '''Convert value to given type'''
+    return getType(tp)(value)
 
 class Mod:
     def __init__(self, xml):
@@ -135,7 +140,9 @@ class Mod:
                 for snode in node:
                     if snode.tag == 'attr':
                         name = snode.attrib['name']
-                        client.addDisplayAttribute(name)
+                        tn = snode.get('type')
+                        t = getType(tn)
+                        client.addDisplayAttribute(name, t)
                     else:
                         logging.warning('unknown display mod xml node tagged "{0}"'.format(snode.tag))
             

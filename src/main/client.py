@@ -133,18 +133,18 @@ class Client(BaseClient, Displaying, Inputting):
     
     def showAttr(self):
         st = '|'
-        for name in self.displayAttrs:
+        for name, t in self.displayAttrs:
             try:
                 value = self.entity.attr(name)
             except BaseEntityDeadError:
                 logging.warning('entity died')
                 return
-            s = ' {0}: {1} |'.format(name, value)
+            s = ' {0}: {1} |'.format(name, t(value))
             st += s
         self.putString(0, 5, st)
     
-    def addDisplayAttribute(self, name):
-        self.displayAttrs.append(name)
+    def addDisplayAttribute(self, name, t):
+        self.displayAttrs.append((name, t))
     
     # INPUT
     def bindKeys(self, keys, actionName, args):
