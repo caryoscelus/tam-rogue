@@ -155,10 +155,17 @@ class TiledMap:
             except TiledMapSizeError:
                 pass
             else:
+                ang, n = points[(x, y)]
+                w = n*nwide
                 if func(x, y):
-                    ang, n = points[(x, y)]
-                    w = n*nwide
                     self.raytrace(x0, y0, func, ang, dist, w, False)
+                else:
+                    killedAngle = math.atan(1/2 / dist)
+                    if killedAngle < w/2:
+                        nw = w/2-killedAngle
+                        ad = killedAngle + nw/2
+                        self.raytrace(x0, y0, func, ang+ad, dist, nw, False)
+                        self.raytrace(x0, y0, func, ang-ad, dist, nw, False)
         
         return
     
