@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import logging
 import traceback
+import math
 
 import tile
 from baseentity import PositionEntityError, BaseEntityDeadError
@@ -120,58 +121,39 @@ class TiledMap:
                                 todo.append((x+dx, y+dy))
         return worked
     
-    def raytrace(self, x0, y0, func, direct=None, sdir=None, applyToSelf=True, worked=None):
+    def raytrace(self, x0, y0, func, angle=0, dist=0, wide=None, applyToSelf=True):
         '''Apply func to raytraced coords'''
         
-        # TODO: optimize, it's very slow now
+        if applyToSelf:
+            if not func(x0, y0):
+                return
         
-        if not worked:
-            worked = self.genMap(lambda x, y: False)
+        if not wide:
+            wide = 2*math.pi
         
-        try:
-            self.getTile(x0, y0)
-        except TiledMapSizeError:
-            return worked
+        dist += 1
         
-        if worked[y0][x0]:
-            return worked
+        points = set()
         
-        worked[y0][x0] = True
+        # iterate possible new angles
+        for i in range(-2, 3):
+            ang = angle+i*wide/4
+            x = int(x0 + math.cos(ang)*dist)
+            y = int(y0 + math.sin(ang)*dist)
+            points.add((x, y, ang))
         
-        if not applyToSelf or func(x0, y0):
-            directs = []
-            if not direct:
-                for dx in range(-1, 2):
-                    for dy in range(-1, 2):
-                        if dx or dy:
-                            directs.append((dx, dy))
-            else:
-                dx, dy = direct
-                directs.append((dx, dy))
-                if dx and dy:               # corner
-                    directs.append((0, dy))
-                    directs.append((dx, 0))
-                elif not dx:
-                    directs.append((dy, dy))
-                    directs.append((-dy, dy))
-                elif not dy:
-                    directs.append((dx, dx))
-                    directs.append((dx, -dx))
+        logging.debug(points)
+        nwide = wide/len(points)
+        for x, y, ang in points:
+            if func(x, y):
+                try:
+                    self.getTile(x, y)
+                except TiledMapSizeError:
+                    pass
                 else:
-                    raise RuntimeError('(0, 0) direction')
-            
-            for d in directs:
-                nsdir = sdir
-                dx, dy = d
-                dn = direct or (dx, dy)
-                if direct and direct != (dx, dy):
-                    if sdir and sdir != (dx, dy):
-                        continue
-                    nsdir = (dx, dy)
-                    if sdir:
-                        direct = sdir
-                worked = self.raytrace(x0+dx, y0+dy, func, direct=dn, sdir=nsdir, worked=worked)
-        return worked
+                    self.raytrace(x0, y0, func, ang, dist, nwide, False)
+        
+        return
     
     
     def getTile(self, x, y):
