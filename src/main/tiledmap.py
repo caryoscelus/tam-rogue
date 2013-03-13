@@ -129,7 +129,7 @@ class TiledMap:
         if first:
             now = time.time()
         
-        if not limit:
+        if limit == None:
             limit = float('inf')
         
         if applyToSelf:
