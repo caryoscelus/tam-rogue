@@ -145,9 +145,8 @@ class TiledMap:
         
         points = {}
         
-        if wide >= math.pi:
-            NUM = 2
-        else:
+        NUM = int(wide*dist/2)
+        if not NUM:
             NUM = 1
         
         nwide = wide/(NUM*2+1)
@@ -165,11 +164,7 @@ class TiledMap:
                 points[(x, y)] = (ang, 1)
         
         for x, y in points:
-            try:
-                self.getTile(x, y)
-            except TiledMapSizeError:
-                pass
-            else:
+            if self.checkTile(x, y):
                 ang, n = points[(x, y)]
                 w = n*nwide
                 if func(x, y):
@@ -187,16 +182,16 @@ class TiledMap:
         return
     
     
+    def checkTile(self, x, y):
+        '''Check if tile coord are valid'''
+        return (x >= 0 and y >= 0) and (x < self.width and y < self.height)
+    
     def getTile(self, x, y):
         '''Get tile from position; raise TiledMapSizeError if not on map'''
-        if x < 0 or y < 0:
+        if not self.checkTile(x, y):
             raise TiledMapSizeError(self)
-        try:
+        else:
             return self.content[y][x]
-        except IndexError:
-            raise TiledMapSizeError(self)
-        except TypeError:
-            raise TypeError('getTile() arguments should be integers, got {0}'.format((x, y)))
     
     def getContent(self, x, y, position):
         '''Get content from (x,y)->position'''
