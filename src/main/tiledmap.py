@@ -135,10 +135,15 @@ class TiledMap:
         
         points = {}
         
-        nwide = wide/5
+        if wide >= math.pi:
+            NUM = 2
+        else:
+            NUM = 1
+        
+        nwide = wide/(NUM*2+1)
         
         # iterate possible new angles
-        for i in range(-2, 3):
+        for i in range(-NUM, NUM+1):
             ang = angle+i*nwide
             x = int(x0 + math.cos(ang)*dist)
             y = int(y0 + math.sin(ang)*dist)
