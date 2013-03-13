@@ -133,25 +133,32 @@ class TiledMap:
         
         dist += 1
         
-        points = set()
+        points = {}
+        
+        nwide = wide/5
         
         # iterate possible new angles
         for i in range(-2, 3):
-            ang = angle+i*wide/4
+            ang = angle+i*nwide
             x = int(x0 + math.cos(ang)*dist)
             y = int(y0 + math.sin(ang)*dist)
-            points.add((x, y, ang))
+            if (x, y) in points:
+                oang, n = points[(x, y)]
+                nang = (oang*n+ang)/(n+1)
+                points[(x, y)] = (nang, n+1)
+            else:
+                points[(x, y)] = (ang, 1)
         
-        logging.debug(points)
-        nwide = wide/len(points)
-        for x, y, ang in points:
-            if func(x, y):
-                try:
-                    self.getTile(x, y)
-                except TiledMapSizeError:
-                    pass
-                else:
-                    self.raytrace(x0, y0, func, ang, dist, nwide, False)
+        for x, y in points:
+            try:
+                self.getTile(x, y)
+            except TiledMapSizeError:
+                pass
+            else:
+                if func(x, y):
+                    ang, n = points[(x, y)]
+                    w = n*nwide
+                    self.raytrace(x0, y0, func, ang, dist, w, False)
         
         return
     
