@@ -2,6 +2,7 @@ import xml.etree.ElementTree as ET
 import logging
 import traceback
 import math
+import time
 
 import tile
 from baseentity import PositionEntityError, BaseEntityDeadError
@@ -121,8 +122,15 @@ class TiledMap:
                                 todo.append((x+dx, y+dy))
         return worked
     
-    def raytrace(self, x0, y0, func, angle=0, dist=0, wide=None, applyToSelf=True):
+    def raytrace(self, x0, y0, func, limit=None, angle=0, dist=0, wide=None, applyToSelf=True):
         '''Apply func to raytraced coords'''
+        
+        first = applyToSelf
+        if first:
+            now = time.time()
+        
+        if not limit:
+            limit = float('inf')
         
         if applyToSelf:
             if not func(x0, y0):
@@ -132,6 +140,8 @@ class TiledMap:
             wide = 2*math.pi
         
         dist += 1
+        if dist >= limit:
+            return
         
         points = {}
         
@@ -163,15 +173,17 @@ class TiledMap:
                 ang, n = points[(x, y)]
                 w = n*nwide
                 if func(x, y):
-                    self.raytrace(x0, y0, func, ang, dist, w, False)
+                    self.raytrace(x0, y0, func, limit, ang, dist, w, False)
                 else:
                     killedAngle = math.atan(1/2 / dist)
                     if killedAngle < w/2:
                         nw = w/2-killedAngle
                         ad = killedAngle + nw/2
-                        self.raytrace(x0, y0, func, ang+ad, dist, nw, False)
-                        self.raytrace(x0, y0, func, ang-ad, dist, nw, False)
+                        self.raytrace(x0, y0, func, limit, ang+ad, dist, nw, False)
+                        self.raytrace(x0, y0, func, limit, ang-ad, dist, nw, False)
         
+        if first:
+            logging.debug('TIME: {0}'.format(time.time()-now))
         return
     
     
