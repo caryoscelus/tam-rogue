@@ -218,17 +218,15 @@ class Entity(baseentity.BaseEntity):
                 try:
                     visionMap.getTile(x, y).put(entity.getPosition(), entity)
                 except baseentity.PositionTakenError:
-                    logging.warning('raytraced one tile twice; this should not happen anymore')
-                    return False
+                    pass
             
             canSee = (not ground) or (not ground.attr('opaque'))
-            canSee = canSee and ((x-x0)**2+(y-y0)**2 <= self.VIEW_LENGTH**2)
             return canSee
         
         def getTileVisionF(onMap, visionMap):
             return lambda x, y: getTileVision(onMap, visionMap, x, y)
         
-        onMap.raytrace(x0, y0, getTileVisionF(onMap, visionMap))
+        onMap.raytrace(x0, y0, getTileVisionF(onMap, visionMap), limit=self.VIEW_LENGTH)
         
         return visionMap
     
