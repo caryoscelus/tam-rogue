@@ -145,7 +145,7 @@ class TiledMap:
         
         points = {}
         
-        NUM = int(wide*dist/2)
+        NUM = round(wide*dist/2)
         if not NUM:
             NUM = 1
         
@@ -154,8 +154,8 @@ class TiledMap:
         # iterate possible new angles
         for i in range(-NUM, NUM+1):
             ang = angle+i*nwide
-            x = int(x0 + math.cos(ang)*dist)
-            y = int(y0 + math.sin(ang)*dist)
+            x = x0+round(math.cos(ang)*dist)
+            y = y0+round(math.sin(ang)*dist)
             if (x, y) in points:
                 oang, n = points[(x, y)]
                 nang = (oang*n+ang)/(n+1)
