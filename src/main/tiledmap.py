@@ -140,7 +140,7 @@ class TiledMap:
         if dist >= limit:
             return
         
-        step = 1/dist
+        step = 0.5/dist
         
         n = round((ang1-ang0)/step+0.5)
         
