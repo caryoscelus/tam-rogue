@@ -122,7 +122,7 @@ class TiledMap:
                                 todo.append((x+dx, y+dy))
         return worked
     
-    def raytrace(self, x0, y0, func, limit=None, angle=0, dist=0, wide=None, applyToSelf=True):
+    def raytrace(self, x0, y0, func, limit=None, dist=0, ang0=0, ang1=2*math.pi, applyToSelf=True):
         '''Apply func to raytraced coords'''
         
         first = applyToSelf
@@ -136,46 +136,45 @@ class TiledMap:
             if not func(x0, y0):
                 return
         
-        if not wide:
-            wide = 2*math.pi
-        
         dist += 1
         if dist >= limit:
             return
         
-        points = {}
+        step = 2*math.pi/dist
         
-        NUM = round(wide*dist/2)
-        if not NUM:
-            NUM = 1
+        n = round((ang1-ang0)/step+0.5)
         
-        nwide = wide/(NUM*2+1)
+        angles = [(ang0, ang1)]
+        def killAngle(a0, a1):
+            i = 0
+            while i < len(angles):
+                ang0, ang1 = angles[i]
+                if a0 < ang1 and a1 > ang0:
+                    newa = []
+                    if a0 > ang0:
+                        newa.append((ang0, a0))
+                    if a1 < ang1:
+                        newa.append((a1, ang1))
+                    del angles[i]
+                    for a in newa:
+                        angles.insert(i, a)
+                        i += 1
+                else:
+                    i += 1
         
-        # iterate possible new angles
-        for i in range(-NUM, NUM+1):
-            ang = angle+i*nwide
+        checked = {}
+        
+        for i in range(n+1):
+            ang = ang0+step*i
             x = x0+round(math.cos(ang)*dist)
             y = y0+round(math.sin(ang)*dist)
-            if (x, y) in points:
-                oang, n = points[(x, y)]
-                nang = (oang*n+ang)/(n+1)
-                points[(x, y)] = (nang, n+1)
-            else:
-                points[(x, y)] = (ang, 1)
+            if not (x, y) in checked:
+                checked[(x, y)] = self.checkTile(x, y) and func(x, y)
+            if not checked[(x, y)]:
+                killAngle(ang, ang+step)
         
-        for x, y in points:
-            if self.checkTile(x, y):
-                ang, n = points[(x, y)]
-                w = n*nwide
-                if func(x, y):
-                    self.raytrace(x0, y0, func, limit, ang, dist, w, False)
-                else:
-                    killedAngle = math.atan(1/2 / dist)
-                    if killedAngle < w/2:
-                        nw = w/2-killedAngle
-                        ad = killedAngle + nw/2
-                        self.raytrace(x0, y0, func, limit, ang+ad, dist, nw, False)
-                        self.raytrace(x0, y0, func, limit, ang-ad, dist, nw, False)
+        for a in angles:
+            self.raytrace(x0, y0, func, limit, dist, a[0], a[1], False)
         
         if first:
             logging.debug('TIME: {0}'.format(time.time()-now))
