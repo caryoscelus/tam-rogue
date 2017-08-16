@@ -39,8 +39,8 @@ thier directory.
 
 GAMES
 -----
-To launch game, you need to edit config.xml and replace line <path add=".."/>
-with <path add="path-to-game-directory"/>
+To launch game, you need to edit config.xml and replace line `<path add="game-1"/>`
+with `<path add="path-to-game-directory"/>`
 
 * https://github.com/caryoscelus/funedaphi - my 7drl 2013 project (not finished yet)
 
