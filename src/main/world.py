@@ -73,6 +73,7 @@ class World(Sleeping):
             else:
                 # iterate over objects on map
                 while True:
+                    t = False
                     try:
                         t = nextMap.step()
                     except Exception as err:

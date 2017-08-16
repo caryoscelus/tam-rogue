@@ -54,11 +54,11 @@ class Wrapper:
         try:
             return _wrappers[src]
         except KeyError:
-            newWrapper = super(Wrapper, cls).__new__(cls, src)
+            newWrapper = super(Wrapper, cls).__new__(cls)
             addWrapper(src, newWrapper)
             return newWrapper
         except TypeError:                       # unhashable
-            newWrapper = super(Wrapper, cls).__new__(cls, src)
+            newWrapper = super(Wrapper, cls).__new__(cls)
             addWrapper(src, newWrapper)
             return newWrapper
     
